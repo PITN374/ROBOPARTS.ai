@@ -1,4 +1,5 @@
-ROBOTRAITS created by and authored by: Aaron Bailot PITN.ai
+ROBOTRAITS/ROBOPARTS created by: Aaron Bailot PITN.ai
+Author: Aaron Bailot powerinthenumbers@pitn.ai
 Original Framework for Personality-Driven Humanoid Intelligence
 ROBOAGENTIC.AI + ROBOTRAITS.AI + ROBOTRAITS.COM
 Powered by powerinthenumbers.ai aka PITN.ai
