@@ -1,0 +1,40 @@
+ROBOPARTS.ai PYTHON DATA MODEL Version 0.1.0
+
+from dataclasses import dataclass, field from datetime import datetime, timezone import uuid
+
+def new_id(): return str(uuid.uuid4())
+
+def utc_now(): return datetime.now(timezone.utc).isoformat()
+
+@dataclass class Product: manufacturer: str mpn: str namespace: str revision: str = "1" specifications: dict = field(defaultfactory=dict) capabilities: list = field(defaultfactory=list) source: str = "" verificationstatus: str = "unverified" id: str = field(defaultfactory=new_id)
+
+@dataclass class ComponentInstance: productid: str serialnumber: str physicalidentifiertype: str = "unknown" verificationstatus: str = "unverified" id: str = field(defaultfactory=new_id)
+
+@dataclass class Organization: name: str organizationtype: str verificationstatus: str = "unverified" website: str = "" id: str = field(defaultfactory=newid)
+
+@dataclass class Robot: name: str manufacturer: str = "" model: str = "" id: str = field(defaultfactory=newid)
+
+@dataclass class BOMPosition: robotid: str componentinstanceid: str position: str configurationrevision: str = "1" installedat: str = field(defaultfactory=utcnow) removedat: str = None id: str = field(defaultfactory=newid)
+
+@dataclass class LifecycleEvent: componentinstanceid: str eventtype: str actor: str payload: dict = field(defaultfactory=dict) evidencereferences: list = field(defaultfactory=list) occurredat: str = field(defaultfactory=utcnow) id: str = field(defaultfactory=new_id)
+
+@dataclass class CompatibilityAssessment: sourceproductid: str targetrobotid: str status: str checkedrequirements: list = field(defaultfactory=list) missingevidence: list = field(defaultfactory=list) limitations: list = field(defaultfactory=list) assessedat: str = field(defaultfactory=utcnow) id: str = field(defaultfactory=newid)
+
+@dataclass class PerformanceObservation: componentinstanceid: str metric: str value: float unit: str source: str = "" observedat: str = field(defaultfactory=utcnow) id: str = field(defaultfactory=new_id)
+
+@dataclass class OntologyRelationship: sourceid: str relationshiptype: str targetid: str sourcetype: str targettype: str provenance: str = "" id: str = field(defaultfactory=new_id)
+
+DESIGN RULES
+
+Each entity receives a persistent identifier.
+Product identity differs from physical-instance identity.
+BOM relationships reference component instances.
+Compatibility assessments retain missing evidence.
+Lifecycle events reference affected components.
+Verification status reflects actual evidence.
+Missing information does not prove compatibility.
+Performance observations include units and provenance.
+Organization registration does not establish verification.
+Database persistence and access controls require implementation.
+
+END OF FILE
