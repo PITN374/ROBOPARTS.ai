@@ -1,0 +1,113 @@
+PITN / ROBOPARTS.ai MASTER SOFTWARE SPECIFICATION Version 0.1.0
+
+CORE ARCHITECTURE
+
+ROBOTRAITS ontology Technical knowledge graph Verified company network Robotics component marketplace AI intelligence layer Persistent component identity Robot bill of materials (BOM) Lifecycle traceability Adaptive robotics Digital twins
+
+INITIAL MARKET
+
+Robotic hands Grippers and end effectors Actuators, motors and drives Joints and transmissions Sensors and encoders Controllers and motion systems Replacement and refurbished components
+
+ONTOLOGY
+
+ROBOTRAITS provides a shared semantic foundation for robotics component classifications, specifications, capabilities, performance and compatibility.
+
+UHMO / UHO represents a proposed specialized ontology for humanoid manipulation.
+
+Every product, organization, component and digital asset must have a persistent identifier.
+
+Specifications must include appropriate data types, units and provenance.
+
+Relationships must define their meanings and valid source and target types.
+
+Records should track ownership, verification status and version history.
+
+PLATFORM COMPONENTS
+
+ROBOTRAITS Shared ontology, component traits, performance and capability definitions.
+
+RoboActuators Actuators, motors, servo systems, drives and motion technologies.
+
+RoboHands Dexterous robotic hands and manipulation systems.
+
+RoboEffectors Grippers, tools and specialized end effectors.
+
+RoboJoints Actuated joints, rotary modules and precision drives.
+
+RoboModules Integrated motion subsystems and modular assemblies.
+
+ROBOPARTS.ai Component discovery, spare parts, replacement parts, supplier listings and lifecycle relationships.
+
+RoboAgentic.ai AI agents, intelligent workflows and technical assistants.
+
+DEVELOPMENT PHASES
+
+Phase 1: Product database, taxonomy, manufacturer profiles, structured specifications, search and administration.
+
+Phase 2: Supplier network, RFQs, quotations, supplier matching and membership functionality.
+
+Phase 3: Lifecycle traceability, maintenance, repair, refurbishment and component substitution.
+
+Phase 4: Knowledge graph, AI-assisted discovery, compatibility recommendations, predictive maintenance and APIs.
+
+CORE DATA ENTITIES
+
+Organization User Product ComponentClass ComponentInstance Specification Capability Robot RobotConfiguration BOMPosition CompatibilityAssessment LifecycleEvent EvidenceRecord SupplierListing RFQ Quote MaintenanceRecord PerformanceObservation BehaviorProfile LearningRecord DigitalTwin OntologyRelationship
+
+ADAPTIVE ROBOTICS
+
+Represent software updates, AI updates, configuration changes, user preferences, task experience, environmental changes, hardware upgrades, component replacement and maintenance.
+
+Adaptive loop:
+
+Task Observation Decision Action Result Feedback Evaluation Adjustment
+
+Learning records must remain distinct from persistent component identity records.
+
+HARDWARE AND CAPABILITIES
+
+Hardware changes may affect available capabilities.
+
+A new sensor may improve perception.
+
+A new robotic hand may enable additional manipulation tasks.
+
+A component replacement may require compatibility assessment and renewed testing.
+
+Declared capabilities must remain distinct from verified capabilities.
+
+SAFETY
+
+Represent force, speed, payload, joint, temperature and operating-environment constraints.
+
+Behavioral preferences and AI recommendations must not override safety controls, physical constraints, authorization requirements or emergency procedures.
+
+KNOWLEDGE GRAPH
+
+Connect manufacturers, products, components, specifications, capabilities, robots, BOM positions, suppliers, lifecycle events, evidence and performance records.
+
+Start with relational database relationships. Introduce a graph database when justified by requirements.
+
+AI INTELLIGENCE
+
+Support natural-language product search, specification comparison, supplier discovery, missing-information detection, compatibility analysis and lifecycle summarization.
+
+Distinguish verified specifications, supplier-declared information, estimates and missing data.
+
+DATA GOVERNANCE
+
+Persistent identifiers Duplicate detection Product revision history Source attribution Verification workflows Access permissions Audit history Ontology versioning Controlled corrections
+
+VALIDATION
+
+Measure component identification time, manual reconciliation effort, specification completeness, compatibility accuracy, supplier discovery time and traceability reconstruction time.
+
+Any efficiency improvement is a hypothesis until measured against a documented baseline.
+
+IMPLEMENTATION PRINCIPLE
+
+Build the technical database and supplier discovery workflow first.
+
+Expand incrementally into lifecycle traceability, ontology relationships, marketplace functionality and AI intelligence.
+
+END OF FILE
