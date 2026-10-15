@@ -1,0 +1,341 @@
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+Create app/main.py:
+
+python
+
+from contextlib import asynccontextmanager
+from datetime import datetime, timezone
+from pathlib import Path
+import json
+import sqlite3
+import uuid
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field, ConfigDict
+
+DB_PATH = Path("pitn.db")
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def connect():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")
+    return conn
+
+
+def initialize():
+    with connect() as db:
+        db.executescript("""
+        CREATE TABLE IF NOT EXISTS products (
+            id TEXT PRIMARY KEY,
+            namespace TEXT NOT NULL,
+            manufacturer TEXT NOT NULL,
+            mpn TEXT NOT NULL,
+            revision TEXT NOT NULL,
+            specifications TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            UNIQUE(manufacturer, mpn, revision)
+        );
+
+        CREATE TABLE IF NOT EXISTS instances (
+            id TEXT PRIMARY KEY,
+            product_id TEXT NOT NULL REFERENCES products(id),
+            serial_number TEXT NOT NULL UNIQUE,
+            verification_status TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS robots (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS bom_items (
+            id TEXT PRIMARY KEY,
+            robot_id TEXT NOT NULL REFERENCES robots(id),
+            instance_id TEXT NOT NULL REFERENCES instances(id),
+            position TEXT NOT NULL,
+            installed_at TEXT NOT NULL,
+            removed_at TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS events (
+            id TEXT PRIMARY KEY,
+            instance_id TEXT NOT NULL REFERENCES instances(id),
+            event_type TEXT NOT NULL,
+            occurred_at TEXT NOT NULL,
+            actor TEXT NOT NULL,
+            payload TEXT NOT NULL
+        );
+        """)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    initialize()
+    yield
+
+
+app = FastAPI(
+    title="PITN / ROBOPARTS.ai",
+    description=(
+        "Robotics component identity, BOM relationships "
+        "and lifecycle traceability."
+    ),
+    version="0.1.0",
+    lifespan=lifespan,
+)
+
+
+class ProductCreate(BaseModel):
+    namespace: str = Field(pattern=r"^\.[a-z][a-z0-9_]*$")
+    manufacturer: str = Field(min_length=1, max_length=200)
+    mpn: str = Field(min_length=1, max_length=200)
+    revision: str = Field(min_length=1, max_length=100)
+    specifications: dict = Field(default_factory=dict)
+
+
+class InstanceCreate(BaseModel):
+    product_id: str
+    serial_number: str = Field(min_length=1, max_length=200)
+
+
+class RobotCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=200)
+
+
+class BOMItemCreate(BaseModel):
+    robot_id: str
+    instance_id: str
+    position: str = Field(min_length=1, max_length=200)
+
+
+class EventCreate(BaseModel):
+    instance_id: str
+    event_type: str = Field(min_length=1, max_length=100)
+    actor: str = Field(min_length=1, max_length=200)
+    payload: dict = Field(default_factory=dict)
+    occurred_at: datetime | None = None
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "service": "PITN / ROBOPARTS.ai"}
+
+
+@app.post("/products", status_code=201)
+def register_product(data: ProductCreate):
+    product_id = str(uuid.uuid4())
+
+    try:
+        with connect() as db:
+            db.execute(
+                """INSERT INTO products
+                VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    product_id,
+                    data.namespace,
+                    data.manufacturer,
+                    data.mpn,
+                    data.revision,
+                    json.dumps(data.specifications),
+                    now(),
+                ),
+            )
+    except sqlite3.IntegrityError:
+        raise HTTPException(
+            status_code=409,
+            detail="This manufacturer, MPN and revision already exist.",
+        )
+
+    return {
+        "id": product_id,
+        **data.model_dump(),
+        "created_at": now(),
+    }
+
+
+@app.get("/products")
+def list_products(namespace: str | None = None):
+    with connect() as db:
+        if namespace:
+            rows = db.execute(
+                "SELECT * FROM products WHERE namespace = ?",
+                (namespace,),
+            ).fetchall()
+        else:
+            rows = db.execute(
+                "SELECT * FROM products ORDER BY created_at"
+            ).fetchall()
+
+    return [
+        {**dict(row),
+         "specifications": json.loads(row["specifications"])}
+        for row in rows
+    ]
+
+
+@app.post("/instances", status_code=201)
+def register_instance(data: InstanceCreate):
+    instance_id = str(uuid.uuid4())
+
+    with connect() as db:
+        product = db.execute(
+            "SELECT id FROM products WHERE id = ?",
+            (data.product_id,),
+        ).fetchone()
+
+        if product is None:
+            raise HTTPException(404, "Product not found.")
+
+        try:
+            db.execute(
+                """INSERT INTO instances
+                VALUES (?, ?, ?, ?, ?)""",
+                (
+                    instance_id,
+                    data.product_id,
+                    data.serial_number,
+                    "unverified",
+                    now(),
+                ),
+            )
+        except sqlite3.IntegrityError:
+            raise HTTPException(
+                409, "Serial number already registered."
+            )
+
+    return {
+        "id": instance_id,
+        "product_id": data.product_id,
+        "serial_number": data.serial_number,
+        "verification_status": "unverified",
+    }
+
+
+@app.post("/robots", status_code=201)
+def register_robot(data: RobotCreate):
+    robot_id = str(uuid.uuid4())
+
+    with connect() as db:
+        db.execute(
+            "INSERT INTO robots VALUES (?, ?)",
+            (robot_id, data.name),
+        )
+
+    return {"id": robot_id, "name": data.name}
+
+
+@app.post("/bom-items", status_code=201)
+def install_component(data: BOMItemCreate):
+    item_id = str(uuid.uuid4())
+
+    with connect() as db:
+        robot = db.execute(
+            "SELECT id FROM robots WHERE id = ?",
+            (data.robot_id,),
+        ).fetchone()
+        instance = db.execute(
+            "SELECT id FROM instances WHERE id = ?",
+            (data.instance_id,),
+        ).fetchone()
+
+        if robot is None:
+            raise HTTPException(404, "Robot not found.")
+        if instance is None:
+            raise HTTPException(404, "Component instance not found.")
+
+        db.execute(
+            """INSERT INTO bom_items
+            VALUES (?, ?, ?, ?, ?, NULL)""",
+            (
+                item_id,
+                data.robot_id,
+                data.instance_id,
+                data.position,
+                now(),
+            ),
+        )
+
+    return {"id": item_id, **data.model_dump(),
+            "installed_at": now()}
+
+
+@app.post("/events", status_code=201)
+def record_event(data: EventCreate):
+    event_id = str(uuid.uuid4())
+
+    with connect() as db:
+        instance = db.execute(
+            "SELECT id FROM instances WHERE id = ?",
+            (data.instance_id,),
+        ).fetchone()
+
+        if instance is None:
+            raise HTTPException(404, "Component instance not found.")
+
+        db.execute(
+            """INSERT INTO events
+            VALUES (?, ?, ?, ?, ?, ?)""",
+            (
+                event_id,
+                data.instance_id,
+                data.event_type,
+                (data.occurred_at or datetime.now(timezone.utc))
+                    .isoformat(),
+                data.actor,
+                json.dumps(data.payload),
+            ),
+        )
+
+    return {"id": event_id, **data.model_dump(mode="json")}
+
+
+@app.get("/instances/{instance_id}/traceability")
+def get_traceability(instance_id: str):
+    with connect() as db:
+        instance = db.execute(
+            "SELECT * FROM instances WHERE id = ?",
+            (instance_id,),
+        ).fetchone()
+
+        if instance is None:
+            raise HTTPException(404, "Component instance not found.")
+
+        product = db.execute(
+            "SELECT * FROM products WHERE id = ?",
+            (instance["product_id"],),
+        ).fetchone()
+
+        events = db.execute(
+            """SELECT * FROM events
+            WHERE instance_id = ? ORDER BY occurred_at, id""",
+            (instance_id,),
+        ).fetchall()
+
+        relationships = db.execute(
+            """SELECT b.*, r.name AS robot_name
+            FROM bom_items b
+            JOIN robots r ON r.id = b.robot_id
+            WHERE b.instance_id = ?
+            ORDER BY b.installed_at""",
+            (instance_id,),
+        ).fetchall()
+
+    return {
+        "instance": dict(instance),
+        "product": {
+            **dict(product),
+            "specifications": json.loads(product["specifications"]),
+        },
+        "robot_relationships": [dict(row) for row in relationships],
+        "events": [
+            {**dict(row), "payload": json.loads(row["payload"])}
+            for row in events
+        ],
+    }
