@@ -1,0 +1,84 @@
+ROBOPARTS.ai API AND KNOWLEDGE GRAPH Version 0.1.0
+
+PURPOSE
+
+Define proposed application interfaces for component discovery, manufacturer records, robot configuration, compatibility and traceability.
+
+PRODUCT ENDPOINTS
+
+GET /products List products.
+
+POST /products Register a product.
+
+GET /products/{product_id} Retrieve product details.
+
+ORGANIZATION ENDPOINTS
+
+GET /organizations Search organizations.
+
+POST /organizations Register an organization.
+
+ROBOT ENDPOINTS
+
+GET /robots List robots.
+
+POST /robots Register a robot.
+
+GET /robots/{robot_id}/bom Retrieve the robot bill of materials.
+
+POST /bom-items Associate a component instance with a robot configuration.
+
+COMPATIBILITY ENDPOINTS
+
+POST /compatibility-assessments Create a compatibility assessment.
+
+GET /compatibility-assessments/{assessment_id} Retrieve assessment results.
+
+TRACEABILITY ENDPOINTS
+
+POST /events Record a component lifecycle event.
+
+GET /instances/{instance_id}/traceability Retrieve component identity, BOM relationships and lifecycle events.
+
+KNOWLEDGE GRAPH ENDPOINTS
+
+GET /ontology/relationships Query defined ontology relationships.
+
+POST /ontology/relationships Create a validated relationship.
+
+MARKETPLACE ENDPOINTS
+
+POST /supplier-listings Create a supplier listing.
+
+POST /rfqs Create a request for quotation.
+
+GET /rfqs/{rfq_id}/quotes Retrieve authorized quotations.
+
+KNOWLEDGE GRAPH RELATIONSHIPS
+
+Organization manufactures Product Product belongsto ComponentClass Product hasspecification Specification Product declarescapability Capability Instance instantiates Product Instance occupies BOMPosition BOMPosition belongsto RobotConfiguration RobotConfiguration belongsto Robot Instance haslifecycleevent Event Event references Evidence Organization supplies Product Product hascompatibilityassessment Assessment ComponentInstance hasobservation PerformanceRecord Capability depends_on ComponentInstance
+
+GRAPH RULES
+
+Every relationship has a defined meaning.
+Relationship endpoints must be validated.
+Source and target entity types must be checked.
+Relationships should retain provenance.
+Historical relationships must not be silently overwritten.
+Component removal must preserve installation history.
+Compatibility must reference a specific configuration.
+AI-generated relationships remain proposed until reviewed.
+Access permissions apply to relationship data.
+Corrections must preserve appropriate audit history.
+
+AI INTELLIGENCE
+
+AI may summarize specifications, compare products, identify missing data and recommend compatibility assessments.
+
+AI-generated estimates must remain distinct from verified information.
+
+Recommendations must identify their supporting evidence.
+
+A compatibility recommendation is not physical safety certification.
+
+END OF FILE
