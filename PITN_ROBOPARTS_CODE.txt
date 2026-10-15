@@ -1,0 +1,103 @@
+PITN / ROBOPARTS.ai — Python Software Concept
+
+Version: 0.1.0
+
+Purpose: Robotics component identity, manufacturer part registration, serialized component identification, robot BOM relationships, and lifecycle traceability.
+
+from datetime import datetime, timezone import json import sqlite3 import uuid
+
+from fastapi import FastAPI, HTTPException from pydantic import BaseModel, Field
+
+DATABASE = "pitn.db"
+
+app = FastAPI( title="PITN / ROBOPARTS.ai", version="0.1.0" )
+
+def connect(): db = sqlite3.connect(DATABASE) db.row_factory = sqlite3.Row db.execute("PRAGMA foreign_keys = ON") return db
+
+def initialize(): with connect() as db: db.executescript(""" CREATE TABLE IF NOT EXISTS products ( id TEXT PRIMARY KEY, namespace TEXT NOT NULL, manufacturer TEXT NOT NULL, mpn TEXT NOT NULL, revision TEXT NOT NULL, specifications TEXT NOT NULL, UNIQUE(manufacturer, mpn, revision) );
+
+CREATE TABLE IF NOT EXISTS instances ( id TEXT PRIMARY KEY, product_id TEXT NOT NULL, serial_number TEXT UNIQUE NOT NULL, FOREIGN KEY(product\_id) REFERENCES products(id) );
+
+CREATE TABLE IF NOT EXISTS robots ( id TEXT PRIMARY KEY, name TEXT NOT NULL );
+
+CREATE TABLE IF NOT EXISTS bom_items ( id TEXT PRIMARY KEY, robot_id TEXT NOT NULL, instance_id TEXT NOT NULL, position TEXT NOT NULL, installed_at TEXT NOT NULL, removed_at TEXT, FOREIGN KEY(robot_id) REFERENCES robots(id), FOREIGN KEY(instance\_id) REFERENCES instances(id) );
+
+CREATE TABLE IF NOT EXISTS events ( id TEXT PRIMARY KEY, instance_id TEXT NOT NULL, event_type TEXT NOT NULL, actor TEXT NOT NULL, occurred_at TEXT NOT NULL, payload TEXT NOT NULL, FOREIGN KEY(instance_id) REFERENCES instances(id) ); """)
+
+class Product(BaseModel): namespace: str = Field(pattern=r"^.\[a-z\]\[a-z0-9_\]_$") manufacturer: str mpn: str revision: str = "1" specifications: dict = Field(default\_factory=dict)
+
+class ComponentInstance(BaseModel): product_id: str serial_number: str
+
+class Robot(BaseModel): name: str
+
+class BOMItem(BaseModel): robot_id: str instance_id: str position: str
+
+class LifecycleEvent(BaseModel): instance_id: str event_type: str actor: str payload: dict = Field(default\_factory=dict)
+
+@app.on\_event("startup") def startup(): initialize()
+
+@app.get("/") def home(): return { "project": "PITN / ROBOPARTS.ai", "status": "running", "version": "0.1.0" }
+
+@app.post("/products") def register_product(product: Product): product_id = str(uuid.uuid4())
+
+try: with connect() as db: db.execute( """INSERT INTO products VALUES (?, ?, ?, ?, ?, ?)""", ( product\_id, product.namespace, product.manufacturer, product.mpn, product.revision, json.dumps(product.specifications) ) ) except sqlite3.IntegrityError: raise HTTPException( 409, "Product already registered." )
+
+return {"id": product_id,_\*product.model\_dump()}
+
+@app.get("/products") def list\_products(): with connect() as db: rows = db.execute( "SELECT \* FROM products" ).fetchall()
+
+return \[ { dict(row), "specifications": json.loads( row\["specifications"\] ) } for row in rows \]
+
+@app.post("/instances") def register_instance(component: ComponentInstance): instance_id = str(uuid.uuid4())
+
+with connect() as db: product = db.execute( "SELECT id FROM products WHERE id = ?", (component.product\_id,) ).fetchone()
+
+if product is None: raise HTTPException(404, "Product not found.")
+
+try: db.execute( "INSERT INTO instances VALUES (?, ?, ?)", ( instance_id, component.product_id, component.serial\_number ) ) except sqlite3.IntegrityError: raise HTTPException( 409, "Serial number already registered." )
+
+return {"id": instance_id,_\*component.model\_dump()}
+
+@app.post("/robots") def register_robot(robot: Robot): robot_id = str(uuid.uuid4())
+
+with connect() as db: db.execute( "INSERT INTO robots VALUES (?, ?)", (robot\_id, robot.name) )
+
+return {"id": robot\_id, "name": robot.name}
+
+@app.post("/bom-items") def install_component(item: BOMItem): bom_id = str(uuid.uuid4())
+
+with connect() as db: robot = db.execute( "SELECT id FROM robots WHERE id = ?", (item.robot\_id,) ).fetchone()
+
+instance = db.execute( "SELECT id FROM instances WHERE id = ?", (item.instance\_id,) ).fetchone()
+
+if robot is None: raise HTTPException(404, "Robot not found.")
+
+if instance is None: raise HTTPException( 404, "Component instance not found." )
+
+db.execute( """INSERT INTO bom_items VALUES (?, ?, ?, ?, ?, NULL)""", ( bom_id, item.robot_id, item.instance_id, item.position, datetime.now(timezone.utc).isoformat() ) )
+
+return {"id": bom_id,_\*item.model\_dump()}
+
+@app.post("/events") def record_event(event: LifecycleEvent): event_id = str(uuid.uuid4())
+
+with connect() as db: instance = db.execute( "SELECT id FROM instances WHERE id = ?", (event.instance\_id,) ).fetchone()
+
+if instance is None: raise HTTPException( 404, "Component instance not found." )
+
+db.execute( "INSERT INTO events VALUES (?, ?, ?, ?, ?, ?)", ( event_id, event.instance_id, event.event\_type, event.actor, datetime.now(timezone.utc).isoformat(), json.dumps(event.payload) ) )
+
+return {"id": event_id,_\*event.model\_dump()}
+
+@app.get("/instances/{instance_id}/traceability") def traceability(instance_id: str): with connect() as db: instance = db.execute( "SELECT \* FROM instances WHERE id = ?", (instance\_id,) ).fetchone()
+
+if instance is None: raise HTTPException( 404, "Component instance not found." )
+
+product = db.execute( "SELECT \* FROM products WHERE id = ?", (instance\["product\_id"\],) ).fetchone()
+
+events = db.execute( """SELECT \* FROM events WHERE instance_id = ? ORDER BY occurred_at""", (instance\_id,) ).fetchall()
+
+bom = db.execute( """SELECT b.\*, r.name AS robot_name FROM bom_items b JOIN robots r ON r.id = b.robot_id WHERE b.instance_id = ? ORDER BY b.installed_at""", (instance_id,) ).fetchall()
+
+return { "instance": dict(instance), "product": { **dict(product), "specifications": json.loads( product\["specifications"\] ) }, "robot\_relationships": \[ dict(row) for row in bom \], "events": \[ {**dict(row), "payload": json.loads(row\["payload"\]) } for row in events \] }
+
+Important: This is a code document only. Saving it as `.txt` preserves the code as text, but GitHub will not execute it as a Python application. The code is an initial prototype and has not been tested in your environment.
