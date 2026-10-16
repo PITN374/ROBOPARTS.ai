@@ -1,103 +1,75 @@
-ROBOPARTS
-Public ROBOPARTS Information
+# ROBOPARTS — Robotic Parts, Capabilities & Digital Twins
 
-ROBOPARTS is a PITN project focused on organizing information about robotic parts, capabilities, robotic systems, tasks, digital representations, identity, lifecycle information, and robotics applications.
+**ROBOPARTS** is a robotics information project authored by **Aaron Bailot, Founder of Power In The Numbers (PITN)**. It organizes information connecting robotic parts, capabilities, robotic systems, tasks, robot matching, digital twins, digital identity, lifecycle information, and robotics applications.
 
-This repository provides a public information layer explaining the major ROBOPARTS concepts.
+**Official project website:** [ROBOPARTS.ai](<https://www.roboparts.ai/>)\
+**Organization:** [Power In The Numbers](<https://powerinthenumbers.ai/>)\
+**Public information hub:** ROBOPARTS Documentation
 
-It is intended to make the project easier to understand, reference, and discover online.
+> **Parts → Capabilities → Robots → Tasks → Applications**
 
-ROBOPARTS at a Glance
+## ROBOPARTS at a Glance
 
-The central concept can be summarized as:
+ROBOPARTS provides a conceptual framework for connecting information about robotic components with their capabilities, the systems in which they operate, and the tasks and applications those systems may support.
 
-Parts → Capabilities → Robots → Tasks → Applications
+Related topics include:
 
-Additional relationships connect these concepts with:
+- Digital twins and digital representations
+- Robot and component identity
+- Robot lifecycle and configuration
+- Adaptive behavior and learning
+- Human-robot interaction
+- Multi-robot ecosystems
+- Technical architecture, development, and APIs
 
-digital twins
-digital identity
-robot lifecycle
-adaptive behavior
-human-robot interaction
-multi-robot environments
-development and APIs
-Explore ROBOPARTS
-Core Concepts
-ROBOPARTS Core Concept
-ROBOPARTS Capabilities and Performance
-ROBOPARTS Task Ontology and Robot Matching
-Digital Robotics
-ROBOPARTS Digital Twin and Robot Lifecycle
-ROBOPARTS Digital Identity
-ROBOPARTS Adaptive Behavior and Learning
-Robotics Interaction and Ecosystems
-ROBOPARTS Human-Robot Interaction
-ROBOPARTS Multi-Robot Ecosystem
-Technical Information
-ROBOPARTS Development, API and Implementation
-ROBOPARTS Technical Architecture
-ROBOPARTS Integrated Architecture and Project Summary
-About the Project
-
-ROBOPARTS is associated with PITN / Power In The Numbers.
-
-The pages in this repository are explanatory summaries based on the public PITN ROBOPARTS project documentation.
-
-They are designed to provide an accessible overview while preserving the original project documentation as the authoritative source.
-
-Authoritative Project Repository
-
-The underlying public technical documentation is maintained in the original PITN ROBOPARTS repository:
-
-https://github.com/PITN374/pitn-roboparts-pilot
-
-This repository does not replace or supersede the original project repository.
-
-Intellectual Property
-
-The original ROBOPARTS project contains technical and intellectual-property documentation.
-
-This repository intentionally provides high-level explanatory information rather than reproducing the complete contents of those records.
-
-For authoritative technical and project records, consult the original PITN ROBOPARTS repository.
-
-Purpose
-
-This repository exists to provide a clear public reference for ROBOPARTS and to help people understand the relationship between:
-
-Robotic Parts → Capabilities → Robots → Tasks → Applications
-
-It is not intended to represent a separate technical implementation of the original project.
-
-Source
-
-Primary public source:
-https://github.com/PITN374/pitn-roboparts-pilot
-
-Public information repository:
-https://github.com/PITN374/roboparts.ai
 ## Explore ROBOPARTS
 
 ### Core Concepts
 
-- [ROBOPARTS Core Concept](roboparts-core-concept.html)
-- [ROBOPARTS Capabilities and Performance](roboparts-capabilities.html)
-- [ROBOPARTS Task Ontology and Robot Matching](roboparts-task-ontology.html)
+- [ROBOPARTS Core Concept](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-core-concept.html>) — Parts, capabilities, robots, and tasks.
+- [ROBOPARTS Capabilities and Performance](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-capabilities.html>) — Component capabilities and performance.
+- [ROBOPARTS Task Ontology and Robot Matching](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-task-ontology.html>) — Connecting task requirements with robot capabilities.
 
 ### Digital Robotics
 
-- [ROBOPARTS Digital Twin and Robot Lifecycle](roboparts-digital-twin-and-lifecycle.html)
-- [ROBOPARTS Digital Identity](roboparts-digital-identity.html)
-- [ROBOPARTS Adaptive Behavior and Learning](roboparts-adaptive-behavior-learning.html)
+- [ROBOPARTS Digital Twin and Robot Lifecycle](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-digital-twin-and-lifecycle.html>) — Digital representations and lifecycle information.
+- [ROBOPARTS Digital Identity](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-digital-identity.html>) — Identity for robots and components.
+- [ROBOPARTS Adaptive Behavior and Learning](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-adaptive-behavior-learning.html>) — Adaptation as tasks and configurations change.
 
-### Robotics Interaction and Ecosystems
+### Interaction and Ecosystems
 
-- [ROBOPARTS Human-Robot Interaction](roboparts-human-robot-interaction.html)
-- [ROBOPARTS Multi-Robot Ecosystem](roboparts-multi-robot-ecosystem.html)
+- [ROBOPARTS Human-Robot Interaction](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-human-robot-interaction.html>) — People, robots, and operating environments.
+- [ROBOPARTS Multi-Robot Ecosystem](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-multi-robot-ecosystem.html>) — Connected multi-robot systems.
 
 ### Technical Information
 
-- [ROBOPARTS Development, API and Implementation](roboparts-development-api.html)
-- [ROBOPARTS Technical Architecture](roboparts-technical-architecture.html)
-- [ROBOPARTS Integrated Architecture and Project Summary](roboparts-integrated-architecture.html)
+- [ROBOPARTS Development, API and Implementation](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-development-api.html>) — APIs and implementation considerations.
+- [ROBOPARTS Technical Architecture](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-technical-architecture.html>) — Core models and system structure.
+- [ROBOPARTS Integrated Architecture](<https://pitn374.github.io/ROBOPARTS.ai/roboparts-integrated-architecture.html>) — An integrated overview of the ROBOPARTS framework.
+
+## Authoritative Project Documentation
+
+The original public technical documentation is maintained in the [PITN ROBOPARTS documentation repository](<https://github.com/PITN374/pitn-roboparts-pilot>).
+
+This public information repository provides explanatory summaries. It does not replace or supersede the original project documentation or technical records.
+
+## Authorship, Ownership and Intellectual Property
+
+**Author and project founder:** Aaron Bailot, Founder of Power In The Numbers (PITN).
+
+**Ownership declaration:** Power In The Numbers, LLC claims ownership of the ROBOPARTS project and its original intellectual property, including original concepts, architecture, and documentation created for the project, subject to applicable law, third-party rights, and any governing agreements.
+
+ROBOPARTS.ai and PowerInTheNumbers.ai are web properties associated with the ROBOPARTS project and Power In The Numbers, respectively. They are project and organizational identities, not aliases of the individual author.
+
+Original technical records and supporting documentation are available through the [authoritative PITN ROBOPARTS repository](<https://github.com/PITN374/pitn-roboparts-pilot>).
+
+## Official Links
+
+- [ROBOPARTS.ai](<https://www.roboparts.ai/>)
+- [Power In The Numbers](<https://powerinthenumbers.ai/>)
+- Public ROBOPARTS information hub
+- [PITN ROBOPARTS documentation repository](<https://github.com/PITN374/pitn-roboparts-pilot>)
+
+---
+
+**Purpose:** Provide a clear, accessible public reference for ROBOPARTS and explain the relationships between robotic parts, capabilities, robots, tasks, and applications.
