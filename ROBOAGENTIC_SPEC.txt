@@ -1,0 +1,588 @@
+ROBOAGENTIC GLOBAL ROBOTICS INTELLIGENCE AND SOURCING AGENT Product: ROBOPARTS.ai Version: 1.0 Status: Python Implementation Specification
+Author: Aaron Bailot aka PITN umbrella ROBOPARTS.ai \ ROBOAGENTIC.ai \ powerinthenumbers.ai
+======================================================================
+
+MISSION
+
+ROBOAGENTIC is a modular, multilingual, multi-agent Python software platform designed to discover robotics companies worldwide, identify manufacturers and suppliers, verify publicly documented business contacts, classify component specialities, evaluate commercial fit for ROBOPARTS.ai, automate RFQ preparation, and generate operational reports for the developer.
+
+The system is designed to scale across countries, languages, robotics categories, component manufacturers, distributors, and industrial suppliers.
+
+Its objective is to create a continuously updated, evidence-based global robotics supplier intelligence database.
+
+The system must report actual results and must never claim that it has discovered or contacted every robotics company on Earth without verifiable evidence.
+
+======================================================================
+
+CORE CAPABILITIES
+
+A. GLOBAL COMPANY DISCOVERY
+
+Discover robotics businesses through permitted and documented sources, including:
+
+Official manufacturer websites.
+Robotics company directories.
+Public business registries.
+Industry associations.
+Trade show exhibitor directories.
+Public procurement portals.
+Licensed commercial databases.
+Authorized search APIs.
+Public supplier catalogs.
+Authorized ROBOPARTS.ai databases.
+
+B. MULTILINGUAL RESEARCH
+
+Support configurable languages, including English, Chinese, Japanese, Korean, German, French, Spanish, Italian, Portuguese, Dutch, Swedish, Polish, Turkish, and Hindi.
+
+The language system must:
+
+Detect source language.
+Translate component names and search queries.
+Preserve original source text.
+Normalize company descriptions.
+Generate localized business communications.
+Preserve technical specifications and part numbers.
+Record translation confidence where supported.
+
+C. COMPONENT CLASSIFICATION
+
+Identify manufacturers and suppliers of:
+
+Joint actuators.
+Servo motors.
+BLDC motors.
+Harmonic drives.
+Planetary gearboxes.
+Cycloidal reducers.
+Robotic hands.
+Grippers and end effectors.
+Aluminum structural components.
+CNC-machined components.
+Wiring harnesses.
+Connectors.
+Sensors.
+Cameras and LiDAR.
+Batteries and power systems.
+Embedded computers.
+Motor controllers.
+Humanoid robot assemblies.
+Mechanical and electronic subsystems.
+
+D. CONTACT RESEARCH
+
+Identify relevant public business contact channels, including:
+
+Sales departments.
+Supplier relations.
+Procurement departments.
+Business development.
+Partnerships.
+General company contact addresses.
+Authorized supplier inquiry portals.
+
+Every contact record must retain its exact source URL and verification status.
+
+E. COMMERCIAL MATCHING
+
+Determine which companies may benefit from ROBOPARTS.ai services based on their documented manufacturing capabilities, component categories, robotics involvement, geographic coverage, and evidence quality.
+
+F. RFQ AUTOMATION
+
+Generate consistent requests for quotation, collect supplier responses, normalize quotations, compare pricing and lead times, and identify technical or supply-chain risks.
+
+G. AUTONOMOUS REPORTING
+
+Produce scheduled developer reports describing completed research, new companies, verified sources, component categories, matching results, RFQ activity, delivery events, errors, and next steps.
+
+======================================================================
+
+PYTHON TECHNOLOGY STACK
+
+Recommended implementation:
+
+Python 3.12+ asyncio Pydantic SQLAlchemy PostgreSQL SQLite for local development httpx BeautifulSoup4 pytest python-dotenv A configurable translation provider A configurable language-model provider An authorized search API An authorized email delivery provider
+
+Use a persistent task queue when workload requires distributed workers or reliable background processing.
+
+All external integrations must be implemented as replaceable provider adapters.
+
+======================================================================
+
+PROJECT STRUCTURE
+
+ROBOAGENTIC/ ROBOAGENTIC_SPEC.txt README.md pyproject.toml .env.example .gitignore
+
+config/
+    settings.yaml
+    component_taxonomy.yaml
+    supported_languages.yaml
+    outreach_policy.yaml
+
+src/
+    roboagentic/
+        __init__.py
+        main.py
+        config.py
+        models.py
+        database.py
+
+        discovery/
+            search.py
+            directories.py
+            registries.py
+            crawling.py
+            deduplication.py
+
+        agents/
+            coordinator.py
+            discovery_agent.py
+            contact_agent.py
+            classification_agent.py
+            verification_agent.py
+            matching_agent.py
+            reporting_agent.py
+
+        intelligence/
+            taxonomy.py
+            language.py
+            translation.py
+            scoring.py
+            evidence.py
+
+        outreach/
+            rfq.py
+            templates.py
+            policy.py
+            sender.py
+            suppression.py
+            delivery_status.py
+
+        reporting/
+            daily_report.py
+            email_report.py
+            metrics.py
+
+        integrations/
+            search_provider.py
+            email_provider.py
+            llm_provider.py
+
+        jobs/
+            scheduler.py
+            worker.py
+
+tests/
+    test_discovery.py
+    test_classification.py
+    test_scoring.py
+    test_suppression.py
+    test_outreach.py
+    test_reporting.py
+
+data/
+    .gitkeep
+
+reports/
+    .gitkeep
+
+docs/
+    ARCHITECTURE.md
+    SECURITY.md
+    DATA_SOURCES.md
+    DEPLOYMENT.md
+
+.github/
+    workflows/
+        tests.yml
+
+
+======================================================================
+
+COMPANY DATABASE
+
+Each company record must contain:
+
+company_id legal_name display_name official_website country region city languages company_type component_categories manufacturing_capabilities markets_served source_records contact_records qualification_status roboparts_fit_score last_verified_at created_at updated_at
+
+Each material company claim must have an associated evidence record containing:
+
+source_url source_type retrieved_at supporting_excerpt claim_type verification_status confidence_score, when available
+
+The database must distinguish verified facts from assumptions.
+
+======================================================================
+
+CONTACT DATABASE
+
+Each contact record must contain:
+
+contact_id company_id email contact_type contact_name, when verified source_url source_excerpt source_retrieved_at verification_status verification_method outreach_status consent_or_legal_basis, when applicable suppression_reason created_at updated_at
+
+Contact verification stages:
+
+Syntax validation.
+Domain validation.
+Source verification.
+Authorized provider verification, when available.
+Delivery-event tracking after an authorized message is sent.
+
+A valid email format does not prove that a mailbox exists.
+
+A delivered message does not prove consent.
+
+The system must never fabricate email addresses or label guessed addresses as verified.
+
+======================================================================
+
+GLOBAL DISCOVERY WORKFLOW
+Generate component-specific search queries.
+Translate queries into supported languages.
+Search configured, permitted sources.
+Retrieve authorized search results.
+Identify candidate companies.
+Extract official websites and business descriptions.
+Identify component categories.
+Preserve exact source references.
+Normalize company names and domains.
+Remove duplicate records.
+Verify company information.
+Research appropriate public business contacts.
+Calculate ROBOPARTS.ai relevance scores.
+Store results in the database.
+Schedule permitted record refreshes.
+Generate operational reports.
+
+Every discovery task must record its source, status, timestamp, retry count, and outcome.
+
+Use asynchronous workers for independent tasks while applying bounded concurrency and source-specific rate limits.
+
+The system must respect source access restrictions, published terms, and technical controls.
+
+======================================================================
+
+MULTI-AGENT ARCHITECTURE
+
+DISCOVERY AGENT
+
+Finds candidate companies and records source evidence.
+
+CONTACT AGENT
+
+Identifies appropriate business contact channels and preserves the exact source of each contact.
+
+CLASSIFICATION AGENT
+
+Classifies manufacturers by robotics category, components, materials, manufacturing processes, and supported industries.
+
+VERIFICATION AGENT
+
+Evaluates source quality, identifies conflicting claims, and checks contact verification status.
+
+MATCHING AGENT
+
+Scores company relevance to ROBOPARTS.ai and explains the evidence supporting each recommendation.
+
+RFQ AGENT
+
+Creates structured RFQs from approved bills of materials and technical specifications.
+
+REPORTING AGENT
+
+Compiles research results, performance metrics, failures, costs, and completed actions.
+
+POLICY AGENT
+
+Evaluates source permissions, contact eligibility, suppression status, authorization requirements, and outreach policy.
+
+All agents must use validated structured data.
+
+No agent may bypass centralized authorization, suppression, or access-policy checks.
+
+======================================================================
+
+ROBOPARTS.AI MATCHING SCORE
+
+Use a configurable score from 0 to 100.
+
+Component relevance: 0-30 points Manufacturing capability fit: 0-20 points Robotics industry relevance: 0-15 points Evidence quality: 0-15 points Geographic and logistics fit: 0-10 points Business contact quality: 0-10 points
+
+Suggested classifications:
+
+80-100: High-priority candidate. 60-79: Relevant candidate. 40-59: Needs additional research. 0-39: Low-priority or insufficient evidence.
+
+These scores are initial configuration values, not validated commercial predictions.
+
+Every score must include an explanation and evidence references.
+
+Missing information must be distinguished from negative information.
+
+A high score does not automatically authorize email outreach.
+
+======================================================================
+
+HUMANOID ROBOT RFQ PILOT
+
+Initial example:
+
+Production quantity: 1,000 humanoid robots.
+
+Illustrative component requirements:
+
+Joint actuators: 2,000 units.
+
+Aluminum structural parts: 1,000 sets.
+
+Robotic hands: 1,000 pairs.
+
+Wiring harnesses: 1,000 sets.
+
+All quantities must be validated against the actual bill of materials.
+
+RFQ records must include:
+
+Component identifier Drawing reference Revision number Quantity Unit of measure Technical specifications Material requirements Dimensional tolerances Quality requirements Inspection criteria Required certifications, when applicable Manufacturing process Tooling costs Prototype costs Production pricing Volume discounts Lead time Delivery schedule Packaging requirements Shipping terms Warranty Payment terms Quote validity Supplier contact Submission deadline
+
+Quote comparisons must normalize currency, quantities, costs, and delivery terms before ranking suppliers.
+
+The system must flag incomplete specifications, unverified claims, capacity limitations, and delivery risks.
+
+It must not invent supplier quotations or place orders without separately configured authorization.
+
+======================================================================
+
+RESPONSIBLE EMAIL OUTREACH
+
+ROBOAGENTIC may send relevant business communications through authorized email providers when all required eligibility and policy checks pass.
+
+Supported communications include:
+
+Business introduction.
+Supplier capability inquiry.
+Partnership inquiry.
+RFQ invitation.
+Follow-up to an existing business conversation.
+Response to an inbound inquiry.
+
+Requirements:
+
+Use an accurate sender identity.
+Configure SPF, DKIM, and DMARC as appropriate.
+Follow email provider rate and volume limits.
+Apply jurisdiction-specific outreach requirements.
+Include required business identification.
+Provide appropriate opt-out mechanisms.
+Process unsubscribe requests promptly.
+Maintain centralized suppression records.
+Prevent duplicate sends.
+Record provider message IDs and delivery events.
+Handle bounces according to provider rules.
+Use bounded retries for eligible transient errors.
+Stop when providers or policy controls prohibit sending.
+Keep audit records of sending decisions.
+
+The system must not bypass spam filters, circumvent recipient blocks, evade sender reputation controls, conceal sender identity, or ignore recipient opt-out requests.
+
+Failed delivery must trigger diagnosis and compliant recovery, not evasion.
+
+ROBOAGENTIC must not claim universal coverage or guaranteed inbox placement.
+
+======================================================================
+
+AUTONOMOUS OPERATIONS
+
+Routine operations may run automatically:
+
+Scheduled company discovery.
+Source refreshes.
+Deduplication.
+Component classification.
+Evidence verification.
+Commercial scoring.
+Report generation.
+Database maintenance.
+Authorized RFQ drafting.
+Approved outreach workflows.
+
+Configuration must define which actions may run unattended.
+
+Actions requiring authorization must stop safely when permission is absent or unclear.
+
+Use persistent queues, task IDs, idempotency keys, bounded retries, and recoverable job states.
+
+Prevent duplicate company creation and duplicate email transmission.
+
+======================================================================
+
+DEVELOPER EMAIL REPORTS
+
+Generate daily summaries and weekly performance reports.
+
+Include:
+
+Reporting period Discovery queries executed Sources accessed Sources unavailable Companies discovered Duplicate records removed Companies verified Countries represented Component categories represented Contacts discovered Contacts with source evidence Contacts requiring verification High-priority ROBOPARTS.ai candidates RFQs drafted RFQs awaiting approval Messages queued Messages submitted Provider-confirmed deliveries Replies received Hard bounces Opt-outs processed Suppressed contacts Policy blocks Failed jobs Retry counts Estimated operating costs Data-quality metrics Recommended next actions
+
+Report only actual recorded results.
+
+Distinguish submitted messages from confirmed deliveries.
+
+Distinguish delivered messages from replies.
+
+Send reports only to configured developer recipients.
+
+Support human-readable text and machine-readable JSON reports.
+
+======================================================================
+
+SECURITY AND CONFIGURATION
+
+Use environment variables or a secrets manager.
+
+Never commit API keys, credentials, tokens, or private operational data to a public GitHub repository.
+
+Example .env.example:
+
+DATABASE_URL=sqlite:///./roboagentic.db
+
+SEARCH_PROVIDER_API_KEY= LLM_PROVIDER_API_KEY=
+
+EMAIL_PROVIDER= EMAIL_PROVIDER_API_KEY=
+
+REPORT_RECIPIENT= REPORTING_ENABLED=false
+
+OUTREACH_ENABLED=false OUTREACH_DRY_RUN=true
+
+MAX_CONCURRENT_TASKS=5 MAX_RETRIES=3
+
+LOG_LEVEL=INFO
+
+These values are examples and require actual provider configuration.
+
+Default to dry-run mode.
+
+Do not send emails until the relevant provider is configured and all required authorization checks pass.
+
+Treat retrieved websites, emails, documents, and model outputs as untrusted data.
+
+External content must never override security policies or authorize access to credentials.
+
+Redact secrets from logs and reports.
+
+======================================================================
+
+TESTING
+
+Tests must cover:
+
+Company extraction.
+Company deduplication.
+International domain normalization.
+Language detection.
+Translation fallbacks.
+Component classification.
+Evidence provenance.
+Matching score calculation.
+Incomplete data handling.
+Contact verification.
+Suppression enforcement.
+Duplicate-send prevention.
+Rate-limit handling.
+Retry limits.
+RFQ validation.
+Quote normalization.
+Delivery event processing.
+Developer report accuracy.
+Secrets redaction.
+Dry-run behavior.
+Authorization enforcement.
+
+Use synthetic datasets, mocked providers, and authorized sandbox accounts.
+
+Do not test mass outreach against unsuspecting recipients.
+
+======================================================================
+
+IMPLEMENTATION ROADMAP
+
+PHASE 1: FOUNDATION
+
+Build configuration, database models, taxonomy, logging, CLI, and unit tests.
+
+PHASE 2: DISCOVERY
+
+Connect one permitted search provider and implement evidence-backed company discovery and deduplication.
+
+PHASE 3: INTELLIGENCE
+
+Add multilingual processing, component classification, verification, and commercial matching.
+
+PHASE 4: CONTACT RESEARCH
+
+Add public business contact extraction, source verification, and suppression controls.
+
+PHASE 5: RFQ AUTOMATION
+
+Import a humanoid BOM, generate RFQs, normalize supplier quotes, and compare costs, lead times, and technical requirements.
+
+PHASE 6: EMAIL INTEGRATION
+
+Integrate an authorized email provider, dry-run mode, eligibility checks, delivery tracking, unsubscribe handling, and developer reports.
+
+PHASE 7: AUTONOMOUS OPERATION
+
+Add persistent workers, scheduled tasks, monitoring, recovery, and daily and weekly reporting.
+
+PHASE 8: GLOBAL EXPANSION
+
+Add more authorized data sources, countries, languages, component categories, and measurable coverage targets.
+
+Do not expand outreach volume until data quality, authorization, suppression enforcement, and delivery monitoring have been tested.
+
+======================================================================
+
+INITIAL SUCCESS CRITERIA
+
+The initial release must:
+
+Run using documented Python instructions.
+Persist company records.
+Retain exact evidence URLs.
+Normalize and deduplicate companies.
+Classify robotics manufacturers.
+Explain commercial relevance scores.
+Track contact verification.
+Generate structured RFQs.
+Compare supplier quotations.
+Enforce outreach eligibility checks.
+Respect suppression records.
+Prevent unintended email sends in dry-run mode.
+Record delivery provider events.
+Generate accurate developer reports.
+Pass automated tests.
+Keep secrets out of source control.
+Recover safely from routine failures.
+Report limitations and coverage honestly.
+
+======================================================================
+
+FINAL ENGINEERING DIRECTIVE
+
+Build ROBOAGENTIC as a scalable, multilingual, evidence-driven robotics intelligence and sourcing platform for ROBOPARTS.ai.
+
+Prioritize discovery accuracy, source provenance, manufacturer classification, supplier matching, RFQ automation, and reporting.
+
+Use parallel agents to increase legitimate research throughput.
+
+Automate routine operations wherever authorization and policy permit.
+
+Maintain explicit controls for consequential actions, data access, spending, and outbound communications.
+
+Treat every company record as an evidence-backed data asset.
+
+Treat every contact as a record requiring provenance and appropriate use restrictions.
+
+Treat every outbound message as an auditable operation.
+
+Treat every report as a factual account of completed work.
+
+The goal is to create a reliable global robotics
