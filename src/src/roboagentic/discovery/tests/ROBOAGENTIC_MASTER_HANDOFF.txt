@@ -1,0 +1,783 @@
+# ROBOAGENTIC — ROBOPARTS.ai
+
+## Consolidated Project Handoff and Implementation Guide
+
+**Project:** ROBOAGENTIC\
+**Product:** ROBOPARTS.ai\
+**Author:** Aaron Bailot\
+**Purpose:** Robotics manufacturer discovery, supplier intelligence, component classification, preliminary identity assessment, RFQ preparation, and reporting.
+
+---
+
+## 1\. PROJECT OVERVIEW
+
+ROBOAGENTIC is a Python platform designed to discover candidate robotics suppliers, organize supplier evidence, classify component capabilities, and support procurement workflows.
+
+Core capabilities:
+
+- Discover candidate robotics manufacturers through configured web-search APIs.
+- Classify potential suppliers by component and manufacturing category.
+- Preserve search queries, source URLs, and discovery provenance.
+- Calculate preliminary robotics relevance and evidence completeness scores.
+- Assess possible manufacturer, distributor, and directory roles.
+- Record supplier research evidence and review requirements.
+- Store candidate company and RFQ records in a database.
+- Generate operational reports.
+- Run scheduled background discovery jobs.
+- Send optional developer reports through configured SMTP.
+- Provide a foundation for multilingual discovery and future procurement agents.
+
+**Critical limitation:** Search results and calculated scores are preliminary signals. They do not prove legal identity, domain ownership, manufacturing capability, product availability, financial stability, or suitability for purchasing.
+
+## 2\. RECOMMENDED REPOSITORY STRUCTURE
+
+The following structure consolidates the intended project layout. Confirm the existing repository before creating or moving files.
+
+```
+roboagentic/
+├── .github/
+│   └── workflows/
+│       └── tests.yml
+├── docs/
+│   └── ROADMAP.md
+├── data/
+│   └── .gitkeep
+├── reports/
+│   └── .gitkeep
+├── src/
+│   └── roboagentic/
+│       ├── __init__.py
+│       ├── main.py
+│       ├── discovery/
+│       │   ├── __init__.py
+│       │   ├── search.py
+│       │   ├── identity.py
+│       │   └── verify.py
+│       └── jobs/
+│           ├── __init__.py
+│           ├── worker.py
+│           └── reporting.py
+├── tests/
+│   ├── test_identity.py
+│   └── test_roboagentic.py
+├── .env.example
+├── .gitignore
+├── pyproject.toml
+├── render.yaml
+└── README.md
+```
+
+Do not replace existing project files blindly. Preserve working database, CLI, packaging, and reporting implementations when integrating these additions.
+
+## 3\. PYTHON AND DEPENDENCIES
+
+Recommended Python version: 3.12 or later.
+
+The project configuration must declare its runtime dependencies, including those used by the implemented modules:
+
+- `httpx` for asynchronous HTTP requests.
+- `python-dotenv` for loading local environment configuration.
+- `pytest` for tests.
+- `ruff` for linting.
+
+Install the project and development dependencies from the repository root:
+
+```
+python -m pip install -e ".[dev]"
+```
+
+The `pyproject.toml` file must define the package metadata, source package discovery, runtime dependencies, and development dependencies. The command above will not work until these are configured correctly.
+
+## 4\. SUPPLIER IDENTITY RESOLUTION
+
+File:
+
+```
+src/roboagentic/discovery/identity.py
+```
+
+This module analyzes supplied company names, websites, search titles, descriptions, and source URLs.
+
+It returns an `IdentityAssessment` containing:
+
+- Company name and proposed website.
+- Preliminary business-role classification.
+- Robotics relevance score.
+- Evidence completeness score.
+- Manual-review requirement.
+- Reasons supporting the assessment.
+- Matched manufacturer, distributor, directory, and robotics terms.
+- Normalized supplier and source domains.
+
+Possible classifications:
+
+```
+possible_manufacturer
+possible_distributor
+manufacturer_and_distributor_possible
+unclassified
+```
+
+Directory evidence is recorded separately in the improved implementation. A business appearing in a directory is not necessarily a directory operator.
+
+### Score definitions
+
+`robotics_relevance` is a heuristic based on recognized robotics-related terms.
+
+`completeness_score` measures how many of five input fields are populated, awarding 20 points per populated field.
+
+Neither score is a probability or a measure of independently verified identity.
+
+The module keeps `review_required=True` because its classifications are preliminary.
+
+### Serialization
+
+Use:
+
+```
+assessment_to_dict(assessment)
+```
+
+to convert an assessment into a dictionary suitable for JSON serialization.
+
+The module does not independently access the internet, verify company registration, or establish website ownership.
+
+## 5\. EVIDENCE REVIEW
+
+File:
+
+```
+src/roboagentic/discovery/verify.py
+```
+
+The `review_candidate()` utility checks:
+
+- Whether the supplier website is a valid HTTP(S) URL.
+- Whether a source URL is available and valid.
+- Whether the company name is populated.
+- Whether the description is populated.
+
+Expected statuses:
+
+```
+needs_review
+evidence_recorded_identity_unverified
+```
+
+These statuses describe the availability of basic evidence, not whether the company is legitimate.
+
+A valid URL does not prove that the website belongs to the named company. A more advanced verification module should eventually corroborate company names, official domains, corporate registrations, product documentation, and independent sources.
+
+## 6\. LIVE DISCOVERY
+
+File:
+
+```
+src/roboagentic/discovery/search.py
+```
+
+The discovery module uses the Brave Search API to find candidate robotics suppliers.
+
+The intended responsibilities are:
+
+1. Generate queries for configured component categories.
+2. Send bounded-concurrency search requests.
+3. Preserve titles, URLs, descriptions, queries, and categories.
+4. Discard malformed results.
+5. Deduplicate results without losing useful provenance.
+6. Export candidates to JSON.
+7. Optionally store candidates in the existing application database.
+
+Configured component categories include:
+
+- Actuators and servo motors.
+- Mechanical components and CNC machining.
+- Robotic hands and grippers.
+- Wiring harnesses and electrical connectors.
+- Force/torque sensors, LiDAR, and tactile sensors.
+- Motor controllers, embedded controllers, and PCB assembly.
+
+The module requires `BRAVE_SEARCH_API_KEY`.
+
+Search results must remain unverified candidates. A search result title is not necessarily a company name, and a result URL is not necessarily the supplier's official website.
+
+## 7\. INTEGRATE IDENTITY ASSESSMENTS INTO DISCOVERY
+
+File:
+
+```
+src/roboagentic/discovery/search.py
+```
+
+Add these imports:
+
+```
+from roboagentic.discovery.identity import (
+    assess_identity,
+    assessment_to_dict,
+)
+```
+
+After collecting the discovery results, generate preliminary identity assessments and export them separately.
+
+Recommended integration:
+
+```
+from pathlib import Path
+import json
+
+assessments = []
+
+for result in results:
+    assessment = assess_identity(
+        company_name=result.title,
+        website=result.url,
+        title=result.title,
+        description=result.description,
+        source_url=result.url,
+    )
+
+    assessments.append(
+        assessment_to_dict(assessment)
+    )
+
+output_path = Path(
+    "reports/identity_assessments.json"
+)
+output_path.parent.mkdir(
+    parents=True,
+    exist_ok=True,
+)
+
+output_path.write_text(
+    json.dumps(
+        assessments,
+        indent=2,
+        ensure_ascii=False,
+    ),
+    encoding="utf-8",
+)
+```
+
+**Important limitation:** This first integration passes the search-result title as the company name and the result URL as both the proposed website and source URL. It is a preliminary integration only.
+
+A production implementation should distinguish:
+
+- `company_name`: the actual supplier name, extracted when possible.
+- `website`: the candidate's official website, when identified.
+- `source_url`: the page that supplied the evidence.
+- `query`: the discovery query that found the candidate.
+- `source_provider`: the search or data provider.
+- `retrieved_at`: the time the evidence was collected.
+
+When an official website cannot be established, retain the result URL as source evidence rather than asserting that it is the supplier's official domain.
+
+The existing `SearchResult` dataclass should be extended if necessary to retain additional provenance fields.
+
+The identity export must not overwrite the original discovery export.
+
+## 8\. DATABASE AND REPORTING
+
+The existing application module is:
+
+```
+src/roboagentic/main.py
+```
+
+The discovery module expects compatible functions for storing company records, initializing the database, and generating reports.
+
+Before integration, confirm the actual function signatures for:
+
+```
+initialize_database()
+add_company(...)
+generate_report()
+calculate_fit_score(...)
+classify_company(...)
+qualification_label(...)
+```
+
+Do not assume these functions accept the proposed arguments without checking the existing implementation.
+
+For production deployment, PostgreSQL is recommended. SQLite is suitable for local development and demonstrations.
+
+Store source evidence and preliminary identity assessments separately from confirmed company records whenever the existing database design permits.
+
+## 9\. AUTONOMOUS DISCOVERY WORKER
+
+File:
+
+```
+src/roboagentic/jobs/worker.py
+```
+
+The worker is intended to:
+
+1. Initialize the database.
+2. Run discovery for configured component categories.
+3. Export current search candidates.
+4. Generate identity assessments.
+5. Optionally save candidate records.
+6. Generate an operational report.
+7. Optionally send a developer summary.
+8. Repeat after the configured interval.
+
+Configuration includes:
+
+```
+DISCOVERY_INTERVAL_HOURS=24
+SEARCH_COUNTRY=US
+SEARCH_LANGUAGE=en
+SEARCH_RESULTS_PER_QUERY=10
+SEARCH_CONCURRENCY=2
+SAVE_DISCOVERIES=true
+REPORTING_ENABLED=false
+LOG_LEVEL=INFO
+```
+
+The worker should use the same discovery and assessment functions as the command-line interface. Avoid duplicating business logic.
+
+The worker must handle repeated failures without leaking API credentials or reporting a failed discovery cycle as successful.
+
+## 10\. DEVELOPER EMAIL REPORTING
+
+File:
+
+```
+src/roboagentic/jobs/reporting.py
+```
+
+The optional reporting module uses SMTP over SSL.
+
+Configuration:
+
+```
+REPORTING_ENABLED=false
+REPORT_RECIPIENT=
+REPORT_FROM_EMAIL=
+REPORT_SMTP_HOST=
+REPORT_SMTP_PORT=465
+REPORT_SMTP_USERNAME=
+REPORT_SMTP_PASSWORD=
+```
+
+Keep reporting disabled until SMTP configuration is tested.
+
+Email reporting is for operational developer summaries. Supplier outreach is not part of the discovery worker.
+
+Before enabling commercial outreach, implement contact eligibility checks, suppression lists, unsubscribe handling, rate limits, audit trails, and delivery tracking. Do not bypass recipient blocks or opt-out requests.
+
+## 11\. ENVIRONMENT CONFIGURATION
+
+File:
+
+```
+.env.example
+```
+
+Recommended template:
+
+```
+DATABASE_URL=sqlite:///./data/roboagentic.db
+
+BRAVE_SEARCH_API_KEY=
+
+DISCOVERY_INTERVAL_HOURS=24
+SEARCH_COUNTRY=US
+SEARCH_LANGUAGE=en
+SEARCH_RESULTS_PER_QUERY=10
+SEARCH_CONCURRENCY=2
+
+SAVE_DISCOVERIES=true
+
+REPORTING_ENABLED=false
+REPORT_RECIPIENT=
+REPORT_FROM_EMAIL=
+REPORT_SMTP_HOST=
+REPORT_SMTP_PORT=465
+REPORT_SMTP_USERNAME=
+REPORT_SMTP_PASSWORD=
+
+LOG_LEVEL=INFO
+```
+
+Use actual credentials only in a private local `.env` file or the deployment provider's secret configuration.
+
+Never commit API keys, SMTP passwords, private database credentials, or tokens to GitHub.
+
+## 12\. GITIGNORE
+
+File:
+
+```
+.gitignore
+```
+
+Recommended entries:
+
+```
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Local data and reports
+data/*
+!data/.gitkeep
+reports/*
+!reports/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+
+# Tests and lint
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+```
+
+Review existing tracked files before relying on `.gitignore`. Adding an ignore rule does not automatically remove a previously committed secret.
+
+## 13\. AUTOMATED TESTING
+
+Identity tests:
+
+```
+tests/test_identity.py
+```
+
+Application tests:
+
+```
+tests/test_roboagentic.py
+```
+
+The identity tests should cover:
+
+- Valid and invalid URL handling.
+- Possible manufacturer classification.
+- Possible distributor classification.
+- Multiple business roles.
+- Directory evidence.
+- Missing information.
+- Third-party source URLs.
+- Robotics relevance.
+- Completeness scoring.
+- JSON serialization.
+- Mandatory manual review.
+
+Application tests should cover component classification, bounded fit scores, evidence review statuses, and qualification labels.
+
+Run all tests from the repository root:
+
+```
+python -m pytest -v
+```
+
+Run code checks:
+
+```
+ruff check src tests
+```
+
+The test imports must match the actual package structure. Ensure that `roboagentic` is installed in editable mode and that `src/roboagentic/discovery/identity.py` exists before running identity tests.
+
+## 14\. GITHUB ACTIONS
+
+File:
+
+```
+.github/workflows/tests.yml
+```
+
+Recommended workflow:
+
+```
+name: ROBOAGENTIC Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install project
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run tests
+        run: python -m pytest -v
+
+      - name: Check code style
+        run: ruff check src tests
+```
+
+This workflow assumes the project has a working `pyproject.toml` and declares its development dependencies.
+
+GitHub Actions runs tests and code checks. It does not automatically deploy or start the autonomous worker.
+
+## 15\. LOCAL INSTALLATION AND EXECUTION
+
+Create a virtual environment.
+
+Windows:
+
+```
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+macOS/Linux:
+
+```
+python -m venv .venv
+source .venv/bin/activate
+```
+
+Install the project:
+
+```
+python -m pip install -e ".[dev]"
+```
+
+Initialize the database:
+
+```
+roboagentic init
+```
+
+Load synthetic demonstration records:
+
+```
+roboagentic demo
+```
+
+List records:
+
+```
+roboagentic list
+```
+
+Generate an operational report:
+
+```
+roboagentic report
+```
+
+Run live discovery:
+
+```
+python -m roboagentic.discovery.search
+```
+
+Export discovery results and save candidates when requested:
+
+```
+python -m roboagentic.discovery.search --save-to-database
+```
+
+Run the autonomous worker:
+
+```
+python -m roboagentic.jobs.worker
+```
+
+The live discovery commands require a valid search API key. Database and CLI commands require the corresponding project functionality to be implemented.
+
+Stop a locally running worker with Ctrl+C.
+
+## 16\. RENDER DEPLOYMENT
+
+File:
+
+```
+render.yaml
+``` 
+
+The intended deployment is a persistent background worker, not a public web server.
+
+The deployment configuration should define:
+
+- Python runtime.
+- Project installation command.
+- Worker start command.
+- Persistent PostgreSQL connection.
+- Brave Search API key.
+- Discovery interval.
+- Search category settings.
+- Optional SMTP credentials.
+
+Example start command:
+
+```
+python -m roboagentic.jobs.worker
+```
+
+Create the PostgreSQL database in Render, connect the repository, and configure secret environment variables through Render's dashboard.
+
+Check that `pyproject.toml` declares all required dependencies before deployment.
+
+The worker needs a persistent database if records must survive redeployments. Local SQLite paths are generally unsuitable for production data persistence on ephemeral hosting.
+
+Do not assume deployment succeeded until the build logs, startup logs, database connection, API requests, and generated reports have been checked.
+
+## 17\. MULTILINGUAL DISCOVERY ROADMAP
+
+The next high-value module is multilingual supplier discovery.
+
+Recommended capabilities:
+
+- Generate translated component and manufacturing queries.
+- Preserve the original query and translated query.
+- Store the source language and target language.
+- Record the country or region targeted.
+- Preserve the original source title and description.
+- Support language-aware terminology and aliases.
+- Deduplicate companies across scripts and languages.
+- Retain original-language evidence alongside translations.
+- Measure discovery coverage by country and language.
+- Track translation provider, query performance, and API cost.
+
+Translated search results must remain candidates until their company identity and capabilities have been corroborated.
+
+## 18\. DEVELOPMENT ROADMAP
+
+### Phase 1 — Foundation
+
+- Python project structure.
+- SQLite database.
+- Component classification.
+- Preliminary supplier scoring.
+- RFQ draft creation.
+- Basic reports.
+
+### Phase 2 — Discovery
+
+- Search API integration.
+- Search-result provenance.
+- Candidate export.
+- Official manufacturer website verification.
+- Source-specific ingestion adapters.
+- Source freshness tracking.
+- Country-level discovery coverage metrics.
+
+### Phase 3 — Reliability
+
+- Automated tests in GitHub.
+- PostgreSQL production deployment.
+- Persistent task queue.
+- Idempotent processing.
+- Worker health monitoring.
+- Backup and recovery.
+- Failure alerts.
+
+### Phase 4 — Intelligence
+
+- Multilingual query generation.
+- Translation provider integration.
+- Supplier identity corroboration.
+- Contact source verification.
+- Explainable supplier scoring.
+- Duplicate company resolution.
+
+### Phase 5 — Procurement
+
+- Bill-of-materials import.
+- Technical requirement validation.
+- Supplier-specific RFQ generation.
+- Quotation document ingestion.
+- Currency and cost normalization.
+- Lead-time and quality comparisons.
+- Specification revision tracking.
+
+### Phase 6 — Reporting
+
+- Scheduled developer summaries.
+- Delivery and error metrics.
+- Search provider cost reporting.
+- Database growth reporting.
+- Monitoring dashboard.
+
+### Phase 7 — Authorized Outreach
+
+- Email provider integration.
+- Contact eligibility rules.
+- Suppression list.
+- Unsubscribe processing.
+- Rate limiting.
+- Bounce and reply tracking.
+- Audit trail.
+
+### Phase 8 — Global Scale
+
+- Licensed international data sources.
+- Regional language support.
+- Distributed workers.
+- Source-specific rate limits.
+- Coverage and accuracy benchmarks.
+
+Global completeness must not be claimed without measurable evidence.
+
+## 19\. RECOMMENDED IMPLEMENTATION ORDER
+
+1. Confirm the existing repository layout and project configuration.
+2. Upload and validate `identity.py`.
+3. Upload and run `tests/test_identity.py`.
+4. Confirm that `verify.py` and the application tests match the actual APIs.
+5. Integrate identity assessment into `search.py`.
+6. Export `reports/identity_assessments.json` separately from discovery results.
+7. Integrate assessment reporting into the worker.
+8. Run the complete test suite and Ruff checks.
+9. Configure environment variables privately.
+10. Test live discovery with a valid API key.
+11. Verify database writes and generated reports.
+12. Deploy the worker and monitor its logs.
+13. Implement official-domain corroboration and multilingual discovery.
+
+## 20\. FINAL PROJECT STATUS AND LIMITATIONS
+
+ROBOAGENTIC is intended to be a modular robotics supplier intelligence platform. Its search, classification, database, reporting, and worker components must be integrated and tested together before the system can be considered production-ready.
+
+The following are not guaranteed by the preliminary modules:
+
+- Worldwide supplier coverage.
+- Official manufacturer identity verification.
+- Domain ownership verification.
+- Manufacturing capability verification.
+- Verified contact details.
+- Automated quotation ingestion.
+- Fully integrated multi-agent coordination.
+- Uninterrupted worker operation.
+- Authorized supplier outreach.
+
+**Final principle:** Discover broadly, preserve evidence, score transparently.
+One important implementation note: the supplied `search.py` was pasted with Python statements and indentation collapsed. Restore it as properly formatted Python before uploading it. The consolidated document above describes the intended integration and repository architecture; it does not mean every listed module has already been implemented, tested, or deployed.
