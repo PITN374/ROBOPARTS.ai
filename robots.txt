@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://pitn374.github.io/ROBOPARTS.ai/sitemap.xml
