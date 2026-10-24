@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <meta name="google-site-verification" content="bTUeH1ZQgkRZwBwYJ31114za_HRlVwvUKi0BN_pmvfk">
+
   <title>{{ page.title | default: site.title }}</title>
+
   {% if page.description %}
   <meta name="description" content="{{ page.description | escape }}">
   {% endif %}
+
   <link rel="canonical" href="{{ page.url | absolute_url }}">
-  {{ content }}
 </head>
 <body>
+  {{ content }}
 </body>
 </html>
