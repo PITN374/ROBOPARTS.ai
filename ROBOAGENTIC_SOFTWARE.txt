@@ -1,0 +1,492 @@
+ROBOAGENTIC.ai SOFTWARE SYNOPSIS AND TECHNICAL ARCHITECTURE Version: 1.0 Document type: Public Project and Software Synopsis Project umbrella: PITN.ai — Power in the Numbers Project attribution: Aaron Bailot / PITN Related public repository: https://github.com/PITN374/ROBOTRAITS Related architecture record: ROBOPARTS-CROSS-REFERENCE.md
+
+======================================================================
+
+PROJECT DEFINITION
+
+ROBOAGENTIC.ai is the proposed intelligent-agent implementation and orchestration layer within the PITN.ai robotics ecosystem.
+
+Its role is to connect structured robot and component information, AI reasoning and planning, task context, authorized tools, behavioral profiles, external data sources and approved robot interfaces.
+
+ROBOAGENTIC is intended to support software agents that can interpret structured information, conduct research, classify and compare options, prepare technical and commercial workflows, communicate through authorized channels, and interact with connected robotic systems within defined authority boundaries.
+
+The initiative has two complementary application directions:
+
+A. Robotics intelligence and sourcing: Discover robotics companies, identify manufacturers and suppliers, preserve source evidence, classify component specialities, evaluate relevance to ROBOPARTS.ai, prepare RFQs, compare supplier quotations and generate operational reports.
+
+B. Robot-oriented agent orchestration: Interpret ROBOTRAITS profiles, use capabilities and constraints during reasoning and behavior selection, manage authorized context and memory, and communicate with simulated or physical robot platforms through approved interfaces.
+
+These directions share an agent architecture but are distinct application domains. They should be connected through documented interfaces rather than treated as one undifferentiated workflow.
+
+This synopsis describes the intended architecture and implementation specification. It does not claim that every proposed agent, integration, workflow or autonomous operation has been implemented or deployed.
+
+======================================================================
+
+MISSION AND DESIGN OBJECTIVES
+
+The mission is to develop a modular, evidence-driven and provider-independent agent platform that can:
+
+Interpret validated structured data.
+Perform bounded research and information retrieval.
+Coordinate specialized agents or processing stages.
+Use source evidence when making recommendations.
+Match requirements against documented capabilities.
+Prepare RFQs and other structured business workflows.
+Interpret ROBOTRAITS profiles when selecting permitted behaviors.
+Interact with authorized services and robot adapters.
+Apply centralized permission and policy checks.
+Record decisions, actions, failures and outcomes.
+Generate accurate operational reports.
+Support multilingual processing where configured.
+Recover safely from routine software and provider failures.
+
+Automation must remain bounded by explicit authorization, source-access restrictions, privacy requirements and safety constraints.
+
+======================================================================
+
+ARCHITECTURAL MODEL
+
+The proposed ecosystem relationship is:
+
+PITN.ai -> Project identity and shared infrastructure context
+
+ROBOPARTS.ai -> Component identities, source evidence, manufacturers, suppliers, configurations and lifecycle records
+
+ROBOTRAITS.ai -> Structured trait vocabulary, behavioral profiles, capabilities and constraints
+
+ROBOAGENTIC.ai -> Agent registration, reasoning, task orchestration, tool access, policy enforcement and authorized workflow execution
+
+AI model -> A replaceable reasoning, language or perception service selected for a specific use case
+
+Memory and context -> Authorized, governed information available to an agent during an interaction or task
+
+Robot adapter -> A controlled interface to a compatible simulated or physical platform
+
+Safety systems -> Independent, robot-specific mechanisms governing hazardous physical operation
+
+No layer should be assumed to substitute for another. A model's capability does not grant permission; a personality profile does not override policy; a component record does not establish physical authenticity; and a software authorization decision does not certify physical safety.
+
+======================================================================
+
+TWO APPLICATION DOMAINS
+
+4.1 Robotics supplier intelligence and sourcing
+
+This application discovers candidate companies through permitted sources, extracts and preserves business evidence, classifies capabilities, evaluates commercial relevance and supports structured sourcing workflows.
+
+Potential sources include official manufacturer websites, supplier catalogs, public business registries, industry directories, trade-show exhibitor listings, public procurement portals, licensed commercial databases and authorized search APIs.
+
+Source availability and permitted use must be configured and documented. The system must respect access restrictions, published terms, technical controls and applicable law.
+
+4.2 Robot-oriented agent implementation
+
+This application interprets ROBOTRAITS profiles and combines them with an AI model, task requirements, context, authorized memory, current robot state and applicable policies.
+
+It may influence reasoning strategy, planning preferences, verification behavior, communication style and interaction patterns.
+
+A robot adapter translates supported high-level operations into platform-specific requests through approved middleware, SDKs or APIs.
+
+The agent must not bypass the robot's validated low-level controller, safety-rated mechanisms or access restrictions.
+
+======================================================================
+
+MULTI-AGENT ARCHITECTURE
+
+A modular implementation may define the following roles.
+
+Discovery Agent: Finds candidate organizations and records source evidence.
+
+Contact Research Agent: Identifies publicly documented business contact channels and preserves their exact sources.
+
+Classification Agent: Classifies manufacturers by component category, materials, manufacturing process and industry.
+
+Verification Agent: Evaluates source quality, identifies conflicting claims and records verification status.
+
+Matching Agent: Scores commercial or technical relevance against configured requirements and explains its conclusions.
+
+RFQ Agent: Creates structured RFQs from approved bills of materials and technical specifications.
+
+Robot Profile Agent: Retrieves and interprets relevant ROBOTRAITS profiles, capabilities and constraints.
+
+Planning Agent: Breaks authorized tasks into bounded steps and identifies required information, tools and approvals.
+
+Policy Agent: Evaluates permissions, source eligibility, suppression records, tool access and action restrictions.
+
+Reporting Agent: Compiles recorded results, metrics, failures, costs and recommended next steps.
+
+Coordinator: Assigns tasks, manages dependencies, validates outputs and tracks task state.
+
+Agents should exchange validated structured data. Specialized agents must not bypass centralized authorization, safety or source-access controls.
+
+Agent role separation is an architectural option. The initial implementation may use simpler modular functions if that is more reliable and easier to test.
+
+======================================================================
+
+GLOBAL COMPANY DISCOVERY AND MULTILINGUAL RESEARCH
+
+The sourcing application may support configurable languages, including English, Chinese, Japanese, Korean, German, French, Spanish, Italian, Portuguese, Dutch, Swedish, Polish, Turkish and Hindi.
+
+A multilingual workflow may:
+
+Generate component-specific queries.
+Translate queries into supported languages.
+Search configured permitted sources.
+Preserve the original source text.
+Detect source language.
+Normalize company descriptions.
+Extract company names, websites and business categories.
+Preserve exact source URLs and retrieval timestamps.
+Identify duplicate or conflicting records.
+Translate relevant technical or commercial content.
+Record translation methods and confidence where available.
+
+Translation must not silently alter part numbers, technical specifications, units, model identifiers or contractual terms.
+
+Language coverage must be measured from actual configured tasks and results. The system must not claim universal discovery or complete coverage of all robotics companies.
+
+======================================================================
+
+EVIDENCE-BACKED COMPANY AND CONTACT DATA
+
+Company records may include:
+
+Stable company identifier.
+Legal and display names, where established.
+Official website and normalized domain.
+Country, region and city, where supported by evidence.
+Source languages.
+Company type.
+Component categories and manufacturing capabilities.
+Markets served.
+Source records and contact records.
+Qualification status.
+Commercial relevance score.
+Creation, update and last-verification timestamps.
+
+Every material claim should reference its supporting source and verification status.
+
+Contact records may include a contact identifier, associated company, publicly documented business email or inquiry channel, contact type, source URL, source excerpt, retrieval timestamp, verification method and applicable outreach restrictions.
+
+The system must never fabricate email addresses or describe guessed contact information as verified.
+
+A syntactically valid address does not prove that a mailbox exists. A delivered message does not establish consent. Public availability of a contact channel does not automatically authorize every type of outreach.
+
+======================================================================
+
+COMMERCIAL MATCHING AND SCORING
+
+A configurable ROBOPARTS.ai relevance score may use a 0-100 scale.
+
+Illustrative initial weighting:
+
+Component relevance: 0-30 points.
+Manufacturing capability fit: 0-20 points.
+Robotics industry relevance: 0-15 points.
+Evidence quality: 0-15 points.
+Geographic and logistics fit: 0-10 points.
+Business contact quality: 0-10 points.
+
+Illustrative categories:
+
+80-100: High-priority candidate. 60-79: Relevant candidate. 40-59: Additional research required. 0-39: Low-priority or insufficient evidence.
+
+These are initial configuration proposals, not validated commercial predictions.
+
+Each score should include its component values, explanation, evidence references and unresolved information. Missing information must not automatically be interpreted as negative evidence.
+
+A high score does not authorize outreach, commit expenditure, establish supplier qualification or approve a purchase.
+
+======================================================================
+
+RFQ AUTOMATION AND QUOTATION COMPARISON
+
+The system may import an approved bill of materials and create structured RFQs.
+
+An RFQ can include component identifiers, drawings, revisions, quantities, units, technical specifications, materials, tolerances, inspection criteria, certifications where applicable, production processes, tooling costs, prototype costs, production pricing, volume discounts, lead times, delivery schedules, packaging, shipping, warranty, payment terms, quotation validity and submission deadlines.
+
+Quotation comparison should normalize relevant currencies, quantities, cost categories and delivery assumptions.
+
+The system should flag incomplete specifications, unverified claims, missing commercial terms, capacity limitations and delivery risks.
+
+Illustrative quantities for a humanoid robot program must be validated against the actual bill of materials before being used in a live RFQ.
+
+RFQ drafting and comparison may be automated within approved limits. Supplier commitments, purchase orders, expenditure and contractual acceptance require separate authorization.
+
+======================================================================
+
+AGENT PROFILES, ROBOTRAITS AND BEHAVIOR
+
+ROBOAGENTIC may consume versioned ROBOTRAITS profiles describing behavioral tendencies, interaction preferences, reasoning preferences, capabilities and constraints.
+
+An agent configuration may combine:
+
+Persistent agent identity.
+Software and interface versions.
+AI provider and model configuration.
+ROBOTRAITS profile identifier and version.
+Declared capabilities and dependencies.
+Task context and authorized memory.
+Available tools and data sources.
+Requested and granted permissions.
+Applicable policy version.
+Credential status and expiration.
+Audit and revocation history.
+
+Personality traits can influence permitted behavioral choices, such as response style, planning depth, verification frequency or exploration preferences.
+
+They do not create physical capabilities, guarantee performance or authorize an action.
+
+The same physical robot may support multiple behavioral profiles, provided that the profiles remain separate from hardware identity, actual capability records and safety configuration.
+
+======================================================================
+
+MEMORY, CONTEXT AND PERSONALIZATION
+
+Agent behavior may depend on personality configuration, authorized memory, current context, task requirements, environment, model behavior, robot state and safety constraints.
+
+Memory may include short-term context, conversation history, approved user preferences, task history and authorized semantic knowledge.
+
+Implementations should distinguish persistent memory from transient context, model parameters and safety-critical configuration.
+
+Personalization should be permission-aware, transparent and controllable. Where appropriate, users should be able to inspect, correct or remove stored preferences and information.
+
+Learning or adapting from interactions should use documented evaluation procedures, change tracking and controlled deployment.
+
+Memory access must be authorized, and sensitive information must not be disclosed to other agents or external services without an appropriate basis and permission.
+
+======================================================================
+
+POLICY ENFORCEMENT AND SAFETY
+
+All protected operations should be evaluated against an explicit policy.
+
+Relevant inputs include requesting agent identity, target resource, requested action, credential validity, granted permissions, contextual restrictions, policy version, required approvals and revocation status.
+
+The decision should be explicit: permitted, denied or unresolved.
+
+An unresolved authorization decision must not silently become approval.
+
+Required controls may include:
+
+Authenticated agent identity.
+Least-privilege permissions.
+Centralized tool and data-access policies.
+Credential expiration and revocation.
+Source-specific access restrictions.
+Email suppression and eligibility checks.
+Bounded spending and action limits.
+Auditable authorization decisions.
+Safe failure behavior when dependencies are unavailable.
+
+A software kill switch or permission revocation mechanism is not equivalent to a certified physical emergency stop. Hazardous robot operation requires suitable robot-specific safety engineering and independent protective mechanisms.
+
+The agent must use authorized robot adapters and must not override safety-rated controllers or bypass validated motion restrictions.
+
+======================================================================
+
+RESPONSIBLE OUTREACH AND EXTERNAL COMMUNICATIONS
+
+Where enabled, the sourcing application may use an authorized email provider for relevant business communications, including supplier inquiries, approved RFQ invitations, partnership inquiries and follow-ups to existing conversations.
+
+Before sending, the system should evaluate sender configuration, source and contact eligibility, applicable jurisdictional requirements, recipient suppression status, duplicate-send protection, provider limits and required authorization.
+
+Operational requirements include:
+
+Accurate sender identity.
+Appropriate email authentication configuration.
+Applicable business identification and opt-out mechanisms.
+Prompt processing of unsubscribe requests.
+Centralized suppression records.
+Duplicate-send prevention.
+Provider message IDs and delivery-event tracking.
+Bounded retries for eligible transient failures.
+Correct handling of bounces and provider restrictions.
+Auditable sending decisions.
+
+The system must not evade recipient blocks, circumvent spam controls, conceal sender identity or ignore opt-out requests.
+
+Default operation should be dry-run until the provider, policies and required permissions have been configured and tested.
+
+======================================================================
+
+AUTONOMOUS OPERATIONS AND JOB MANAGEMENT
+
+Routine permitted work may include scheduled discovery, source refreshes, deduplication, classification, evidence review, scoring, report generation, RFQ drafting and database maintenance.
+
+Use persistent task identifiers, recoverable job states, idempotency keys, bounded retries and source-specific rate limits.
+
+Apply bounded concurrency to independent work. A persistent task queue may be introduced when workload or reliability requirements justify distributed workers.
+
+Prevent duplicate company creation and duplicate email transmission.
+
+When a required permission is absent or unclear, the affected action must stop safely.
+
+External websites, documents, email content and model-generated text must be treated as untrusted input. They must never override security policy or authorize access to secrets.
+
+======================================================================
+
+REPORTING AND OPERATIONAL METRICS
+
+Reports should reflect actual recorded results for a defined reporting period.
+
+Potential metrics include:
+
+Discovery queries executed.
+Sources accessed or unavailable.
+Companies discovered, deduplicated and verified.
+Countries and component categories represented.
+Contacts found and contacts requiring verification.
+High-priority candidates and their evidence.
+RFQs drafted, approved and awaiting action.
+Messages queued and submitted.
+Provider-confirmed deliveries, replies, bounces and opt-outs.
+Policy blocks, failed jobs and retry counts.
+Estimated operating costs.
+Data-quality measures and recommended next actions.
+
+Reports must distinguish submitted messages from confirmed deliveries and deliveries from replies.
+
+Only configured developer recipients should receive private operational reports. Secrets and unnecessary personal information must be redacted.
+
+Support human-readable text and machine-readable JSON output where required.
+
+======================================================================
+
+PROPOSED PYTHON IMPLEMENTATION
+
+For the sourcing application, a candidate technology stack includes:
+
+Python 3.12 or later.
+asyncio for bounded asynchronous work.
+Pydantic for structured data validation.
+SQLAlchemy for database access.
+PostgreSQL for shared deployments and SQLite for local development.
+httpx and BeautifulSoup4 for permitted HTTP retrieval and parsing.
+pytest for automated tests.
+python-dotenv for local configuration.
+Replaceable search, translation, language-model and email-provider adapters.
+A persistent task queue when distributed execution is required.
+
+These are recommended choices, not mandatory dependencies for every ROBOAGENTIC application.
+
+A modular package may separate discovery, agent coordination, intelligence, evidence, outreach, reporting, provider integrations, jobs and configuration.
+
+Robot-oriented deployments may additionally require platform-specific adapters, ROS interfaces, manufacturer SDKs or simulation APIs.
+
+Technology selection must be driven by the actual target workflow, security model, performance requirements and deployment environment.
+
+======================================================================
+
+SECURITY AND CONFIGURATION
+
+Keep API keys, credentials, tokens and private operational data out of public source control.
+
+Use environment variables or a suitable secrets manager. Provide example configuration without real secrets.
+
+Default to dry-run for outbound communications and other consequential operations until explicit configuration and authorization are established.
+
+Validate external input, redact secrets, restrict data access, maintain audit logs and document retention policies.
+
+External integrations must be replaceable where practical so that provider changes do not require rewriting core business logic.
+
+======================================================================
+
+TESTING AND IMPLEMENTATION ROADMAP
+
+Testing should cover:
+
+Company extraction, normalization and deduplication.
+International domains and multilingual processing.
+Evidence provenance and source verification.
+Component classification and commercial scoring.
+Incomplete and conflicting data.
+Contact verification and suppression.
+Duplicate-send prevention and retry limits.
+RFQ validation and quotation normalization.
+Delivery-event processing.
+Agent profile validation and policy enforcement.
+Credential expiration and revocation.
+Authorized tool and robot-interface access.
+Report accuracy and secrets redaction.
+Dry-run behavior and safe handling of dependency failures.
+
+Use synthetic datasets, mocked providers and authorized sandbox accounts.
+
+Suggested development phases:
+
+Phase 1: Configuration, data models, logging, storage and tests.
+
+Phase 2: One permitted discovery provider and evidence-backed company records.
+
+Phase 3: Multilingual processing, classification, verification and matching.
+
+Phase 4: Contact research, source verification and suppression controls.
+
+Phase 5: RFQ generation and quotation comparison.
+
+Phase 6: Authorized communication provider, dry-run mode and delivery tracking.
+
+Phase 7: Persistent jobs, recovery, monitoring and reporting.
+
+Phase 8: ROBOTRAITS integration, agent policy enforcement and selected robot adapters.
+
+Phase 9: Broader source coverage, interoperability and measured expansion.
+
+Each phase should be accepted against reproducible evidence rather than a roadmap description alone.
+
+======================================================================
+
+DEFINITION OF SUCCESS
+
+Within an agreed implementation scope, ROBOAGENTIC should demonstrate that it can:
+
+Execute configured tasks and preserve their status and outcomes.
+Discover candidate organizations from permitted sources.
+Preserve source evidence and distinguish verified facts from assumptions.
+Normalize and deduplicate records.
+Explain relevance scores and identify unresolved information.
+Prepare structured RFQs and compare supplier responses.
+Enforce outreach eligibility, suppression and duplicate-send controls.
+Keep outbound communication disabled by default until configured.
+Record actual provider events and generate accurate reports.
+Interpret versioned ROBOTRAITS profiles where that integration is implemented.
+Access protected data and tools only through authorized interfaces.
+Deny prohibited actions and record policy decisions.
+Recover safely from routine errors and dependency failures.
+Preserve reproducible tests, known limitations and implementation evidence.
+
+No success criterion should be described as achieved until the relevant implementation and test evidence exists.
+
+======================================================================
+
+RELATIONSHIP TO THE PITN.AI ECOSYSTEM
+
+ROBOPARTS.ai provides component, manufacturer, supplier, identity and lifecycle information.
+
+ROBOTRAITS.ai provides structured behavioral semantics and, where defined, capability and constraint profiles.
+
+ROBOAGENTIC.ai uses appropriate information and policies to orchestrate reasoning, research, sourcing, communication and authorized interaction.
+
+PITN.ai provides the overarching project identity and intended knowledge and infrastructure context.
+
+Stable identifiers and documented interfaces may connect the systems while preserving the distinction between physical identity, behavioral configuration, verified capability and authority.
+
+======================================================================
+
+AUTHORSHIP AND INTELLECTUAL PROPERTY NOTICE
+
+The public PITN documentation attributes the ROBOAGENTIC initiative to the PITN ecosystem and associates it with Aaron Bailot.
+
+The public ROBOTRAITS repository includes ROBOAGENTIC in its ecosystem cross-reference and contains proprietary licensing and IP notices for specified original materials.
+
+This synopsis describes the intended architecture. It does not grant rights to software, documentation, data, trademarks or other intellectual property. Applicable repository licenses, asset-specific notices, third-party terms and written agreements must be reviewed before reuse, distribution or commercial deployment.
+
+Public references:
+
+https://github.com/PITN374/ROBOTRAITS
+
+https://github.com/PITN374/ROBOTRAITS/blob/main/ROBOPARTS-CROSS-REFERENCE.md
+
+https://pitn374.github.io/ROBOPARTS.ai/
+
+END OF ROBOAGENTIC SOFTWARE SYNOPSIS
