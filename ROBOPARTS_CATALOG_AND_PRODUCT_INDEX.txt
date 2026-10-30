@@ -1,0 +1,431 @@
+ROBOPARTS.ai — CATALOG AND PRODUCT INDEX
+
+Document ID: RP-CATALOG-001
+Version: 1.0
+Status: Proposed Catalog Architecture
+Parent Project: PITN.ai
+Development Stage: Stage 1
+
+1. Purpose
+
+Define a structured, searchable catalog of robotics components and associated product families.
+
+The catalog must support early architecture selection, engineering comparison, supplier sourcing, RFQ preparation, sample evaluation, and eventual lifecycle traceability.
+
+The catalog must distinguish:
+
+Product families.
+Manufacturer model numbers.
+Individual commercial products.
+Product revisions.
+Physical component instances.
+Custom OEM variants.
+Accessories and associated controllers.
+2. Catalog Classification Structure
+
+Proposed hierarchy:
+
+ROBOTICS COMPONENTS
+
+Actuators and motion systems.
+Motors.
+Reducers and gearboxes.
+Linear motion systems.
+Sensors.
+Controllers and electronics.
+Robotic hands and end effectors.
+Structural and mechanical components.
+Wiring and connectivity.
+Batteries and power systems.
+Integrated robotic assemblies.
+
+Each classification must have a stable internal identifier and a versioned taxonomy.
+
+3. Actuator Product-Family Index
+
+The initial catalog should separate the following architectures.
+
+ACT-01 — Integrated Rotary Actuators
+
+Integrated motor, reduction mechanism, feedback, and potentially driver/controller.
+
+Application candidates:
+
+Humanoid hip joints.
+Knee joints.
+Ankle joints.
+Shoulder joints.
+Elbow joints.
+Wrist joints.
+Neck joints.
+
+Comparison attributes:
+
+Continuous output torque.
+Peak output torque.
+Output speed.
+Acceleration profile.
+Outer diameter.
+Axial length.
+Mass.
+Reducer type.
+Encoder.
+Brake.
+Driver.
+Communication protocol.
+Bus voltage.
+Thermal duty cycle.
+ACT-02 — Quasi-Direct-Drive Actuators
+
+Lower-ratio or direct-drive-oriented integrated rotary architecture.
+
+Evaluation:
+
+Torque density.
+Backdrivability.
+Torque control.
+Thermal performance.
+Output inertia.
+Shock tolerance.
+Joint mass.
+Continuous operating envelope.
+
+Potential applications:
+
+Humanoid leg joints.
+Dynamic manipulation.
+Compact robotic arms.
+ACT-03 — Harmonic Drive Actuator Systems
+
+High-reduction precision rotary systems.
+
+Evaluation:
+
+Reduction ratio.
+Rated and peak torque.
+Backlash.
+Torsional stiffness.
+Bearing support.
+Output speed.
+Thermal performance.
+Shock and overload limits.
+
+Potential applications:
+
+Compact precision joints.
+Shoulder and elbow assemblies.
+Wrist mechanisms.
+ACT-04 — Planetary Gear Actuator Systems
+
+Motor and planetary reduction configurations.
+
+Evaluation:
+
+Reduction ratio.
+Efficiency.
+Backlash.
+Rated torque.
+Peak torque.
+Bearing arrangement.
+Lubrication.
+Noise.
+Service life.
+ACT-05 — Cycloidal Reducer Systems
+
+High-torque reduction systems requiring application-specific assessment.
+
+Evaluation:
+
+Output torque.
+Reduction ratio.
+Backlash.
+Shock loading.
+Torsional stiffness.
+Bearing arrangement.
+Efficiency.
+Lubrication and thermal behavior.
+ACT-06 — Frameless Motors
+
+Separate motor stator and rotor intended for integration into a customer-designed mechanism.
+
+Evaluation:
+
+Continuous torque.
+Peak torque.
+Torque constant.
+Speed.
+Winding resistance.
+Voltage.
+Current.
+Rotor inertia.
+Thermal path.
+Motor dimensions.
+Encoder compatibility.
+ACT-07 — Linear Actuators
+
+Electromechanical systems producing linear displacement.
+
+Evaluation:
+
+Continuous force.
+Peak force.
+Stroke.
+Speed.
+Acceleration.
+Position repeatability.
+Side-load capacity.
+Axial stiffness.
+Backlash.
+Duty cycle.
+Noise and service life.
+ACT-08 — Motor Controllers and Drivers
+
+Evaluation:
+
+Supported motor type.
+Voltage.
+Continuous current.
+Peak current.
+Control modes.
+Encoder compatibility.
+Firmware.
+Communication protocol.
+Update frequency.
+Protection functions.
+Harness and connector configuration.
+ACT-09 — Reducers and Gearboxes
+
+Catalog separately from integrated actuators.
+
+Evaluation:
+
+Reduction ratio.
+Rated output torque.
+Peak torque.
+Efficiency.
+Backlash.
+Stiffness.
+Input speed.
+Bearing support.
+Lubrication.
+Life-cycle assumptions.
+ACT-10 — Accessories and Interfaces
+
+Examples:
+
+Encoders.
+Brakes.
+Bearings.
+Connectors.
+Harnesses.
+Mounting flanges.
+Adapters.
+Cooling accessories.
+
+These must be associated with compatible product families without automatically being treated as included components.
+
+4. Humanoid Joint Classification Index
+
+The first selection matrix should cover:
+
+Joint	Primary requirements	Additional review
+Hip	Torque, speed, duty	Impact, thermal, bearing loads
+Knee	Torque, speed, acceleration	Overload, stiffness, thermal
+Ankle	Torque, speed, control	Shock, compactness, stiffness
+Shoulder	Torque, speed, envelope	Mass, routing, mirrored fit
+Elbow	Torque, speed, mass	Backlash, cable routing
+Wrist	Compactness, precision	Bore, connector, stiffness
+Neck	Torque, speed, noise	Safety, range, mechanism
+Hand	Force, speed, precision	Transmission, tactile integration
+
+This is a coverage framework, not a declaration that one actuator architecture fits every joint.
+
+5. Joint-Level Engineering Requirements
+
+Each joint position must have an independently defined requirement record.
+
+Required fields:
+
+Joint identifier.
+Joint position.
+Number of axes.
+Required continuous torque.
+Required peak torque.
+Peak torque duration.
+Output speed.
+Acceleration and deceleration profile.
+Operating cycle.
+Expected load.
+Robot mass and payload assumptions.
+Ambient temperature.
+Cooling conditions.
+Mechanical envelope.
+Mounting interface.
+Electrical requirements.
+Feedback requirements.
+Control architecture.
+Communication protocol.
+
+Torque, speed, force, and stroke must use explicit units.
+
+Continuous and peak ratings must never be merged into one specification.
+
+6. Mechanical Interface Index
+
+Record:
+
+Outer diameter.
+Inner diameter or hollow-shaft bore.
+Axial length.
+Mass.
+Flange dimensions.
+Bolt circle.
+Mounting-hole specification.
+Output interface.
+Bearing support.
+Cable exit direction.
+Connector location.
+Harness clearance.
+Assembly envelope.
+Drawing revision.
+7. Electrical and Control Index
+
+Record:
+
+Nominal bus voltage.
+Permitted voltage range.
+Continuous current.
+Peak current.
+Motor winding configuration.
+Encoder type and resolution.
+Brake requirement.
+Driver location.
+Communication protocol.
+Pinout.
+Connector.
+Firmware version.
+Control modes.
+Current limits.
+Communication update requirements.
+
+Potential protocols: CAN, CAN FD, EtherCAT, RS485, PWM, and other documented interfaces.
+
+Compatibility must be verified for the actual controller and firmware configuration.
+
+8. Catalog Record Structure
+
+Every catalog entry should support:
+
+product_id
+manufacturer_id
+manufacturer_part_number
+product_family_id
+component_class
+model
+revision
+architecture_type
+rated_specifications
+mechanical_interfaces
+electrical_interfaces
+control_interfaces
+compatible_accessories
+source_references
+evidence_references
+verification_status
+drawing_revision
+catalog_status
+created_at
+updated_at
+
+9. Catalog Indexing and Search
+
+Search dimensions should include:
+
+Product family.
+Manufacturer.
+Part number.
+Torque class.
+Speed range.
+Voltage.
+Reducer type.
+Outer diameter.
+Axial length.
+Hollow-shaft requirement.
+Encoder.
+Brake.
+Protocol.
+Application.
+Verification status.
+Availability status, when supported by current evidence.
+
+The catalog must support filtering without assuming missing attributes are zero or negative.
+
+10. Product Selection Workflow
+Define robot architecture and joint map.
+Define torque and speed requirements by joint.
+Establish mechanical envelope.
+Define electrical and control assumptions.
+Filter applicable actuator architectures.
+Compare standard catalog products.
+Review performance and thermal evidence.
+Identify missing information.
+Shortlist candidate models.
+Request controlled engineering documentation.
+Evaluate sample readiness.
+Complete sample acceptance.
+Consider OEM modifications only after baseline fit is established.
+11. Product-Family Selection Rules
+
+Do not compare unrelated architectures using one undifferentiated torque ranking.
+
+Separate:
+
+Integrated rotary modules.
+QDD modules.
+Frameless motors.
+Linear actuators.
+Controllers.
+Reducers.
+Accessories.
+
+A catalog-level match is a preliminary engineering candidate, not proof of application suitability.
+
+12. Initial Catalog Coverage Target
+
+The first catalog should prioritize:
+
+Humanoid robot prototype platforms.
+Bipedal leg and arm development.
+University and robotics laboratory sourcing.
+Standard actuator models.
+Sample and pilot-order readiness.
+
+Broad torque-class coverage is useful during early architecture sizing, but the final selection must be tied to actual joint requirements.
+
+13. Catalog Evidence Policy
+
+Public catalog pages may contain:
+
+Product family introductions.
+Reference images.
+General model information.
+Public selection specifications.
+Application descriptions.
+
+Do not present fabricated factory photographs, teardown images, lot-specific reports, or unverified engineering measurements as actual project evidence.
+
+14. Future Catalog Expansion
+
+Add:
+
+Manufacturer-specific product indices.
+Cross-reference tables.
+Compatible controller matrices.
+CAD and drawing availability indices.
+Joint-specific shortlist records.
+Sample history.
+Pilot-order history.
+Supplier qualification.
+Lot traceability.
+
+All product information remains subject to source verification and revision control.
