@@ -1,0 +1,453 @@
+ROBOPARTS.ai — DIGITAL IDENTITY AND BILL OF MATERIALS
+
+Document ID: RP-IDENTITY-008
+Version: 1.0
+Status: Proposed Data Architecture
+Parent Project: PITN.ai (Power in the Numbers)
+Author: Aaron Bailot
+Development Stage: Stage 1
+
+1. PURPOSE
+
+This document defines the proposed digital identity, component identification, bill of materials (BOM), and relationship architecture for RoboParts.ai.
+
+RoboParts.ai is intended to provide a structured physical-hardware information layer for robotic systems.
+
+Its purpose extends beyond a conventional parts directory.
+
+The proposed platform should connect:
+
+Individual physical components.
+Manufacturer product families.
+Commercial product models.
+Product revisions.
+Serialized component instances.
+Robot assemblies.
+Subsystems.
+Robot identities.
+Capabilities.
+Suppliers.
+Integrators.
+Lifecycle records.
+Maintenance and recall information.
+
+The architecture should provide accountability for the physical components assigned to each designated robot.
+
+2. CORE IDENTITY PRINCIPLE
+
+A product model and an individual physical component are not the same thing.
+
+For example:
+
+Manufacturer: Example Manufacturer
+
+Product Family: Integrated Rotary Actuator
+
+Model: Example-01
+
+Revision: B
+
+Individual Component: RP-000001
+
+Serial Number: SN-123456
+
+Robot Assignment: ROBOT-0001
+
+The model identifies a commercial product.
+
+The serial number identifies a particular manufactured unit.
+
+The RoboParts component identifier provides an internal reference to that physical unit within the platform.
+
+These identifiers should remain distinct.
+
+3. PROPOSED IDENTITY HIERARCHY
+
+PITN.ai | v ROBOT IDENTITY | v ROBOT CONFIGURATION | v SUBSYSTEM | v ASSEMBLY | v COMPONENT INSTANCE | v MANUFACTURER PRODUCT | v PRODUCT FAMILY
+
+The system should support relationships in both directions.
+
+A component should be traceable to the robot in which it is installed.
+
+A robot should be traceable to the components installed within it.
+
+4. COMPONENT IDENTITY
+
+Every registered component should receive a stable internal identifier.
+
+Example:
+
+Component ID: RP-000001
+
+Suggested fields:
+
+component_id
+component_type
+component_class
+product_id
+manufacturer_id
+manufacturer_part_number
+manufacturer_serial_number
+product_revision
+manufacturing_lot
+manufacturing_date
+received_date
+ownership_reference
+supplier_id
+verification_status
+lifecycle_status
+created_at
+updated_at
+
+An internal identifier must not be confused with a manufacturer serial number.
+
+If the manufacturer does not provide a serial number, the absence must be recorded rather than inventing one.
+
+5. PRODUCT AND COMPONENT DISTINCTION
+
+The architecture should distinguish the following entities:
+
+5.1 Product Family
+
+A collection of related products sharing a general architecture.
+
+Example:
+
+Integrated Rotary Actuators.
+
+5.2 Product Model
+
+A specific manufacturer model.
+
+Example:
+
+Manufacturer Model X.
+
+5.3 Product Revision
+
+A documented revision or variant of a product.
+
+5.4 Commercial Product
+
+The product offered for sale or sourcing.
+
+5.5 Physical Component Instance
+
+The actual unit received, installed, tested, repaired, or retired.
+
+5.6 Custom OEM Variant
+
+A product modified or manufactured to customer-specific requirements.
+
+OEM modifications must be separately identified and revision-controlled.
+
+6. ROBOT IDENTITY
+
+Every registered robot should have a stable internal identifier.
+
+Example:
+
+Robot ID: ROBOT-0001
+
+Suggested fields:
+
+robot_id
+robot_name
+robot_class
+platform_model
+manufacturer
+owner_reference
+integrator_id
+configuration_id
+robot_revision
+deployment_status
+commissioning_date
+retirement_date
+digital_twin_reference
+created_at
+updated_at
+
+Robot identity must remain stable when individual components are replaced.
+
+Replacing a motor must not create a new robot identity.
+
+7. SUBSYSTEM AND ASSEMBLY STRUCTURE
+
+The system should support hierarchical relationships.
+
+Example:
+
+HUMANOID ROBOT | +-- LEFT ARM | | | +-- SHOULDER ASSEMBLY | +-- ELBOW ASSEMBLY | +-- WRIST ASSEMBLY | +-- RIGHT ARM | | | +-- SHOULDER ASSEMBLY | +-- ELBOW ASSEMBLY | +-- WRIST ASSEMBLY | +-- LEFT LEG | +-- RIGHT LEG | +-- TORSO | +-- HEAD
+
+Each subsystem may contain assemblies, components, and subcomponents.
+
+The architecture must support mirrored left/right assemblies without assuming that their components are identical.
+
+8. BILL OF MATERIALS
+
+Each robot configuration should support a versioned BOM.
+
+Suggested fields:
+
+bom_id
+robot_id
+configuration_id
+bom_revision
+bom_status
+effective_date
+approved_by
+approval_reference
+created_at
+
+BOM line items should support:
+
+bom_line_id
+bom_id
+parent_assembly_id
+component_id
+product_id
+manufacturer_part_number
+quantity
+reference_designator
+installation_location
+required_revision
+optional_or_required
+compatibility_status
+installation_status
+
+A BOM should distinguish:
+
+Required components.
+Optional components.
+Accessories.
+Compatible alternatives.
+Spare parts.
+Consumables.
+Custom assemblies.
+
+Accessories must not automatically be treated as included in an actuator or product package.
+
+9. COMPONENT RELATIONSHIPS
+
+The platform should support relationships such as:
+
+ROBOT | v SUBSYSTEM | v ASSEMBLY | v COMPONENT | v PRODUCT MODEL | v MANUFACTURER
+
+Additional relationships may include:
+
+Manufactured by.
+Supplied by.
+Installed in.
+Replaces.
+Compatible with.
+Requires.
+Controlled by.
+Connected to.
+Tested with.
+Recalled by.
+Superseded by.
+Maintained by.
+
+Relationships should have stable identifiers and, where appropriate, effective dates and verification status.
+
+10. COMPONENT COMPATIBILITY
+
+Compatibility should be evaluated across multiple dimensions.
+
+Mechanical
+Dimensions.
+Mounting interfaces.
+Flanges.
+Bolt circles.
+Shaft interfaces.
+Bearing support.
+Cable clearance.
+Electrical
+Bus voltage.
+Current requirements.
+Connector.
+Pinout.
+Power distribution.
+Control
+Motor type.
+Encoder.
+Brake.
+Driver.
+Firmware.
+Control modes.
+Communication
+CAN.
+CAN FD.
+EtherCAT.
+RS485.
+Ethernet.
+PWM.
+Other documented protocols.
+Environmental
+Temperature.
+Humidity.
+Vibration.
+Dust and water exposure.
+Operating environment.
+Software
+Driver support.
+Firmware compatibility.
+API compatibility.
+Control-system compatibility.
+
+Compatibility states should include:
+
+Verified.
+Conditionally compatible.
+Proposed.
+Incompatible.
+Unknown.
+Requires engineering review.
+
+Missing data must never be interpreted as proof of compatibility.
+
+11. COMPONENT-TO-CAPABILITY RELATIONSHIPS
+
+A component may contribute one or more capabilities.
+
+Examples:
+
+Sensor → Perception
+
+Actuator → Movement
+
+Robotic Hand → Manipulation
+
+Battery → Energy Availability
+
+Controller → Motion Control
+
+The relationship should be recorded independently of the component's physical identity.
+
+A proposed capability record may contain:
+
+capability_id
+capability_name
+description
+required_components
+applicable_robot_classes
+verification_status
+evidence_reference
+
+A robot's available capabilities should be derived from its actual configuration and operational state.
+
+12. DIGITAL IDENTITY AND ROBOAGENTIC
+
+The broader PITN.ai ecosystem may allow RoboAgentic.ai to act as an intelligent information and oversight layer for registered components.
+
+Potential responsibilities include:
+
+Summarizing component identity.
+Reporting current configuration.
+Identifying missing documentation.
+Highlighting compatibility concerns.
+Summarizing lifecycle history.
+Identifying relevant recalls.
+Reporting component performance.
+Providing authorized maintenance recommendations.
+
+An AI-generated assessment must remain distinguishable from manufacturer documentation, verified test results, and formal engineering approval.
+
+RoboAgentic.ai must not be represented as an independent safety authority unless a separately validated authority and authorization architecture is established.
+
+13. ROBO TRAITS INTEGRATION
+
+RoboTraits.ai may use verified hardware information to describe a robot's characteristics and capabilities.
+
+For example:
+
+Installed Robotic Hand | v Verified Manipulation Capability | v Robot Capability Profile | v RoboTraits
+
+A hardware change may require reassessment of the relevant robot characteristics.
+
+RoboTraits information should not replace component identity or manufacturer specifications.
+
+14. DIGITAL TWIN RELATIONSHIP
+
+A digital twin may represent:
+
+Robot identity.
+Current BOM.
+Component assignments.
+Product revisions.
+Operating state.
+Capability profile.
+Configuration history.
+Maintenance history.
+Fault history.
+Performance information.
+
+The digital representation should distinguish current physical state from intended design configuration.
+
+A digital twin must not be assumed to be synchronized with the physical robot without supporting evidence.
+
+15. IDENTITY CHANGE CONTROL
+
+The following should not normally change after assignment:
+
+Internal robot ID.
+Internal component ID.
+Manufacturer serial number, where provided.
+Historical transaction identifiers.
+
+Changes should instead be recorded as new events or revisions.
+
+Examples:
+
+Component replacement.
+Robot reassignment.
+Subsystem relocation.
+Product revision update.
+Firmware change.
+Configuration update.
+Maintenance event.
+
+Historical records must remain attributable to the correct physical unit.
+
+16. DATA INTEGRITY
+
+The system should support:
+
+Unique identifiers.
+Referential integrity.
+Versioned BOMs.
+Auditable assignment history.
+Source references.
+Evidence references.
+Timestamped changes.
+Controlled deletion or retirement.
+Access control.
+Data validation.
+
+A historical component assignment should not be silently overwritten when a replacement occurs.
+
+17. FUTURE DEVELOPMENT
+
+Potential future features:
+
+QR-code identification.
+RFID identification.
+NFC identification.
+Digital component passports.
+Manufacturer integrations.
+Supplier integrations.
+Automated BOM validation.
+Robot-wide recall identification.
+Multi-robot component inventory.
+Digital twin synchronization.
+Component-level AI summaries.
+
+These are proposed capabilities.
+
+18. STATUS
+
+Document status: Proposed Data Architecture.
+
+The identifiers and data structures in this document are design examples, not evidence of an existing production identity registry.
+
+END OF DOCUMENT
