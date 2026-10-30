@@ -1,0 +1,375 @@
+ROBOPARTS.ai — ROBOT SAFETY ARCHITECTURE
+
+Document ID: RP-SAFETY-007
+Version: 1.0
+Status: Proposed Safety Architecture
+Author: Aaron Bailot
+Parent Project: PITN.ai (Power in the Numbers)
+Development Stage: Stage 1
+Related Systems: RoboTraits.ai, RoboAgentic.ai, PITN.ai
+
+1. PURPOSE
+
+This document establishes the proposed safety architecture for RoboParts.ai.
+
+The objective is to provide a structured framework for identifying, documenting, monitoring, and managing safety-related characteristics of robotic components and assemblies.
+
+The architecture addresses:
+
+Emergency stop systems.
+Safe Torque Off (STO).
+Safety-related component identification.
+Fault detection and handling.
+Hardware operating limits.
+Component safety boundaries.
+Human override.
+Recall and replacement accountability.
+Safety-related configuration changes.
+Relationships between physical hardware and intelligent-agent systems.
+
+RoboParts.ai is intended to provide the physical hardware identity and accountability layer within the broader PITN.ai robotics ecosystem.
+
+This document defines an architectural framework. It does not certify a robot, establish a safety integrity level, or demonstrate compliance with any particular safety standard.
+
+2. CORE SAFETY PRINCIPLE
+
+Physical safety must remain independent of learned behavior, personality settings, user preferences, and ordinary AI decision-making.
+
+The proposed architecture distinguishes:
+
+Physical safety mechanisms.
+Safety-rated control systems.
+Ordinary robot control systems.
+Intelligent-agent decision systems.
+Digital identity and accountability systems.
+
+An intelligent agent must not be treated as a substitute for a validated safety system.
+
+RoboAgentic.ai may provide monitoring, analysis, and authorized control requests, but safety-related functions must be implemented through appropriately designed and validated hardware and control architectures.
+
+3. SAFETY ARCHITECTURE
+
+Proposed relationship:
+
+ROBOT | v PHYSICAL COMPONENTS | v SAFETY-RELATED HARDWARE | v SAFETY CONTROL SYSTEM | +---- Emergency Stop | +---- Safe Torque Off | +---- Protective Devices | +---- Fault Monitoring | v ROBOT CONTROL SYSTEM | v ROBOAGENTIC.AI | v ROBOT BEHAVIOR
+
+RoboParts.ai maintains the identity, configuration, compatibility, and lifecycle information associated with the physical components and safety-related assemblies.
+
+4. EMERGENCY STOP ARCHITECTURE
+
+Emergency stop systems are intended to provide a means of initiating an emergency response when a hazardous condition occurs.
+
+A proposed emergency stop architecture may include:
+
+Physical emergency stop buttons.
+Safety-rated input devices.
+Safety relays or safety controllers.
+Safety-rated drive interfaces.
+STO-capable motor drives.
+Documented reset procedures.
+Emergency stop status monitoring.
+
+An emergency stop must be designed according to the applicable machine and robot safety requirements.
+
+An ordinary software command, application button, network message, or AI instruction must not be represented as an equivalent replacement for a validated emergency stop system.
+
+4.1 Emergency Stop Identification
+
+Each emergency stop device or safety-related assembly should have an identifiable record.
+
+Suggested fields:
+
+safety_device_id
+device_type
+manufacturer
+manufacturer_part_number
+serial_number
+robot_id
+subsystem_id
+installation_location
+electrical_interface
+safety_controller_reference
+installation_revision
+inspection_status
+validation_reference
+last_inspection_date
+4.2 Emergency Stop Behavior
+
+The intended behavior must be established through a formal risk assessment and validated safety design.
+
+Documentation should identify:
+
+Hazard addressed.
+Initiating device.
+Safety logic.
+Affected motion or energy sources.
+Required stopping behavior.
+Reset conditions.
+Restart conditions.
+Validation evidence.
+
+An emergency stop activation must not automatically authorize a subsequent restart.
+
+5. SAFE TORQUE OFF (STO)
+
+Safe Torque Off is a safety-related drive function intended to prevent a motor from producing torque.
+
+STO is not necessarily equivalent to mechanical braking or complete electrical isolation.
+
+Depending on the application, additional measures may be necessary to address:
+
+Gravity-driven movement.
+Falling loads.
+Stored mechanical energy.
+Residual electrical energy.
+Pneumatic or hydraulic energy.
+Unexpected movement after power restoration.
+5.1 STO Identification
+
+Suggested component attributes:
+
+sto_supported
+sto_implementation
+sto_channel_configuration
+sto_certification_reference
+drive_model
+drive_firmware
+safety_controller_reference
+safety_validation_status
+installation_revision
+
+These fields must be populated from manufacturer documentation and actual system verification.
+
+5.2 STO Verification
+
+STO compatibility must be evaluated for the actual motor drive, wiring, safety controller, firmware, and installation configuration.
+
+A general statement that a motor controller supports STO is insufficient to establish that the complete robot assembly has a validated safety function.
+
+6. PHYSICAL SAFETY BOUNDARIES
+
+Every relevant component should have documented operating limits.
+
+Examples include:
+
+Maximum continuous torque.
+Peak torque and permitted duration.
+Maximum rotational speed.
+Maximum linear force.
+Maximum stroke.
+Maximum current.
+Permitted bus voltage.
+Maximum operating temperature.
+Permitted duty cycle.
+Maximum payload.
+Mechanical travel limits.
+Environmental limitations.
+
+Safety-related limits must be distinguished from ordinary performance ratings.
+
+A product's peak performance rating must not be treated as an approved continuous operating condition.
+
+7. FAULT DETECTION AND HANDLING
+
+The architecture should support structured recording of faults.
+
+Potential fault categories:
+
+Overtemperature.
+Overcurrent.
+Overvoltage.
+Undervoltage.
+Encoder failure.
+Communication loss.
+Controller failure.
+Motor stall.
+Mechanical overload.
+Excessive vibration.
+Unexpected position.
+Brake failure.
+Battery fault.
+Sensor disagreement.
+Safety circuit fault.
+Component identification mismatch.
+7.1 Fault Record
+
+Suggested fields:
+
+fault_id
+robot_id
+component_id
+subsystem_id
+fault_code
+fault_category
+timestamp
+operating_state
+detected_value
+applicable_limit
+severity
+response_action
+reset_authorization
+resolution_status
+evidence_reference
+7.2 Fault Severity
+
+Proposed classifications:
+
+CRITICAL: Potential immediate safety hazard requiring the appropriate validated protective response.
+
+HIGH: Serious malfunction or component degradation requiring restricted operation or maintenance assessment.
+
+MEDIUM: Abnormal operation requiring investigation.
+
+LOW: Informational or maintenance-related event.
+
+The severity classification must be based on the application-specific risk assessment, not solely on a software-generated label.
+
+8. SAFETY AND INTELLIGENT AGENTS
+
+RoboAgentic.ai may interact with component information and robot operating data.
+
+However:
+
+AI decisions must not bypass safety interlocks.
+Learned behavior must remain subject to physical limits.
+User preferences must not override safety requirements.
+Software updates must not silently disable safety functions.
+Component substitutions must undergo compatibility assessment.
+Safety-related configuration changes must be controlled.
+Safety faults must not be automatically cleared by an ordinary AI agent.
+
+RoboTraits may describe personality and behavioral characteristics.
+
+Those characteristics must not alter the authority or operation of safety-rated control functions.
+
+9. KILL SWITCH AND REMOTE CONTROL DISTINCTION
+
+The term "kill switch" may refer to different functions and must be precisely defined.
+
+The architecture distinguishes:
+
+Physical emergency stop.
+Safety-rated STO activation.
+Software operational disable.
+Remote administrative disable.
+Recall-related restriction.
+Component quarantine.
+Agent authorization revocation.
+
+These functions are not interchangeable.
+
+A recall flag or digital disable command does not physically stop a robot unless an independently validated control architecture implements that behavior.
+
+Remote shutdown or disable functions must not be relied upon as the sole emergency safety mechanism.
+
+10. COMPONENT RECALL AND SAFETY ACCOUNTABILITY
+
+RoboParts.ai should support identification of components affected by:
+
+Manufacturer recalls.
+Safety notices.
+Defective production lots.
+Firmware advisories.
+Design revisions.
+Unauthorized substitutions.
+End-of-life notifications.
+
+The system should be able to identify:
+
+Affected manufacturer.
+Model and revision.
+Serial numbers.
+Production lots.
+Robots containing affected components.
+Relevant subsystems.
+Installation dates.
+Replacement history.
+Inspection status.
+
+A recall record should distinguish between a warning, an inspection requirement, a usage restriction, and a confirmed safety-critical defect.
+
+11. SAFETY CHANGE CONTROL
+
+Changes to safety-related components or configurations require controlled review.
+
+Examples:
+
+Motor replacement.
+Controller replacement.
+Brake replacement.
+Encoder substitution.
+Firmware modification.
+Wiring changes.
+Mechanical redesign.
+Safety controller changes.
+Emergency stop circuit changes.
+
+Each change should have:
+
+Change request.
+Affected component identifiers.
+Previous configuration.
+Proposed configuration.
+Engineering review.
+Risk assessment reference.
+Test requirements.
+Approval record.
+Verification evidence.
+Release authorization.
+12. SAFETY DOCUMENTATION REQUIREMENTS
+
+Each safety-related component record should support:
+
+Manufacturer documentation.
+Product datasheets.
+Safety manuals.
+Wiring diagrams.
+Certification references.
+Installation instructions.
+Validation records.
+Inspection records.
+Firmware references.
+Revision history.
+
+Unverified claims must be identified as unverified.
+
+13. FUTURE DEVELOPMENT
+
+Potential future capabilities include:
+
+Robot-wide safety component inventory.
+Safety configuration graphs.
+Automated recall impact identification.
+Safety-related digital twin information.
+Component fault history.
+Safety inspection scheduling.
+Integration with validated safety controllers.
+Controlled maintenance and replacement workflows.
+
+These are proposed capabilities, not claims of existing implementation.
+
+14. ENGINEERING AND COMPLIANCE DISCLAIMER
+
+This architecture is a documentation and information-management framework.
+
+It is not a substitute for:
+
+Formal machinery risk assessment.
+Functional safety engineering.
+Certified safety components.
+Validated safety circuits.
+Applicable robot safety standards.
+Qualified engineering review.
+System-level testing and validation.
+
+Applicable requirements may include ISO 10218, ISO 12100, ISO 13849-1, IEC 62061, and IEC 61800-5-2, depending on the machine, application, jurisdiction, and design.
+
+The applicability and current editions of standards must be independently confirmed.
+
+15. STATUS
+
+Document status: Proposed Architecture.
+
+No safety certification, completed functional safety validation, or production deployment is implied.
+
+END OF DOCUMENT
