@@ -1,0 +1,821 @@
+ROBOPARTS.AI
+Actuator Identity, Performance and Humanoid Joint Standard
+
+Original Intellectual Property Concept: PITN.ai — Power In The Numbers
+Founder and Author: Aaron Bailot
+Document Status: Proposed Technical Architecture
+Version: 1.0
+Classification: Public Technical Documentation
+
+1. PURPOSE AND FRAMEWORK
+
+ROBOPARTS establishes a standardized framework for identifying, describing, evaluating, matching, and tracking robotic actuators and their associated components.
+
+Actuators are the mechanical power systems responsible for creating controlled movement in robots. They convert electrical, hydraulic, pneumatic, or other forms of energy into physical motion.
+
+In humanoid robots, actuator performance directly affects movement, strength, precision, efficiency, responsiveness, and overall mechanical capability.
+
+These characteristics influence:
+
+Torque and rotational force.
+Speed and acceleration.
+Joint responsiveness.
+Mechanical efficiency.
+Thermal performance.
+Payload capacity.
+Robot weight and balance.
+Electrical energy consumption.
+Manufacturing and maintenance costs.
+Long-term reliability.
+
+A humanoid robot may contain dozens of actuators distributed throughout its hips, knees, ankles, shoulders, elbows, wrists, hands, neck, and torso.
+
+Each actuator contributes to the robot's overall performance. Differences in actuator design can affect the mechanical requirements, electrical architecture, thermal demands, and operating capabilities of the entire machine.
+
+ROBOPARTS introduces a persistent identity and information structure that connects individual actuators to their components, manufacturers, specifications, applications, verification records, and replacement history.
+
+The objective is to establish a consistent foundation for robotic hardware identification and engineering compatibility.
+
+2. THE ACTUATOR DESIGN AND TORQUE DISTRIBUTION PRINCIPLE
+
+Core engineering principle: The design of an actuator determines where the system carries the burden of producing torque.
+
+Every actuator must generate useful mechanical force while operating within physical and economic limits involving size, weight, speed, efficiency, heat, precision, shock resistance, and manufacturing cost.
+
+Two major design approaches illustrate how these requirements can be distributed differently.
+
+HIGHER-REDUCTION ARCHITECTURE
+
+This approach combines a relatively smaller, faster motor with a higher-ratio gearbox.
+
+The gearbox increases output torque while reducing rotational speed.
+
+Its design places greater importance on:
+
+Precision transmission components.
+Gearbox efficiency.
+Mechanical tolerances.
+Bearing performance.
+Backlash management.
+Transmission durability.
+LOWER-REDUCTION / QUASI-DIRECT-DRIVE ARCHITECTURE
+
+This approach combines a larger, higher-torque motor with a lower-ratio transmission.
+
+More of the torque-generation responsibility remains with the motor rather than the gearbox.
+
+Its design places greater importance on:
+
+Motor electromagnetic performance.
+Copper winding capacity.
+Permanent magnet performance.
+Electrical current delivery.
+Motor cooling.
+Thermal management.
+Power electronics.
+
+Neither architecture provides a universal solution for every robotic joint.
+
+The appropriate design depends on joint loading, operating speed, movement requirements, available installation space, thermal conditions, manufacturing capabilities, and total system cost.
+
+ROBOPARTS treats these architectural differences as identifiable engineering characteristics rather than interchangeable product descriptions.
+
+3. ACTUATOR COMPONENT ARCHITECTURE
+
+A complete actuator may contain multiple mechanical, electrical, and electronic components.
+
+PRIMARY COMPONENTS
+Motor stator.
+Motor rotor.
+Permanent magnets.
+Copper windings.
+Reducer or gearbox.
+Bearings.
+Encoder.
+Motor driver.
+Controller.
+Brake.
+Housing.
+Thermal management system.
+Mechanical mounting interfaces.
+Electrical connectors.
+Cable assemblies.
+
+A joint module generally describes the mechanical assembly installed at a robotic joint.
+
+A motor driver provides the power electronics used to operate and control the motor.
+
+An actuator may represent an integrated assembly containing mechanical and electrical components or a more limited component package.
+
+For consistent identification and procurement, ROBOPARTS distinguishes between the complete actuator and the individual components included in its assembly.
+
+Product records identify all included and excluded items.
+
+These records specifically distinguish the presence of a motor driver, encoder, brake, cabling, housing, cooling system, mounting hardware, software, and control firmware.
+
+An actuator product description alone does not establish that these additional components are included.
+
+This structure creates a consistent basis for product comparison, engineering evaluation, supplier quotations, and procurement.
+
+4. ROBOPARTS ACTUATOR IDENTITY AND COMPONENT NAMESPACE
+
+ROBOPARTS establishes a primary actuator identity connected to its independently identifiable subcomponents.
+
+PRIMARY NAMESPACE
+
+.actuator
+
+RELATED COMPONENT NAMESPACES
+
+.motor
+.stator
+.rotor
+.reducer
+.bearing
+.encoder
+.brake
+.motorcontroller
+.thermalmodule
+.mechanicalinterface
+.connector
+.cableharness
+
+The primary actuator identity serves as the parent reference for the complete assembly.
+
+Each independently identifiable component may maintain a separate identity connected to the parent assembly.
+
+ILLUSTRATIVE ACTUATOR IDENTITY
+
+PITN-RB-000001.actuator
+
+COMPONENT RELATIONSHIP
+text
+PITN-RB-000001.actuator
+|
++-- MOTOR
+|   +-- STATOR
+|   +-- ROTOR
+|   +-- PERMANENT MAGNETS
+|   +-- WINDINGS
+|
++-- REDUCER
+|
++-- ENCODER
+|
++-- BEARINGS
+|
++-- MOTOR DRIVER
+|
++-- BRAKE
+|
++-- HOUSING
+|
++-- THERMAL MANAGEMENT
+|
++-- CONNECTORS
+
+
+This identity structure establishes traceability between the complete actuator, its internal components, its manufacturer, and its installation within a robotic system.
+
+Component relationships remain connected throughout manufacturing, assembly, installation, maintenance, and replacement.
+
+5. ACTUATOR CLASSIFICATION STANDARD
+
+ROBOPARTS supports multiple actuator technologies through a common classification structure.
+
+5.1 ROTARY ELECTRIC ACTUATORS
+Outrunner motors.
+Inrunner motors.
+Frameless motors.
+Integrated rotary actuators.
+Quasi-direct-drive actuators.
+Planetary geared actuators.
+Harmonic geared actuators.
+Cycloidal geared actuators.
+5.2 LINEAR ELECTRIC ACTUATORS
+Linear motors.
+Screw-driven actuators.
+Ball-screw actuators.
+Roller-screw actuators.
+Electromechanical linear modules.
+5.3 ADDITIONAL ACTUATOR TECHNOLOGIES
+Hydraulic actuators.
+Pneumatic actuators.
+Series elastic actuators.
+Tendon-driven actuator systems.
+
+Each classification identifies the underlying motion technology and provides a foundation for comparing products within the same category.
+
+6. FRAMELESS MOTOR IDENTITY AND SPECIFICATION
+
+Frameless motors are particularly relevant to custom humanoid joint development.
+
+A frameless motor typically consists of a stator and rotor designed for integration into a larger mechanical assembly.
+
+Unlike a conventional enclosed motor, its mounting structure, housing, bearing arrangement, and thermal interface may be provided by the equipment manufacturer or system integrator.
+
+ROBOPARTS supports separate identification of:
+
+Stator assembly.
+Rotor assembly.
+Permanent magnet configuration.
+Winding configuration.
+Electrical steel construction.
+Mounting arrangement.
+Thermal interface.
+Encoder arrangement.
+MOTOR PERFORMANCE ATTRIBUTES
+
+Each frameless motor profile supports the following engineering information:
+
+Physical dimensions
+
+Outer diameter (OD).
+Inner diameter (ID).
+Stack length.
+Air gap.
+
+Electrical characteristics
+
+KV rating.
+Motor resistance.
+Motor inductance.
+Bus voltage.
+Continuous current.
+Peak current.
+Electrical connection configuration.
+
+Mechanical characteristics
+
+Rated speed.
+Continuous torque.
+Peak torque.
+Rotor inertia.
+Maximum operating speed.
+
+Thermal characteristics
+
+Winding temperature limits.
+Cooling requirements.
+Thermal resistance.
+Permitted operating conditions.
+
+ROBOPARTS distinguishes manufacturer-declared specifications from independently measured and verified performance.
+
+This distinction maintains the integrity of motor records and prevents unverified performance claims from being treated as established engineering results.
+
+7. GEARBOX AND TRANSMISSION ARCHITECTURES
+
+ROBOPARTS identifies the transmission technology associated with each actuator.
+
+The gearbox is a major contributor to output torque, rotational speed, mechanical efficiency, precision, and overall actuator behavior.
+
+7.1 PLANETARY GEARBOX
+
+A planetary gearbox uses a central sun gear to drive multiple planet gears positioned inside an outer ring gear.
+
+Typical characteristics include:
+
+High mechanical efficiency.
+Established manufacturing processes.
+Scalable production.
+Multiple available reduction ratios.
+Good load distribution.
+Potential backlash.
+Increased complexity in multi-stage configurations.
+7.2 HARMONIC / STRAIN-WAVE GEARBOX
+
+A harmonic gearbox uses a flexible transmission element to achieve high reduction ratios within a compact mechanical arrangement.
+
+Typical characteristics include:
+
+High reduction ratios.
+Compact packaging.
+Low backlash.
+Precision positioning.
+Specialized manufacturing requirements.
+Flexible-element fatigue considerations.
+7.3 CYCLOIDAL GEARBOX
+
+A cycloidal gearbox uses eccentric motion and rolling contact between internal transmission components to produce mechanical reduction.
+
+Typical characteristics include:
+
+High load capacity.
+Strong shock resistance.
+Low backlash potential.
+Mechanical durability.
+Multiple load-bearing contact points.
+Packaging and mass considerations.
+7.4 QUASI-DIRECT DRIVE (QDD)
+
+Quasi-direct drive represents an actuator design philosophy rather than a separate gearbox family.
+
+It generally combines a high-torque motor with a relatively low-ratio transmission.
+
+A conceptual reduction range commonly associated with QDD designs is approximately 3:1 to 10:1, although actual implementations vary.
+
+QDD architectures place greater responsibility on the motor and electrical system to generate the required output torque.
+
+Their design emphasizes responsiveness, backdrivability, force control, and reduced transmission complexity.
+
+ROBOPARTS classifies QDD as an actuator architecture and separately identifies the actual gearbox technology used within the assembly.
+
+8. ROBOPARTS ACTUATOR PERFORMANCE STANDARD
+
+Every actuator profile supports a structured collection of engineering performance attributes.
+
+8.1 TORQUE PERFORMANCE
+Continuous torque.
+Rated torque.
+Peak torque.
+Peak torque duration.
+Output torque.
+Torque-speed curve.
+8.2 SPEED AND MOTION
+Maximum speed.
+Rated speed.
+Output speed.
+Acceleration.
+Deceleration.
+8.3 TORQUE DENSITY
+Peak torque per unit mass.
+Continuous torque per unit mass.
+
+Torque density provides a useful comparison of mechanical output relative to actuator weight.
+
+8.4 MASS AND WEIGHT DISTRIBUTION
+Complete actuator mass.
+Motor mass.
+Reducer mass.
+Driver mass.
+Installed mass.
+Distal installation mass.
+
+The distinction between actuator mass and installed mass helps account for the additional weight of mounting hardware, cabling, cooling equipment, and other supporting components.
+
+8.5 MECHANICAL PERFORMANCE
+Gear ratio.
+Backlash.
+Backdrivability.
+Rotor inertia.
+Output inertia.
+Shock tolerance.
+Bearing load capacity.
+Mounting configuration.
+8.6 ELECTRICAL PERFORMANCE
+Bus voltage.
+Continuous current.
+Peak current.
+Motor resistance.
+Motor inductance.
+KV rating.
+Electrical interfaces.
+Communication protocol.
+8.7 THERMAL PERFORMANCE
+Continuous operating temperature.
+Winding temperature limits.
+Cooling method.
+Thermal resistance.
+Heat rejection capability.
+Duty cycle.
+Ambient operating temperature.
+8.8 CONTROL AND FEEDBACK
+Encoder type.
+Encoder resolution.
+Position feedback.
+Velocity feedback.
+Torque control capability.
+Current control capability.
+Control bandwidth.
+Communication interface.
+8.9 RELIABILITY AND SERVICE LIFE
+Operating hours.
+Mechanical cycle count.
+Failure events.
+Maintenance history.
+Warranty.
+Expected service life.
+
+Together, these attributes provide a consistent information structure for actuator evaluation, comparison, engineering selection, and lifecycle management.
+
+9. HUMANOID JOINT APPLICATION STANDARD
+
+Actuator performance must be evaluated in relation to its intended robotic joint.
+
+The mechanical requirements of a hip actuator differ substantially from those of a wrist or finger actuator.
+
+ROBOPARTS connects actuator identities and performance specifications to individual humanoid joint applications.
+
+9.1 HIP
+
+Primary engineering considerations:
+
+High torque output.
+Significant load capacity.
+Dynamic movement.
+Shock resistance.
+Thermal management.
+Structural integration.
+9.2 KNEE
+
+Primary engineering considerations:
+
+High output torque.
+Repeated mechanical loading.
+Impact tolerance.
+Joint stiffness.
+Continuous operating capability.
+Mechanical durability.
+9.3 ANKLE
+
+Primary engineering considerations:
+
+Dynamic force control.
+Rapid response.
+Impact loading.
+Compact installation.
+Accurate movement control.
+9.4 SHOULDER
+
+Primary engineering considerations:
+
+Multi-axis movement.
+Torque density.
+Weight management.
+Range of motion.
+Mechanical integration.
+9.5 ELBOW
+
+Primary engineering considerations:
+
+Controlled force.
+Compact packaging.
+Positioning precision.
+Mechanical strength.
+9.6 WRIST
+
+Primary engineering considerations:
+
+Low mass.
+Smooth movement.
+Positioning accuracy.
+Backlash management.
+Compact dimensions.
+9.7 HAND AND FINGER
+
+Primary engineering considerations:
+
+Compact actuators.
+Fine movement control.
+Force sensing.
+Low weight.
+Thermal constraints.
+Tendon or linkage integration.
+9.8 NECK AND TORSO
+
+Primary engineering considerations:
+
+Controlled rotation.
+Low operating noise.
+Compact integration.
+Mechanical stability.
+Structural load management.
+
+These classifications establish application-oriented engineering considerations rather than universal performance requirements.
+
+Actual joint specifications remain dependent on robot geometry, intended movement, loading conditions, and operating requirements.
+
+10. ROBOT PROFILE AND ENGINEERING INTAKE
+
+ROBOPARTS establishes a structured engineering intake process for connecting robot characteristics to actuator requirements.
+
+This information supports product matching, compatibility assessment, supplier quotations, and engineering review.
+
+10.1 ROBOT INFORMATION
+Robot height.
+Total robot mass.
+Target payload.
+Arm reach.
+Leg configuration.
+Number of joints.
+Number of motion axes.
+Robot model.
+Robot configuration revision.
+10.2 JOINT INFORMATION
+Joint name.
+Joint location.
+Number of motion axes.
+Required motion range.
+Target torque.
+Peak torque.
+Continuous torque.
+Required speed.
+Acceleration.
+Target actuator mass.
+Available installation envelope.
+10.3 MECHANICAL REQUIREMENTS
+Outer diameter.
+Inner diameter.
+Axial length.
+Mounting interface.
+Bearing arrangement.
+Reducer preference.
+Backlash limits.
+Shock loading.
+Cable routing.
+Installation clearance.
+10.4 ELECTRICAL REQUIREMENTS
+Bus voltage.
+Current limits.
+Controller location.
+Communication protocol.
+Connector standard.
+Cable length.
+Electrical shielding.
+10.5 CONTROL REQUIREMENTS
+Encoder type.
+Encoder resolution.
+Absolute position capability.
+Brake requirement.
+Control software.
+Control environment.
+10.6 THERMAL AND SAFETY REQUIREMENTS
+Cooling method.
+Ambient temperature.
+Operating duty cycle.
+Temperature limits.
+Force limits.
+Speed limits.
+Emergency stop integration.
+10.7 PROCUREMENT REQUIREMENTS
+Prototype quantity.
+Pilot production quantity.
+Production quantity.
+Required delivery date.
+Drawing revision.
+Qualification requirements.
+
+This structured intake creates a common engineering reference for the robot manufacturer, actuator supplier, component manufacturer, and procurement team.
+
+11. ROBOPARTS COMPONENT COMPATIBILITY ENGINE
+
+ROBOPARTS introduces a compatibility assessment framework that evaluates actuator suitability across three primary engineering categories.
+
+A. MECHANICAL COMPATIBILITY
+
+Evaluation attributes include:
+
+Physical dimensions.
+Mounting interfaces.
+Joint geometry.
+Load capacity.
+Reducer coupling.
+Installation clearance.
+B. ELECTRICAL AND CONTROL COMPATIBILITY
+
+Evaluation attributes include:
+
+Operating voltage.
+Current requirements.
+Motor driver compatibility.
+Encoder compatibility.
+Communication protocol.
+Electrical connectors.
+Software interface.
+C. PERFORMANCE COMPATIBILITY
+
+Evaluation attributes include:
+
+Continuous torque.
+Peak torque.
+Operating speed.
+Torque density.
+Thermal capability.
+Duty cycle.
+Backlash.
+Shock tolerance.
+COMPATIBILITY CLASSIFICATION
+
+Every compatibility assessment uses one of five standardized results:
+
+COMPATIBLE — The available engineering information demonstrates that the component meets the defined requirements.
+
+CONDITIONALLY COMPATIBLE — The component can meet the requirements when specified modifications, additional components, or operating restrictions are applied.
+
+INCOMPATIBLE — One or more critical requirements are outside the component's capabilities.
+
+INSUFFICIENT DATA — Available information is not sufficient to complete the assessment.
+
+NOT VERIFIED — Compatibility has not been established through the required engineering review or testing.
+
+A dimensional match alone does not establish complete actuator compatibility.
+
+Mechanical, electrical, control, performance, and thermal requirements must be considered together.
+
+12. PERFORMANCE VERIFICATION AND DATA INTEGRITY
+
+ROBOPARTS separates manufacturer specifications, measured results, and independently verified performance.
+
+This distinction establishes a consistent foundation for evaluating technical claims.
+
+12.1 DECLARED SPECIFICATION
+
+Information published or supplied by the manufacturer.
+
+12.2 MEASURED PERFORMANCE
+
+Results obtained through a documented physical test or measurement process.
+
+12.3 VERIFIED PERFORMANCE
+
+Performance supported by an identified test procedure, documented results, and accepted verification criteria.
+
+PERFORMANCE VERIFICATION RECORD
+
+Each verification record supports:
+
+Component identity.
+Manufacturer.
+Product model.
+Hardware revision.
+Test date.
+Test environment.
+Test procedure.
+Measurement equipment.
+Measured results.
+Acceptance criteria.
+Verification authority.
+Verification status.
+
+Original manufacturer specifications and performance claims remain associated with their source and revision.
+
+Subsequent changes to a component or its specifications do not overwrite historical records.
+
+This preserves engineering traceability and supports reliable product comparisons over time.
+
+13. ACTUATOR ECONOMICS AND SUPPLY CHAIN
+
+Actuator architecture influences where manufacturing costs, material requirements, and supplier dependencies are concentrated.
+
+Higher-reduction architectures may place greater economic importance on:
+
+Precision gears.
+Specialized machining.
+Tight manufacturing tolerances.
+Transmission assembly.
+Precision bearings.
+
+Lower-reduction architectures may place greater economic importance on:
+
+High-performance motors.
+Copper windings.
+Permanent magnets.
+Electrical steel.
+Power electronics.
+Thermal management.
+High-current electrical components.
+
+ROBOPARTS connects actuator identities to their underlying manufacturers, component suppliers, and sourcing relationships.
+
+This structure supports visibility into:
+
+Supplier concentration.
+Alternative manufacturers.
+Material dependencies.
+Component availability.
+Product revision differences.
+Replacement options.
+Manufacturing dependencies.
+Potential supply-chain risks.
+
+The actuator's contribution to total humanoid bill-of-materials cost varies according to robot design, production volume, actuator architecture, component sourcing, and manufacturing strategy.
+
+ROBOPARTS treats actuator economics as a measurable part of the complete robotic hardware supply chain rather than a fixed industry-wide percentage.
+
+14. ACTUATOR PROCUREMENT AND ENGINEERING WORKFLOW
+
+ROBOPARTS organizes actuator sourcing and engineering evaluation into a connected workflow.
+
+text
+ROBOT PROFILE
+     |
+     v
+JOINT REQUIREMENTS
+     |
+     v
+ACTUATOR SPECIFICATION
+     |
+     v
+COMPATIBILITY ASSESSMENT
+     |
+     v
+CANDIDATE COMPONENTS
+     |
+     v
+MANUFACTURER / SUPPLIER
+     |
+     v
+REQUEST FOR QUOTATION (RFQ)
+     |
+     v
+ENGINEERING REVIEW
+     |
+     v
+SAMPLE PROCUREMENT
+     |
+     v
+PERFORMANCE TESTING
+     |
+     v
+VERIFICATION
+     |
+     v
+PRODUCTION PROCUREMENT
+
+
+Each stage maintains its relationship to the original robot profile, joint requirements, actuator identity, and engineering documentation.
+
+This structure creates continuity between initial product discovery, technical evaluation, supplier selection, physical testing, and production sourcing.
+
+15. ADAPTIVE HARDWARE RELATIONSHIPS AND ROBOT CAPABILITY
+
+Actuator replacement, modification, or upgrading can change the physical characteristics and operating capabilities of a robot.
+
+ROBOPARTS maintains the relationship between:
+
+Previous actuator identity.
+Replacement actuator identity.
+Robot identity.
+Joint identity.
+Installation event.
+Configuration revision.
+Performance test.
+Verified capability.
+
+Every hardware change becomes part of the robot's component history.
+
+A replacement actuator may introduce changes in torque, speed, weight, electrical consumption, thermal requirements, and mechanical behavior.
+
+These changes are recorded against the affected joint and robot configuration.
+
+An actuator upgrade does not automatically establish an increase in verified robot capability.
+
+Any resulting capability change remains subject to engineering evaluation, system-level testing, and appropriate authorization.
+
+This approach maintains a traceable connection between the hardware installed in a robot and its documented performance.
+
+16. ROBOPARTS LONG-TERM TECHNICAL FOUNDATION
+
+The ROBOPARTS actuator framework establishes a common information structure connecting robotic components to their specifications, manufacturers, applications, compatibility records, and lifecycle history.
+
+Its proposed architecture supports several interconnected capabilities:
+
+Component Identity
+
+Persistent identification of actuators and their independently identifiable subcomponents.
+
+Engineering Standardization
+
+Consistent organization of mechanical, electrical, thermal, and performance specifications.
+
+Hardware Compatibility
+
+Structured evaluation of components against actual robotic joint requirements.
+
+Performance Verification
+
+Separation of manufacturer claims, measured results, and verified engineering performance.
+
+Supplier Intelligence
+
+Connections between actuator assemblies, component manufacturers, materials, and supply-chain relationships.
+
+Procurement Integration
+
+Continuity between component discovery, engineering review, quotations, testing, and production sourcing.
+
+Hardware Lifecycle Management
+
+Traceable records of component installation, replacement, modification, and performance history.
+
+The long-term objective is to create a connected hardware information framework that improves the identification, evaluation, sourcing, and management of robotic components.
+
+ROBOPARTS positions actuator identity as a foundational element of a broader robotic hardware standard.
+
+17. INTELLECTUAL PROPERTY AND ATTRIBUTION
+
+ROBOPARTS.ai is an original intellectual-property concept created by PITN.ai (Power In The Numbers).
+
+Founder and Author: Aaron Bailot
+Original Concept Owner: PITN.ai
+
+This document describes the proposed ROBOPARTS technical architecture for robotic actuator identity, component relationships, performance classification, compatibility assessment, sourcing, verification, and lifecycle management.
+
+The framework is intended to evolve through technical implementation, engineering development, testing, collaboration, and industry participation.
+
+All third-party motor technologies, gearbox designs, manufacturers, commercial products, technical specifications, and trademarks remain the property of their respective owners.
+
+The ROBOPARTS framework establishes its own proposed organizational and identification architecture for connecting these technologies within a consistent robotic hardware information system.
+
+END OF DOCUMENT
