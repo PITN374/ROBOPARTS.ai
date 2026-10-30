@@ -1,0 +1,466 @@
+ROBOPARTS.ai
+27-NAME PHYSICAL BOM NAMESPACE ARCHITECTURE
+
+Version: 1.0.0 Author: Aaron Bailot Founder: PITN — Power In The Numbers Project: ROBOPARTS.ai Parent Ecosystem: PITN.ai Document Type: Foundational Architecture Specification
+
+============================================================
+
+PURPOSE
+
+This document establishes the proposed 27-name Physical Bill of Materials (BOM) Namespace Architecture for ROBOPARTS.ai.
+
+ROBOPARTS provides a structured framework for identifying, classifying, organizing, connecting, and managing the physical components and assemblies that make up robotic systems.
+
+The architecture establishes standardized namespace classifications for the major physical elements of a robot, from the complete robotic system down to individual components and interconnects.
+
+Each namespace provides a designated classification entry point for associating physical components with their manufacturer information, product identity, part numbers, revisions, BOM positions, lot numbers, serial numbers, physical installations, and lifecycle records.
+
+The objective is to connect physical robotics hardware to persistent component identity and the information systems that describe it.
+
+============================================================
+
+THE 27-NAME PHYSICAL BOM ARCHITECTURE
+
+The following table establishes the proposed 27 namespaces and their primary manufacturer BOM functions.
+
+SYSTEM Namespace: .robotsystem Function: Top-level robot system and physical BOM boundary.
+ASSEMBLY Namespace: .roboticarm Function: Robotic arm assembly.
+ASSEMBLY Namespace: .roboticleg Function: Robotic leg assembly.
+ASSEMBLY Namespace: .robotichand Function: Robotic hand assembly.
+ASSEMBLY Namespace: .roboticwrist Function: Robotic wrist and associated subassemblies.
+MOTION Namespace: .actuator Function: Motors, servos, rotary actuators, linear actuators, and joint drives.
+MOTION Namespace: .reducer Function: Gearboxes, reduction mechanisms, and mechanical transmission systems.
+MOTION Namespace: .mechanicalinterface Function: Flanges, mounts, couplers, adapters, and mechanical connection interfaces.
+MOTION Namespace: .encoder Function: Position, velocity, and rotational feedback components.
+MECHANICAL Namespace: .fastener Function: Bolts, screws, nuts, washers, and mechanical fastening hardware.
+SENSING Namespace: .robotsensor Function: General robotic sensors and sensing devices.
+SENSING Namespace: .sensingmodule Function: Integrated sensing assemblies and sensor modules.
+SENSING Namespace: .torquesensor Function: Torque measurement and monitoring components.
+SENSING Namespace: .forcesensor Function: Force and load measurement components.
+SENSING Namespace: .forcetorque Function: Combined force and torque measurement systems.
+SAFETY Namespace: .safetysensor Function: Safety, presence, contact, and protective sensing components.
+CONTROL Namespace: .controlsystem Function: Robotic control hardware and control-system assemblies.
+CONTROL Namespace: .robotcontroller Function: Robot controllers, computing hardware, and input/output systems.
+ENERGY Namespace: .batterymodule Function: Battery assemblies and integrated battery modules.
+ENERGY Namespace: .batterycell Function: Individual battery cells.
+ENERGY Namespace: .powerconverter Function: Power conversion electronics and electrical power management components.
+VISION Namespace: .visionmodule Function: Integrated robotic vision assemblies.
+VISION Namespace: .visionsensor Function: Vision sensing hardware.
+VISION Namespace: .cameramodule Function: Camera, depth-camera, stereo-camera, and imaging assemblies.
+INTERACTION Namespace: .endeffector Function: End effectors, robotic tools, grippers, and task-specific interaction hardware.
+INTERACTION Namespace: .toolchanger Function: Robotic tool-changing mechanisms and associated assemblies.
+INTERCONNECT Namespace: .cableharness Function: Electrical wiring, communication cables, and physical cable harness assemblies.
+
+============================================================
+
+FUNCTIONAL ARCHITECTURE
+
+The 27 namespaces operate within a hierarchical physical BOM structure.
+
+                     .robotsystem
+                          |
+         +----------------+----------------+
+         |                |                |
+   .roboticarm      .roboticleg      .robotichand
+         |                |                |
+         +-------- .roboticwrist -----------+
+                          |
+                   PHYSICAL BOM
+                          |
+   +--------------+-------+--------+-------------+
+   |              |       |        |             |
+ MOTION         SENSING CONTROL   ENERGY        VISION
+   |              |       |        |             |
+
+
+.actuator .robotsensor .controlsystem .batterymodule .visionmodule .reducer .sensingmodule .robotcontroller .batterycell .visionsensor .mechanicalinterface .torquesensor .powerconverter .cameramodule .encoder .forcesensor .fastener .forcetorque .safetysensor | +---------------- INTERACTION | | | .endeffector | .toolchanger | +---------------- INTERCONNECT | .cableharness
+
+The physical BOM establishes the relationships between complete robotic systems, assemblies, functional subsystems, and individual physical components.
+
+A component may belong to more than one functional relationship depending on its physical installation, design, and application.
+
+The architecture is intended to support hierarchical BOM relationships without restricting components to a single operational role.
+
+============================================================
+
+SEVEN BROWSER CATEGORIES
+
+For public ROBOPARTS browsing and component discovery, the 27 namespaces are organized into seven primary browser categories.
+
+CATEGORY 1: CORE SYSTEM
+
+.robotssystem .roboticarm .roboticleg .robotichand .roboticwrist .fastener .cableharness
+
+Primary function: Physical robot structure, major assemblies, fastening hardware, and interconnects.
+
+CATEGORY 2: ACTUATORS
+
+.actuator .reducer .mechanicalinterface .encoder
+
+Primary function: Movement, torque generation, mechanical transmission, joint interfaces, and motion feedback.
+
+CATEGORY 3: SENSORS
+
+.robotsensor .sensingmodule .torquesensor .forcesensor .forcetorque .safetysensor
+
+Primary function: Measurement, perception-related sensing, force feedback, and safety-related detection.
+
+CATEGORY 4: CONTROLLERS
+
+.controlsystem .robotcontroller
+
+Primary function: Control hardware, computing, command execution, and input/output infrastructure.
+
+CATEGORY 5: POWER SYSTEMS
+
+.batterymodule .batterycell .powerconverter
+
+Primary function: Energy storage, battery assemblies, electrical power conversion, and distribution.
+
+CATEGORY 6: VISION MODULES
+
+.visionmodule .visionsensor .cameramodule
+
+Primary function: Imaging, visual perception hardware, camera assemblies, and vision infrastructure.
+
+CATEGORY 7: GRIPPERS
+
+.endeffector .toolchanger
+
+Primary function: Physical interaction, robotic manipulation, task-specific tools, and end-effector exchange.
+
+The seven browser categories provide a simplified discovery interface while retaining the underlying 27-name physical BOM classification architecture.
+
+NOTE:
+
+The browser categories are a presentation and discovery structure.
+
+The 27 namespaces are the proposed physical component classification structure.
+
+These two levels should remain separately identifiable.
+
+============================================================
+
+BROWSER STRUCTURE
+                       PITN
+                        |
+       +----------------+----------------+
+       |                |                |
+       v                v                v
+  CORE SYSTEM       ACTUATORS         SENSORS
+       |                |                |
+   robotsystem        actuator         robotsensor
+   roboticarm         reducer          sensingmodule
+   roboticleg         mechanicalinterface torquesensor
+   robotichand        encoder          forcesensor
+   roboticwrist                        forcetorque
+   fastener                            safetysensor
+   cableharness
+       |
+       +---------------+----------------+
+       |               |                |
+       v               v                v
+   CONTROLLERS     POWER SYSTEMS    VISION MODULES
+       |               |                |
+   controlsystem   batterymodule    visionmodule
+   robotcontroller batterycell      visionsensor
+                   powerconverter   cameramodule
+       |
+       +------------------------------+
+                                      |
+                                      v
+                                   GRIPPERS
+                                      |
+                                  endeffector
+                                  toolchanger
+
+
+PITN provides the broader persistent identity and relationship infrastructure.
+
+ROBOPARTS organizes the physical robotics component classifications and their relationships.
+
+============================================================
+
+ARCHITECTURAL LOGIC
+
+The seven browser categories correspond to the major physical functions of a robotic machine.
+
+CORE SYSTEM: Structure, assemblies, physical organization, and interconnect.
+
+ACTUATORS: Movement, mechanical force, torque, and motion transmission.
+
+SENSORS: Measurement, feedback, force detection, and safety-related sensing.
+
+CONTROLLERS: Computation, control hardware, and command infrastructure.
+
+POWER SYSTEMS: Energy storage, conversion, and electrical distribution.
+
+VISION MODULES: Visual sensing, imaging, and perception hardware.
+
+GRIPPERS: Physical interaction, manipulation, and task-specific tooling.
+
+The overall functional relationship can be represented as:
+
+              PHYSICAL MACHINE
+                     |
+         +-----------+-----------+
+         |           |           |
+       POWER       CONTROL     SENSING
+         |           |           |
+         +-----------+-----------+
+                     |
+                   MOTION
+                     |
+                   VISION
+                     |
+                INTERACTION
+                     |
+                PHYSICAL WORK
+
+
+This is a conceptual functional relationship, not a mandatory sequence of physical operation.
+
+The actual architecture and control dependencies depend on the robot's design and application.
+
+============================================================
+
+CORE MANUFACTURER IDENTITY CHAIN
+
+Every namespace should support relationships to the underlying manufacturer and physical component records.
+
+The proposed manufacturer identity chain is:
+
+NAMESPACE | v ASSEMBLY / COMPONENT | v PART | v MANUFACTURER | v MANUFACTURER PART NUMBER (MPN) | v DISTRIBUTOR SKU | v BOM POSITION | v REVISION / CONFIGURATION | v MANUFACTURING LOT / SERIAL | v PHYSICAL ASSET | v TEST / CALIBRATION | v INSTALLATION | v SERVICE / LIFECYCLE | v PERSISTENT DIGITAL IDENTITY
+
+This chain provides a conceptual foundation for connecting manufacturer records, commercial identifiers, engineering information, and individual physical assets.
+
+The manufacturer's original part number, distributor SKU, engineering revision, and physical serial number should remain preserved as distinct source identifiers.
+
+A ROBOPARTS/PITN identity is intended to connect these identifiers rather than replace them.
+
+============================================================
+
+PERSISTENT COMPONENT IDENTITY
+
+The namespace is the classification entry point.
+
+Persistent component identity is the infrastructure.
+
+The relationships are where the value accumulates.
+
+A component identity may connect:
+
+Namespace classification
+Component designation
+Manufacturer identity
+Manufacturer part number
+Product model
+Distributor SKU
+Engineering revision
+Manufacturing lot
+Individual serial number
+Physical installation
+Robot and subsystem association
+Testing and calibration
+Service and maintenance
+Replacement and lifecycle history
+
+The persistent identity concept is intended to maintain continuity of reference even when commercial identifiers, ownership, sourcing relationships, or installation locations change.
+
+Replacement, refurbishment, and revision changes should be recorded through traceable relationships rather than silently overwriting historical records.
+
+The implementation must distinguish between a product or part designation and an individual serialized physical component.
+
+============================================================
+
+HUMANOID ROBOTICS APPLICATION
+
+The 27-name physical BOM architecture is particularly relevant to humanoid robotics.
+
+A humanoid robot may contain:
+
+Hip actuators
+Knee actuators
+Shoulder actuators
+Elbow actuators
+Wrist actuators
+Robotic hands
+Grippers
+Encoders
+Torque sensors
+Force sensors
+Cameras
+Vision modules
+Controllers
+Batteries
+Power converters
+Cable harnesses
+Mechanical interfaces
+Structural assemblies
+
+Each physical component may have its own manufacturer, product model, part number, revision, lot number, serial number, installation requirements, and service history.
+
+ROBOPARTS provides a proposed structure for relating these individual components to the humanoid's physical BOM and overall identity.
+
+For actuator-related components, relevant information may include:
+
+Continuous torque
+Peak torque
+Torque density
+Motor speed
+Gear ratio
+Rotor inertia
+Backdrivability
+Backlash
+Shock tolerance
+Thermal performance
+Electrical requirements
+Mechanical dimensions
+Installation envelope
+Mass
+Encoder requirements
+Controller compatibility
+Cooling requirements
+
+These attributes can help connect individual component specifications to joint-level requirements and complete robotic system capabilities.
+
+============================================================
+
+COMPONENT ACCOUNTABILITY, TRACEABILITY AND RECALL
+
+ROBOPARTS is intended to support traceable relationships between component identity, manufacturer, product revision, manufacturing lot, serial number, installation history, and affected robotic systems.
+
+These relationships can provide a foundation for:
+
+Identifying potentially affected components.
+Tracing component installation locations.
+Identifying robotic systems containing affected components.
+Recording maintenance and corrective actions.
+Coordinating authorized replacement.
+Maintaining service and lifecycle records.
+Supporting recall investigations.
+Preserving component accountability.
+
+Future implementations may incorporate component safety status, recall notifications, authorization controls, and restrictions on continued use.
+
+Safety-critical disablement or kill-switch functionality must be implemented through validated control systems and authorized safety mechanisms.
+
+A namespace or digital identity alone does not physically disable a component.
+
+============================================================
+
+WEB3 NAMESPACE AND ADDRESSING DIRECTION
+
+The 27-name architecture establishes proposed human-readable namespace classifications for physical robotics components and assemblies.
+
+Examples include:
+
+.actuator .encoder .endeffector .robotsystem .robotcontroller .batterymodule .visionmodule
+
+These names may provide classification and addressing entry points within a future interoperable digital identity architecture.
+
+Potential applications include:
+
+Component identity resolution.
+Digital passport references.
+Manufacturer and product relationships.
+Cross-platform component identification.
+Lifecycle record association.
+Digital twin relationships.
+Authorized identity verification.
+Web2-to-Web3 identity interoperability.
+
+The namespaces documented here are proposed architectural classifications.
+
+Their publication does not, by itself, establish registration as decentralized identifiers, blockchain assets, or functioning Web3 domain names.
+
+Actual registration, resolution, ownership, authorization, and interoperability require defined technical protocols and implementation.
+
+============================================================
+
+RELATIONSHIP TO THE PITN ECOSYSTEM
+
+ROBOPARTS is a core physical-component information layer within the broader PITN robotics ecosystem.
+
+The complementary architecture is:
+
+PITN.ai | v PERSISTENT COMPONENT IDENTITY | v ROBOPARTS.ai | v PHYSICAL COMPONENTS / HARDWARE | v ROBOT CAPABILITIES | v RoboTraits.ai | v ROBOT CHARACTERISTICS / BEHAVIORAL PROFILES | v RoboAgentic.ai | v INTELLIGENT AGENT IMPLEMENTATION
+
+PITN provides the broader identity and relationship infrastructure.
+
+ROBOPARTS provides physical component classification, identity relationships, capabilities, and lifecycle context.
+
+RoboTraits provides complementary descriptive and behavioral-profile concepts.
+
+RoboAgentic provides complementary intelligent-agent implementation concepts.
+
+These are distinct architectural roles intended to interoperate within the broader ecosystem.
+
+============================================================
+
+IMPLEMENTATION PRINCIPLES
+
+The proposed 27-name architecture is intended to follow these principles:
+
+Preserve manufacturer source identifiers.
+Distinguish product identity from individual physical identity.
+Maintain traceable BOM relationships.
+Support hierarchical assemblies and component relationships.
+Preserve revision and configuration history.
+Connect components to their physical robotic installations.
+Support component compatibility and capability information.
+Maintain lifecycle and service relationships.
+Distinguish declared specifications from tested and verified performance.
+Support future interoperability with existing ERP, PLM, MES, CAD, procurement, quality, and service systems.
+Support future digital identity and Web3 addressing implementations.
+Maintain appropriate authorization and safety boundaries.
+
+The architecture is intended to complement existing enterprise systems rather than require their replacement.
+
+============================================================
+
+FOUNDATIONAL ARCHITECTURAL PROPOSITION
+
+A robotic system is not simply one machine.
+
+It is an interconnected collection of physical components, assemblies, subsystems, and supporting infrastructure.
+
+Each component may have its own manufacturer, commercial identity, technical specifications, installation requirements, performance characteristics, and lifecycle.
+
+ROBOPARTS establishes a proposed 27-name Physical BOM Namespace Architecture to organize these relationships.
+
+The objective is to connect the physical component to the information that describes it and preserve those relationships throughout its lifecycle.
+
+From an individual actuator to a complete humanoid robot, the same architectural principle applies.
+
+IDENTIFY THE COMPONENT. CONNECT ITS RELATIONSHIPS. UNDERSTAND ITS CAPABILITIES. PRESERVE ITS HISTORY. MAINTAIN ITS ACCOUNTABILITY.
+
+============================================================
+
+AUTHORSHIP AND INTELLECTUAL PROPERTY ATTRIBUTION
+
+Project: ROBOPARTS.ai
+
+Author: Aaron Bailot
+
+Founder: PITN — Power In The Numbers
+
+PITN.ai: https://pitn.ai/
+
+ROBOPARTS.ai: https://roboparts.ai/
+
+Power In The Numbers: https://powerinthenumbers.ai/
+
+Public Repository: https://github.com/PITN374/pitn-roboparts-pilot
+
+ROBOPARTS.ai is an original intellectual property concept associated with PITN — Power In The Numbers.
+
+This document records the proposed 27-name Physical BOM Namespace Architecture, its functional classifications, and its intended relationships to persistent component identity and robotic systems.
+
+Copyright and other intellectual property rights, where applicable, remain subject to the governing law and the project's applicable repository license and publication terms.
+
+END OF DOCUMENT
+
+ROBOPARTS.ai PITN — POWER IN THE NUMBERS
+
+THERE IS POWER IN THE NUMBERS.
