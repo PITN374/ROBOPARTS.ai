@@ -1,0 +1,470 @@
+ROBOTRAITS.ai / ROBOAGENTIC.ai — TECHNICAL MODEL
+
+Document ID: PITN-AGENT-001
+Version: 1.0
+Status: Proposed Technical Specification
+Parent Project: PITN.ai
+
+1. Purpose
+
+Define the relationship between structured robotics information, configurable behavioral intelligence, AI-powered agents, memory, task matching, and authorized robot interaction.
+
+2. ROBOTRAITS — Core Data Model
+
+ROBOTRAITS provides structured descriptions of robots, components, software agents, capabilities, constraints, behavior, and performance.
+
+2.1 Profile Categories
+
+Identity
+
+Persistent identifiers.
+Manufacturer.
+Model.
+Revision.
+Ownership.
+Provenance.
+
+Physical
+
+Mass.
+Dimensions.
+Mobility.
+Payload.
+Range.
+Balance.
+Mechanical limitations.
+
+Sensors
+
+Cameras.
+Microphones.
+LiDAR.
+IMUs.
+Force sensors.
+Tactile sensors.
+Proximity sensors.
+
+Actuators
+
+Motors.
+Joints.
+Integrated actuators.
+Linear actuators.
+Hands.
+Grippers.
+End effectors.
+
+Capabilities
+
+Perception.
+Recognition.
+Navigation.
+Manipulation.
+Conversation.
+Planning.
+Learning.
+Supported tasks.
+
+Behavior
+
+Decision patterns.
+Observable actions.
+Context-dependent behavior.
+Task preferences.
+
+Personality
+
+Configurable behavioral dimensions.
+Archetypes.
+Trait weights.
+Activation conditions.
+
+Interaction
+
+Voice.
+Speech rate.
+Tone.
+Gestures.
+Turn-taking.
+Communication style.
+
+Cognition
+
+Planning depth.
+Verification tendencies.
+Risk sensitivity.
+Persistence.
+Uncertainty handling.
+
+Memory
+
+Task context.
+Episodic memory.
+Semantic knowledge.
+Conversation history.
+Authorized preferences.
+
+Safety
+
+Operating limits.
+Permissions.
+Restricted actions.
+Override references.
+Safety-system information.
+
+Interfaces
+
+ROS.
+Manufacturer SDKs.
+APIs.
+WebSocket.
+gRPC.
+Simulation interfaces.
+
+Performance
+
+Accuracy.
+Precision.
+Latency.
+Reliability.
+Speed.
+Payload.
+Task success.
+Battery life.
+
+Digital Twin
+
+Hardware configuration.
+Software version.
+State.
+Performance.
+Maintenance.
+Identity relationships.
+
+Lifecycle
+
+Deployment.
+Training.
+Maintenance.
+Updates.
+Configuration.
+Retirement.
+3. Trait Schema
+
+Each trait should support:
+
+trait_id
+trait_name
+trait_category
+definition
+measurement_method
+value
+unit
+confidence, where supported
+context
+activation_conditions
+behavioral_effects
+constraints
+version
+provenance
+verification_status
+
+Required and optional fields must be defined through versioned schemas.
+
+Manufacturer extensions must not break the common ontology.
+
+4. Verification Status
+
+Supported states:
+
+DECLARED
+INFERRED
+VERIFIED
+DISPUTED
+UNVERIFIED
+
+These describe evidence status, not personality values or confidence scores.
+
+A manufacturer-declared rating is not equivalent to an independently measured result.
+
+5. Physical Capabilities and Behavioral Profiles
+
+Physical identity and personality configuration must remain separate.
+
+One physical robot may support multiple behavioral profiles.
+
+Changing personality cannot:
+
+Increase recorded physical torque.
+Expand physical operating range.
+Increase rated payload.
+Override mechanical limitations.
+Grant additional permissions.
+Modify independent safety policies.
+6. Personality Model
+
+Potential behavioral dimensions:
+
+Curiosity
+Patience
+Sociability
+Assertiveness
+Cooperation
+Persistence
+Caution
+Adaptability
+Formality
+Playfulness
+Task orientation
+Expressiveness
+Independence
+Helpfulness
+Exploration
+Verification
+Creativity
+Responsiveness
+
+A normalized 0.0–1.0 scale is a proposed starting convention.
+
+Each scale requires an explicit definition and behavioral evaluation method.
+
+7. Personality Archetypes
+
+Potential configurations:
+
+Strategic Mastermind.
+Analytical Researcher.
+Creative Innovator.
+Human-Centered Visionary.
+Creative Individualist.
+Collaborative Mentor.
+Enthusiastic Explorer.
+Precision Guardian.
+Protective Caregiver.
+Operational Organizer.
+Community Coordinator.
+Technical Engineer.
+Adaptive Artist.
+Autonomous Operator.
+Social Companion.
+
+Archetypes are configurable behavioral presets, not fixed identities or claims of consciousness.
+
+Multiple archetypes may be combined through defined weights and activation rules.
+
+8. Behavioral Evaluation
+
+The initial experiment should:
+
+Define a versioned trait schema.
+Create two substantially different profiles.
+Use the same AI model and task.
+Control other relevant variables.
+Define observable metrics.
+Repeat trials.
+Measure response consistency.
+Evaluate interruptions and verification.
+Measure task success.
+Record safety-policy compliance.
+
+Behavioral effects remain hypotheses until demonstrated.
+
+9. ROBOAGENTIC — Agent Architecture
+
+Proposed specialized agent responsibilities:
+
+Discovery Agent: Supplier and component discovery.
+
+Contact Agent: Public business contact research and provenance.
+
+Classification Agent: Component and supplier classification.
+
+Verification Agent: Evidence quality and conflicting claims.
+
+Matching Agent: Explainable commercial and technical matching.
+
+RFQ Agent: Preparation of structured sourcing requests.
+
+Robot-Profile Agent: Retrieval and interpretation of ROBOTRAITS profiles.
+
+Reasoning and Planning Agent: AI-assisted reasoning and planning.
+
+Memory and Context Agent: Authorized context and memory management.
+
+Interaction Agent: Dialogue and personalization.
+
+Robot-Integration Agent: Approved platform-specific actions.
+
+Policy Agent: Authorization and restrictions.
+
+Reporting Agent: Results, errors, and audit reporting.
+
+These are logical roles and do not require separate deployed services.
+
+10. Agent Identity
+
+A registered agent should contain:
+
+agent_id
+identity
+owner_or_responsible_organization
+software_version
+interface_versions
+declared_capabilities
+dependencies
+available_tools
+data_sources
+requested_permissions
+approved_permissions
+policy_version
+credential_status
+expiration
+registration_history
+revocation_history
+audit_references
+
+Declared capabilities never automatically grant permissions.
+
+11. Behavioral Input Model
+
+Conceptual model:
+
+BEHAVIOR = f( PERSONALITY, MEMORY, CONTEXT, TASK, ENVIRONMENT, AI MODEL, CURRENT STATE, SAFETY CONSTRAINTS )
+
+These inputs must remain separately governed.
+
+Core behavioral configuration, task instructions, persistent memory, learned model parameters, user preferences, and safety policies must not be conflated.
+
+12. Memory and Personalization
+
+Potential memory categories:
+
+Short-term task context.
+Conversation history.
+Episodic memory.
+Semantic knowledge.
+User preferences.
+Environmental information.
+Task history.
+
+Memory requirements:
+
+Explicit access controls.
+Authorized retrieval.
+Appropriate retention.
+Review and correction controls.
+Deletion mechanisms.
+Change history.
+Reversible preference updates where appropriate.
+
+Learning from interactions must not silently modify safety-critical policies or physical limits.
+
+13. Capability and Task Matching
+
+Proposed workflow:
+
+Task Requirements
+→ Profile Retrieval
+→ Capability Matching
+→ Performance Evidence Review
+→ Constraint Evaluation
+→ Authorization and Safety Check
+→ Optional Behavioral Preference Matching
+→ Explained Results.
+
+Each requirement should receive a result such as:
+
+SATISFIED
+NOT_SATISFIED
+UNRESOLVED
+NOT_APPLICABLE
+
+The result must identify supporting evidence and missing information.
+
+Personality cannot compensate for a missing physical capability.
+
+14. Authorization Model
+
+The policy service must evaluate:
+
+Agent identity.
+Agent status.
+Requested operation.
+Target resource.
+Approved permissions.
+Credential validity.
+Contextual restrictions.
+Policy version.
+Expiration.
+Required approvals.
+Revocation state.
+
+Decision:
+
+PERMITTED
+DENIED
+UNRESOLVED
+
+Missing, expired, or revoked permission cannot be interpreted as approval.
+
+15. Robot Integration
+
+Proposed integration:
+
+ROBOTRAITS Profile
+→ ROBOAGENTIC
+→ Reasoning and Planning
+→ Context and Memory
+→ Behavior Selection
+→ Universal Robot Interface
+→ Robot-Specific Adapter
+→ Approved Middleware or Manufacturer SDK
+→ Simulated or Physical Robot.
+
+Adapter responsibilities:
+
+Validate action parameters.
+Check relevant configuration.
+Enforce authorization.
+Translate supported commands.
+Report execution results.
+Record audit metadata.
+Respect independent safety mechanisms.
+16. Physical Safety Boundary
+
+The architecture must distinguish software permission revocation, workflow restriction, and physical emergency stopping.
+
+A software API, AI model, remote service, or ordinary application flag must not be represented as a certified safety-rated emergency stop.
+
+Physical deployment requires platform-specific engineering and validation.
+
+17. Initial Technical Demonstration
+
+Demonstrate:
+
+Robot-profile registration.
+ROBOTRAITS validation.
+Agent registration.
+Authorized profile retrieval.
+Prohibited operation denial.
+Permission revocation.
+Historical configuration update.
+Audit record retrieval.
+
+Use simulated actions initially.
+
+18. Future Extensions
+
+Potential later development:
+
+Multiple AI providers.
+Multilingual interaction.
+Reinforcement learning.
+Digital twins.
+Multi-robot coordination.
+Simulation frameworks.
+Advanced memory.
+Behavioral benchmarking.
+Physical robot adapters.
+
+Each extension requires an explicit scope and acceptance criteria.
