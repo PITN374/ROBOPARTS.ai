@@ -1,0 +1,890 @@
+RoboParts.ai v1.0.0
+Introducing the Physical Hardware Identity, Intelligence & Accountability Infrastructure for Robotics
+
+Founder: Aaron Bailot
+Parent Ecosystem: PITN.ai — Power in the Numbers
+Project: RoboParts.ai
+Development Stage: Stage 1 — Architecture and Prototype Development
+Release: Public Project Introduction
+Original Repository: https://github.com/PITN374/pitn-roboparts-pilot
+
+INTRODUCING ROBOPARTS.ai
+Building the Digital Identity, Intelligence, and Accountability Infrastructure for Robotics
+
+Robotics is entering a new era.
+
+Humanoid robots, autonomous machines, industrial robotics, and intelligent robotic systems are becoming increasingly sophisticated. As these systems evolve, so does the complexity of the physical hardware that makes them possible.
+
+Every robot is an interconnected system of actuators, motors, reducers, sensors, controllers, batteries, processors, structural assemblies, wiring, vision systems, end effectors, and countless individual components.
+
+Yet the information associated with these components remains fragmented.
+
+Manufacturer specifications, product revisions, mechanical interfaces, electrical requirements, compatibility information, individual serial numbers, installation records, maintenance histories, and recall information are often distributed across disconnected manufacturer databases, supplier catalogs, engineering documentation, and internal systems.
+
+RoboParts.ai is being developed to address this infrastructure gap.
+
+The objective is to establish a structured digital platform connecting the physical components of robotic systems to their manufacturers, individual identities, assemblies, robot configurations, capabilities, and complete recorded lifecycles.
+
+RoboParts.ai is intended to become more than a conventional robotics parts directory.
+
+It is designed to provide the physical hardware identity and accountability layer for a broader robotics ecosystem.
+
+1. THE PROBLEM ROBOPARTS.ai SEEKS TO SOLVE
+
+A robot is not simply a single product.
+
+It is an interconnected physical system assembled from components manufactured by different companies, sourced through different suppliers, and integrated into complex mechanical, electrical, and computational architectures.
+
+Consider a humanoid robot.
+
+Its physical architecture may include:
+
+Hip, knee, ankle, shoulder, elbow, and wrist actuators.
+Integrated rotary drives.
+Frameless motors.
+Harmonic, planetary, and cycloidal reduction systems.
+Encoders and position feedback devices.
+Torque and force sensors.
+Robotic hands and end effectors.
+Controllers and computing hardware.
+Battery assemblies and power electronics.
+Cameras and vision systems.
+Safety-related sensors and control hardware.
+Mechanical interfaces, fasteners, and cable harnesses.
+
+Each component has its own manufacturer, product model, part number, revision, specifications, and potentially an individual serial number.
+
+When a component is installed in a robot, it becomes part of a larger physical configuration.
+
+When it is replaced, upgraded, recalled, repaired, or retired, that history should remain traceable.
+
+RoboParts.ai is being designed around this principle:
+
+Every designated physical component should have an identifiable relationship to the robot in which it is installed and a traceable history throughout its lifecycle.
+
+This creates a foundation for hardware accountability that extends beyond product discovery and sourcing.
+
+2. THE ROBOPARTS.ai CONCEPT
+
+RoboParts.ai is being developed around six interconnected architectural functions.
+
+2.1 Robotics Component Intelligence
+
+A structured catalog organizing robotic hardware by:
+
+Component classification.
+Manufacturer.
+Product family.
+Product model.
+Manufacturer part number.
+Product revision.
+Mechanical specifications.
+Electrical specifications.
+Performance characteristics.
+Communication interfaces.
+Operating limits.
+Compatibility.
+Documentation and verification status.
+
+Initial development priorities include humanoid actuators, integrated rotary modules, quasi-direct-drive systems, harmonic drives, planetary gear systems, cycloidal reducers, frameless motors, linear actuators, controllers, sensors, robotic hands, and associated hardware.
+
+2.2 Digital Component Identity
+
+A commercial product model and an individual physical component are not the same thing.
+
+RoboParts.ai distinguishes between:
+
+Manufacturer.
+Product family.
+Product model.
+Product revision.
+Manufacturer part number.
+Commercial SKU.
+Individual serialized component.
+Internal RoboParts component identifier.
+Physical robot assignment.
+
+For example:
+
+Field	Example
+Manufacturer	Example Manufacturer
+Product Model	Example-01
+Revision	B
+Manufacturer Serial Number	SN-123456
+RoboParts Component ID	RP-000001
+Robot Assignment	ROBOT-0001
+
+The internal RoboParts identifier remains distinct from the manufacturer's serial number.
+
+The objective is to establish an identifiable digital record for each designated physical component.
+
+2.3 Robot-Specific Bills of Materials
+
+RoboParts.ai is designed to connect individual components to complete robotic systems through structured, versioned Bills of Materials (BOMs).
+
+The intended relationship is:
+
+text
+ROBOT
+└── SUBSYSTEM
+    └── ASSEMBLY
+        └── COMPONENT
+            └── PRODUCT MODEL
+                └── MANUFACTURER
+                    └── SERIALIZED PHYSICAL UNIT
+
+
+This enables a robot's recorded hardware configuration to be reconstructed.
+
+It also allows individual component replacements to be recorded without changing the identity of the robot or erasing the history of the removed component.
+
+2.4 Compatibility and Engineering Intelligence
+
+Component compatibility involves more than identifying products that appear similar.
+
+It requires consideration of:
+
+Mechanical dimensions and mounting interfaces.
+Torque and force requirements.
+Continuous and peak operating conditions.
+Thermal performance.
+Voltage and current requirements.
+Motors, encoders, brakes, and controllers.
+Wiring and connector interfaces.
+Communication protocols.
+Firmware and driver support.
+Environmental operating conditions.
+
+RoboParts.ai is intended to distinguish verified compatibility from proposed compatibility, conditional compatibility, unknown compatibility, and incompatibility.
+
+Missing information must not be interpreted as proof that two components are compatible.
+
+2.5 Lifecycle and Accountability
+
+The platform is designed to maintain component histories from initial sourcing through:
+
+Product selection.
+Supplier sourcing.
+Quotation and purchasing.
+Sample evaluation.
+Receiving inspection.
+Component registration.
+Robot installation.
+Operational history.
+Fault reporting.
+Maintenance.
+Replacement.
+Recall management.
+Retirement.
+
+A particularly important long-term objective is the ability to identify which individual robots contain affected components when manufacturers issue recalls or safety-related notices.
+
+2.6 Hardware-Aware Robotics Intelligence
+
+Physical hardware determines what a robot can actually do.
+
+RoboParts.ai is intended to provide verified hardware information to other systems within the PITN.ai ecosystem.
+
+This creates a connection between physical component identity, installed hardware, robot capabilities, operational information, and intelligent-agent systems.
+
+The objective is to distinguish theoretical capabilities from capabilities supported by actual installed and verified hardware.
+
+3. THE 27-NAME PHYSICAL BOM ARCHITECTURE
+
+A central part of the RoboParts.ai architecture is its proposed 27-Name Physical BOM Architecture.
+
+This establishes a structured namespace framework for identifying the major physical assemblies and component classes that make up robotic systems.
+
+The architecture is intended to support consistent manufacturer data organization, product classification, BOM relationships, component identification, and future database development.
+
+Each namespace identifies a physical hardware category or assembly function.
+
+3.1 The 27 Physical BOM Namespaces
+#	Layer	Namespace	Primary BOM Function
+1	SYSTEM	robotsystem	Top-level robot system and BOM boundary
+2	ASSEMBLY	roboticarm	Arm assembly
+3	ASSEMBLY	roboticleg	Leg assembly
+4	ASSEMBLY	robotichand	Hand assembly
+5	ASSEMBLY	roboticwrist	Wrist and subassembly
+6	MOTION	actuator	Motors, servos, joint drives
+7	MOTION	reducer	Gearboxes and reduction mechanisms
+8	MOTION	mechanicalinterface	Flanges, mounts, couplers, adapters
+9	MOTION	encoder	Position and velocity feedback
+10	MECHANICAL	fastener	Bolts, screws, nuts, washers
+11	SENSING	robotsensor	General robot sensors
+12	SENSING	sensingmodule	Integrated sensing assemblies
+13	SENSING	torquesensor	Torque measurement
+14	SENSING	forcesensor	Force and load measurement
+15	SENSING	forcetorque	Combined force and torque sensing
+16	SAFETY	safetysensor	Safety, presence, and contact sensing
+17	CONTROL	controlsystem	Control hardware and systems
+18	CONTROL	robotcontroller	Robot controller, computing, and I/O
+19	ENERGY	batterymodule	Battery assemblies
+20	ENERGY	batterycell	Individual battery cells
+21	ENERGY	powerconverter	Power conversion electronics
+22	VISION	visionmodule	Integrated vision assemblies
+23	VISION	visionsensor	Vision sensing hardware
+24	VISION	cameramodule	Camera, depth, and stereo assemblies
+25	INTERACTION	endeffector	End effectors, tools, and grippers
+26	INTERACTION	toolchanger	Tool-changing mechanisms
+27	INTERCONNECT	cableharness	Cable and wiring harness assemblies
+
+These 27 namespaces provide the proposed foundation for organizing physical robotic hardware.
+
+They are intended to support a consistent classification structure across different robot types, manufacturers, and component architectures.
+
+3.2 Seven Major Browser Categories
+
+The 27 namespaces are also organized into seven major browser categories.
+
+This provides a more accessible way to navigate the physical hardware architecture.
+
+Browser Category	Namespaces	Core Function
+CORE SYSTEM	robotsystem, roboticarm, roboticleg, robotichand, roboticwrist, fastener, cableharness	Physical robot structure and interconnect
+ACTUATORS	actuator, reducer, mechanicalinterface, encoder	Motion generation and transmission
+SENSORS	robotsensor, sensingmodule, torquesensor, forcesensor, forcetorque, safetysensor	Measurement, feedback, and sensing
+CONTROLLERS	controlsystem, robotcontroller	Computation, control, and I/O
+POWER SYSTEMS	batterymodule, batterycell, powerconverter	Energy storage and conversion
+VISION MODULES	visionmodule, visionsensor, cameramodule	Visual perception hardware
+GRIPPERS	endeffector, toolchanger	Physical interaction and manipulation
+
+The seven browser categories correspond to the major physical functions of a robotic machine:
+
+CORE SYSTEM → Structure and interconnect.
+ACTUATORS → Motion.
+SENSORS → Measurement and feedback.
+CONTROLLERS → Computation and control.
+POWER SYSTEMS → Energy.
+VISION MODULES → Perception.
+GRIPPERS → Physical interaction.
+
+This organization is intended to make the platform navigable while maintaining a consistent underlying physical BOM classification.
+
+3.3 Functional Architecture
+
+The proposed functional relationship is:
+
+text
+PHYSICAL ROBOT SYSTEM
+│
+└── .robotsystem
+    │
+    ├── .roboticarm
+    ├── .roboticleg
+    ├── .robotichand
+    └── .roboticwrist
+        │
+        └── PHYSICAL BOM
+            │
+            ├── MOTION
+            ├── SENSING
+            ├── CONTROL
+            ├── ENERGY
+            ├── VISION
+            ├── INTERACTION
+            └── INTERCONNECT
+
+
+The architecture is intended to support hierarchical relationships between complete robot systems, assemblies, individual components, and their associated manufacturer records.
+
+The actual physical configuration of each robot determines which assemblies and components are present.
+
+The architecture does not assume that every robot contains every category or that mirrored assemblies necessarily contain identical components.
+
+3.4 The Manufacturer Identity Chain
+
+An important part of the proposed architecture is the connection between component classification and manufacturer-level identification.
+
+The manufacturer data chain is:
+
+text
+NAMESPACE
+    ↓
+ASSEMBLY / COMPONENT
+    ↓
+PART
+    ↓
+MANUFACTURER
+    ↓
+MANUFACTURER PART NUMBER (MPN)
+    ↓
+SKU
+    ↓
+BOM POSITION
+    ↓
+REVISION / CONFIGURATION
+    ↓
+LOT / SERIAL
+    ↓
+PHYSICAL ASSET
+    ↓
+TEST / CALIBRATION
+    ↓
+SERVICE / LIFECYCLE
+    ↓
+DIGITAL IDENTITY
+
+
+This chain is intended to connect the commercial identity of a product with the individual physical unit installed in a robot.
+
+It also establishes the foundation for tracing a component through its complete recorded history.
+
+A product catalog identifies what can be purchased.
+
+A physical BOM identifies what is intended to be installed.
+
+A serialized component record identifies which actual physical unit is installed.
+
+A lifecycle record documents what happens to that unit over time.
+
+RoboParts.ai is designed to connect all four.
+
+4. WHY THE PHYSICAL BOM ARCHITECTURE MATTERS
+
+As robotic systems become more complex, component classification and identity become increasingly important.
+
+A consistent physical BOM architecture can provide a common organizational foundation for:
+
+Robotics manufacturers.
+Component manufacturers.
+Engineering teams.
+Robotics suppliers and distributors.
+System integrators.
+Research laboratories.
+Maintenance organizations.
+Digital twin developers.
+Intelligent robotics platforms.
+
+The 27-name framework is intended to create consistency between product classification, manufacturer information, physical assemblies, and individual component records.
+
+It also creates a foundation for future manufacturer integrations and structured component data exchange.
+
+The long-term objective is to move beyond disconnected product listings toward a connected representation of the physical hardware that makes up a robot.
+
+5. COMPONENT IDENTITY AND ROBOT-SPECIFIC BOM ACCOUNTABILITY
+
+RoboParts.ai proposes a hierarchical identity structure.
+
+text
+PITN.ai
+   ↓
+ROBOT IDENTITY
+   ↓
+ROBOT CONFIGURATION
+   ↓
+SUBSYSTEM
+   ↓
+ASSEMBLY
+   ↓
+COMPONENT INSTANCE
+   ↓
+MANUFACTURER PRODUCT
+   ↓
+PRODUCT FAMILY
+
+
+Every designated robot receives a stable internal robot identifier.
+
+Every registered physical component receives a stable internal component identifier.
+
+These identifiers connect physical hardware to the relevant configuration and lifecycle records.
+
+For example:
+
+text
+ROBOT-0001
+│
+├── LEFT ARM
+│   ├── SHOULDER ASSEMBLY
+│   ├── ELBOW ASSEMBLY
+│   └── WRIST ASSEMBLY
+│
+├── RIGHT ARM
+│   ├── SHOULDER ASSEMBLY
+│   ├── ELBOW ASSEMBLY
+│   └── WRIST ASSEMBLY
+│
+├── LEFT LEG
+├── RIGHT LEG
+├── TORSO
+└── HEAD
+
+
+Each assembly can contain multiple component instances.
+
+Replacing an actuator does not create a new robot identity.
+
+Instead, the original component is recorded as removed and the replacement is registered through a new installation event.
+
+This preserves historical accountability.
+
+6. LIFECYCLE, MAINTENANCE, AND RECALL TRACEABILITY
+
+RoboParts.ai is intended to maintain a continuous record of component lifecycle events.
+
+The proposed lifecycle includes:
+
+text
+REQUIREMENT
+    ↓
+PRODUCT SELECTION
+    ↓
+SUPPLIER SOURCING
+    ↓
+RFQ
+    ↓
+SAMPLE
+    ↓
+SAMPLE EVALUATION
+    ↓
+ACCEPTANCE
+    ↓
+PILOT ORDER
+    ↓
+RECEIVING INSPECTION
+    ↓
+COMPONENT REGISTRATION
+    ↓
+ROBOT INSTALLATION
+    ↓
+OPERATION
+    ↓
+MAINTENANCE
+    ↓
+REPLACEMENT OR RETIREMENT
+
+
+The system is intended to preserve information associated with:
+
+Manufacturing lots.
+Serial numbers.
+Product revisions.
+Supplier records.
+Receiving inspections.
+Installation events.
+Operating hours and cycle counts.
+Performance measurements.
+Fault events.
+Maintenance activities.
+Component replacements.
+Manufacturer recalls.
+Retirement and disposition.
+
+One of the important long-term capabilities is fleet-wide recall impact identification.
+
+If a manufacturer issues a safety notice affecting a particular model, revision, serial-number range, or production lot, RoboParts.ai is intended to help identify the recorded robots and assemblies containing potentially affected components.
+
+Recall notices, inspection requirements, usage restrictions, and confirmed individual defects must remain distinguishable.
+
+7. SAFETY ARCHITECTURE AND PHYSICAL ACCOUNTABILITY
+
+Physical robot safety is a fundamental consideration within the RoboParts.ai architecture.
+
+The project recognizes an essential distinction:
+
+Physical safety must remain independent of learned behavior, personality settings, user preferences, and ordinary AI decision-making.
+
+The proposed safety information architecture includes:
+
+Emergency stop device identification.
+Safe Torque Off (STO) information.
+Safety-related component identification.
+Safety controller references.
+Hardware operating limits.
+Fault detection and classification.
+Safety-related configuration changes.
+Component recalls and safety notices.
+Inspection and validation evidence.
+
+The architecture distinguishes physical emergency stops, safety-rated STO functions, software operational disable, remote administrative disable, recall restrictions, and agent authorization revocation.
+
+These functions are not interchangeable.
+
+An ordinary software command, application button, network message, or AI instruction must not be represented as an equivalent replacement for a validated emergency stop system.
+
+Similarly, STO is not necessarily equivalent to mechanical braking or complete electrical isolation.
+
+RoboAgentic.ai may provide monitoring, analysis, and authorized control requests, but safety-related functions must be implemented through appropriately designed and validated hardware and control architectures.
+
+RoboParts.ai is intended to provide the component identity, documentation, configuration, and lifecycle information needed to support this broader accountability framework.
+
+This architecture does not certify a robot, establish a safety integrity level, or demonstrate compliance with any particular safety standard.
+
+Applicable standards and engineering requirements must be independently assessed for each application.
+
+8. HARDWARE CAPABILITIES AND ROBOT INTELLIGENCE
+
+A robot's capabilities ultimately depend on its physical hardware and actual operating configuration.
+
+An actuator contributes movement.
+
+A robotic hand contributes manipulation.
+
+A sensor contributes measurement.
+
+A vision system contributes perception.
+
+A controller contributes computation and control.
+
+A battery contributes energy availability.
+
+RoboParts.ai is intended to establish structured relationships between physical components and the capabilities they contribute to a robotic system.
+
+The proposed relationship is:
+
+text
+PHYSICAL COMPONENTS
+        ↓
+VERIFIED HARDWARE CAPABILITIES
+        ↓
+ROBOT CONFIGURATION
+        ↓
+ROBOT CAPABILITY PROFILE
+        ↓
+TASK REQUIREMENTS
+        ↓
+APPLICATION
+
+
+A capability should not automatically become verified simply because a component is installed.
+
+The architecture distinguishes:
+
+Theoretical capability.
+Declared capability.
+Installed capability.
+Operational capability.
+Tested capability.
+Independently verified capability.
+
+This distinction is important as robots become increasingly adaptive and intelligent.
+
+An intelligent agent should have access to information about the hardware actually installed in the robot rather than relying solely on theoretical product specifications or outdated configuration records.
+
+9. THE PITN.ai ROBOTICS ECOSYSTEM
+
+RoboParts.ai is intended to operate as the physical hardware foundation of the broader PITN.ai robotics ecosystem.
+
+The related platforms have distinct but complementary roles.
+
+PITN.ai — Power in the Numbers
+
+The overarching robotics ecosystem and infrastructure framework.
+
+RoboParts.ai
+
+Physical robotics hardware, component identity, manufacturer information, product classification, BOMs, compatibility, maintenance, and lifecycle accountability.
+
+RoboTraits.ai / RoboTraits.com
+
+Robot characteristics, capabilities, descriptive profiles, personality concepts, behavioral characteristics, and performance-related information.
+
+RoboAgentic.ai
+
+Intelligent agents, decision-making, learning, adaptive behavior, feedback, agent interoperability, and hardware-aware reasoning.
+
+The conceptual relationship is:
+
+text
+PHYSICAL COMPONENTS
+        ↓
+ROBOPARTS.ai
+        ↓
+VERIFIED HARDWARE INFORMATION
+        ↓
+ROBOT CONFIGURATION AND CAPABILITIES
+        ↓
+ROBOTRAITS
+        ↓
+ROBOAGENTIC.ai
+        ↓
+INTELLIGENT ROBOTIC SYSTEM
+
+
+The objective is to connect physical hardware identity with robot characteristics and intelligent-agent functionality while maintaining clear boundaries between information systems and validated physical safety systems.
+
+These integrations are proposed architectural relationships and remain subject to implementation, testing, authorization, and validation.
+
+10. INITIAL INDUSTRY FOCUS
+
+The initial development focus is humanoid robotics and actuator sourcing.
+
+This is an important entry point because humanoid robotics combines demanding mechanical, electrical, thermal, and control requirements within relatively constrained physical envelopes.
+
+Priority joint positions include:
+
+Hip.
+Knee.
+Ankle.
+Shoulder.
+Elbow.
+Wrist.
+Neck.
+Hand.
+
+Priority technologies include:
+
+Integrated rotary actuator modules.
+Quasi-direct-drive systems.
+Harmonic drive systems.
+Planetary gear systems.
+Cycloidal reducers.
+Frameless motors.
+Linear actuators.
+Axial-flux motors.
+Planetary roller screws.
+Compact electric cylinders.
+Matched motor-controller-encoder assemblies.
+
+The platform is intended to organize the technical and commercial information necessary to evaluate these components against real engineering requirements.
+
+Initial potential users include:
+
+Humanoid robot manufacturers and developers.
+Robotics engineering and R&D teams.
+University and research laboratories.
+Actuator and component manufacturers.
+Robotics suppliers and distributors.
+System integrators.
+Robotics maintenance organizations.
+
+The broader architecture is intended to extend beyond humanoid robotics to industrial robots, autonomous machines, research platforms, and other robotic systems.
+
+11. TECHNICAL DEVELOPMENT DIRECTION
+
+The proposed initial software architecture uses:
+
+Python.
+FastAPI.
+Pydantic.
+SQLite.
+SQLAlchemy.
+GitHub and Git.
+
+The initial prototype is intended to establish a foundation for:
+
+Manufacturer registration.
+Product and product-family records.
+Component identity.
+Robot identity.
+Subsystem relationships.
+Versioned Bills of Materials.
+Component installation records.
+Lifecycle event recording.
+Maintenance history.
+Fault records.
+Compatibility relationships.
+Capability records.
+Recall identification.
+
+Future infrastructure may include PostgreSQL, manufacturer integrations, supplier portals, digital component passports, QR and RFID identification, digital twins, and authorized API access.
+
+The software architecture is a proposed development direction.
+
+The API and database prototype must be implemented, executed, tested, and validated before being represented as operational.
+
+12. DEVELOPMENT ROADMAP
+
+The proposed development roadmap is organized into twelve phases.
+
+Phase 1 — Documentation and Architecture
+
+Establish the component catalog, physical BOM architecture, identity model, safety architecture, lifecycle architecture, and technical documentation.
+
+Phase 2 — Component Catalog
+
+Develop the structured component taxonomy, manufacturer index, product families, product models, and specification records.
+
+Phase 3 — Humanoid Actuator Sourcing
+
+Establish engineering requirements and sourcing frameworks for humanoid joint hardware.
+
+Phase 4 — Supplier and Sample Qualification
+
+Develop a repeatable process for mechanical fit, duty and thermal evaluation, electrical interfaces, sample validation, and pilot continuity.
+
+Phase 5 — Digital Identity and BOM
+
+Implement component identity, robot identity, subsystem relationships, and versioned BOM structures.
+
+Phase 6 — FastAPI and SQLite Prototype
+
+Develop the initial local database and API.
+
+Phase 7 — Lifecycle and Traceability
+
+Introduce receiving inspection, maintenance, fault records, replacements, recalls, and retirement.
+
+Phase 8 — Safety and Accountability
+
+Develop structured safety-related component records, operating limits, validation references, and safety change control.
+
+Phase 9 — Capability and Robot Profiles
+
+Connect physical hardware to declared, installed, tested, and verified robot capabilities.
+
+Phase 10 — Adaptive Robotics Integration
+
+Explore integration with RoboTraits.ai, RoboTraits.com, RoboAgentic.ai, and PITN.ai.
+
+Phase 11 — Multi-Robot Ecosystem
+
+Support multiple robot identities, individual BOMs, fleet-wide inventory, and recall impact analysis.
+
+Phase 12 — Platform Expansion
+
+Evaluate manufacturer portals, supplier portals, digital component passports, advanced search, analytics, and production-grade infrastructure.
+
+These phases represent proposed development priorities, not claims of completed implementation.
+
+13. WHY ROBOPARTS.ai MATTERS TO THE ROBOTICS INDUSTRY
+
+As robotics scales, the industry will need more than increasingly capable hardware.
+
+It will also need better ways to organize, identify, connect, and account for the physical components that make these machines possible.
+
+A robot's identity is not limited to its external model or software configuration.
+
+Its physical identity is also defined by the individual components installed within it.
+
+Those components have manufacturers, revisions, production histories, operating limits, maintenance requirements, and replacement histories.
+
+Connecting that information creates opportunities for improved:
+
+Engineering visibility.
+Component sourcing.
+Product comparison.
+Compatibility assessment.
+Manufacturing traceability.
+Configuration management.
+Maintenance planning.
+Recall identification.
+Hardware verification.
+Digital twin accuracy.
+Hardware-aware intelligent robotics.
+
+RoboParts.ai is being developed to address this information and accountability layer.
+
+Its intended position is complementary to existing robotics manufacturers, component suppliers, engineering platforms, and intelligent robotics systems.
+
+It is not intended to replace manufacturers' engineering documentation or certified safety systems.
+
+Instead, it seeks to connect fragmented hardware information into a coherent, structured representation of robotic systems.
+
+The broader vision is to make the physical composition of a robot as identifiable, traceable, and understandable as its digital identity.
+
+14. LONG-TERM COMMERCIAL OPPORTUNITIES
+
+Potential future business models include:
+
+Enterprise platform subscriptions.
+Advanced component intelligence services.
+Manufacturer participation.
+Supplier and distributor participation.
+Engineering and sourcing services.
+API access.
+Lifecycle management services.
+Component data integrations.
+Digital component passport services.
+Specialized engineering information solutions.
+
+These represent potential commercial opportunities, not established revenue streams or existing customer commitments.
+
+Development priorities will be determined by engineering requirements, market demand, implementation capability, and available resources.
+
+15. FOUNDER AND PROJECT ATTRIBUTION
+
+Aaron Bailot
+
+Founder — PITN.ai, RoboParts.ai, RoboTraits.ai, RoboTraits.com, and RoboAgentic.ai.
+
+RoboParts.ai is an original intellectual property concept attributed to PITN.ai (Power in the Numbers), as represented by its founder.
+
+The project forms part of the broader PITN.ai robotics ecosystem.
+
+The original public project repository is:
+
+https://github.com/PITN374/pitn-roboparts-pilot
+
+The repository serves as the original public reference for the project.
+
+This release introduces and organizes the broader architectural direction, including the physical BOM classification framework, component identity architecture, lifecycle traceability, and intended ecosystem relationships.
+
+Third-party manufacturer names, product specifications, trademarks, technical documentation, and other referenced materials remain subject to their respective owners' rights.
+
+The project's stated ownership attribution does not independently establish legal title to third-party contributions or pre-existing intellectual property.
+
+16. PROJECT STATUS AND DISCLAIMER
+
+Document Status: Public Project Introduction
+Development Stage: Stage 1 — Architecture and Prototype Development
+
+RoboParts.ai is currently an early-stage architectural and development initiative.
+
+The documentation describes proposed systems, data structures, software architecture, and future capabilities.
+
+It does not imply that all proposed features have been implemented, tested, deployed, or commercially released.
+
+The following status distinctions apply:
+
+Status	Meaning
+PROPOSED	Documented architectural concept or intended functionality.
+IN DEVELOPMENT	Implementation work has started.
+IMPLEMENTED	Functionality has been completed.
+TESTED	Defined tests have been executed successfully.
+VERIFIED	Required verification evidence exists.
+DEPLOYED	Functionality has been released into an identified operating environment.
+
+The proposed safety architecture is a documentation and information-management framework.
+
+It is not a substitute for formal risk assessment, functional safety engineering, certified components, validated safety circuits, applicable standards, or qualified engineering review.
+
+Applicable requirements may include ISO 10218, ISO 12100, ISO 13849-1, IEC 62061, and IEC 61800-5-2, depending on the application and jurisdiction.
+
+No safety certification, production deployment, validated recall integration, or operational intelligent-agent integration is implied.
+
+17. THE LONG-TERM VISION
+
+The long-term objective is to establish RoboParts.ai as the digital identity, intelligence, and accountability infrastructure connecting the physical components of robotic systems.
+
+The vision extends beyond knowing which products are available.
+
+It is about understanding:
+
+What a robot is made of.
+Who manufactured its components.
+Which individual physical units are installed.
+Where those components are located.
+How they connect to the complete robotic system.
+What capabilities they contribute.
+How they have performed.
+What maintenance they require.
+What happens when they are replaced.
+Whether they are affected by manufacturer recalls.
+And how this information can support the next generation of intelligent robotic systems.
+
+As robotics evolves, the connection between physical hardware and digital intelligence will become increasingly important.
+
+RoboParts.ai is being designed to provide that connection.
+
+The robot is the system. The components are its physical foundation. RoboParts.ai is intended to give that foundation a structured digital identity.
+
+EXPLORE THE PROJECT
+
+Original Public Repository:
+
+https://github.com/PITN374/pitn-roboparts-pilot
+
+Parent Ecosystem:
+
+PITN.ai — Power in the Numbers
+
+Founder:
+
+Aaron Bailot
+
+RoboParts.ai welcomes interest from robotics engineers, researchers, manufacturers, component suppliers, system integrators, and developers interested in the future of robotics hardware information, digital identity, and lifecycle accountability.
+
+This release marks the public introduction of the broader RoboParts.ai architectural vision.
+
+RoboParts.ai — Building the Physical Identity and Accountability Layer for Robotics.
