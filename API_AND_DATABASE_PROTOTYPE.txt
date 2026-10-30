@@ -1,0 +1,602 @@
+ROBOPARTS.ai — API AND DATABASE PROTOTYPE
+
+Document ID: RP-API-010
+Version: 1.0
+Status: Initial Prototype Specification — UNTESTED
+Parent Project: PITN.ai (Power in the Numbers)
+Author: Aaron Bailot 
+Development Stage: Stage 1
+Proposed Technology: Python, FastAPI, SQLite
+
+1. PURPOSE
+
+This document defines the initial proposed software architecture for the RoboParts.ai API and database prototype.
+
+The objective is to establish a foundation for:
+
+Component registration.
+Manufacturer and product records.
+Product-family classification.
+Serialized component identity.
+Robot registration.
+Robot configurations.
+Bills of materials.
+Component-to-robot relationships.
+Compatibility records.
+Capability records.
+Maintenance history.
+Fault history.
+Recall identification.
+Lifecycle traceability.
+
+The initial implementation should prioritize a lightweight, understandable architecture that can be tested locally and expanded later.
+
+2. IMPLEMENTATION STATUS
+
+IMPORTANT:
+
+The implementation described in this document is a proposed starting point.
+
+The code examples and architecture have not been represented as tested, production-ready, or deployed software.
+
+All implementation steps require execution, testing, validation, and revision.
+
+3. PROPOSED TECHNOLOGY STACK
+
+Backend:
+
+Python.
+FastAPI.
+Pydantic.
+
+Database:
+
+SQLite for initial development.
+
+ORM:
+
+SQLAlchemy, proposed.
+
+API Documentation:
+
+FastAPI-generated OpenAPI documentation.
+Swagger UI.
+
+Development:
+
+GitHub.
+Git.
+Python virtual environment.
+
+Future options:
+
+PostgreSQL.
+Authentication and role-based access.
+Manufacturer integrations.
+Supplier integrations.
+Digital twin services.
+AI-assisted information retrieval.
+
+SQLite is suitable for an initial local prototype. A production deployment with multiple concurrent users, stronger operational controls, and more complex transaction requirements should be evaluated for migration to PostgreSQL or another suitable database.
+
+4. INITIAL PROJECT STRUCTURE
+
+Proposed repository structure:
+
+ROBOPARTS/ | +-- app/ | | | +-- main.py | +-- database.py | +-- models.py | +-- schemas.py | +-- crud.py | | | +-- routers/ | | | +-- components.py | +-- manufacturers.py | +-- products.py | +-- robots.py | +-- bom.py | +-- lifecycle.py | +-- capabilities.py | +-- tests/ | +-- data/ | +-- docs/ | +-- requirements.txt | +-- README.md | +-- .gitignore
+
+This is a proposed initial structure, not a statement that these files already exist.
+
+5. CORE DATABASE ENTITIES
+
+The initial database should support the following entities:
+
+Manufacturer.
+Product Family.
+Product.
+Product Revision.
+Component Instance.
+Robot.
+Robot Configuration.
+Subsystem.
+Bill of Materials.
+BOM Line.
+Compatibility Record.
+Capability.
+Component Capability.
+Maintenance Event.
+Fault Event.
+Recall Record.
+Supplier.
+Lifecycle Event.
+Evidence Reference.
+
+Additional entities can be introduced as the implementation evolves.
+
+6. IDENTIFIER CONVENTIONS
+
+Proposed internal identifiers:
+
+Manufacturer: MFR-000001
+
+Product: PROD-000001
+
+Product Family: FAM-000001
+
+Component: RP-000001
+
+Robot: ROBOT-000001
+
+Configuration: CFG-000001
+
+BOM: BOM-000001
+
+Maintenance: MNT-000001
+
+Fault: FLT-000001
+
+Recall: RCL-000001
+
+Identifiers must be unique and stable.
+
+Manufacturer part numbers and manufacturer serial numbers must remain separate from internal RoboParts identifiers.
+
+7. INITIAL DATABASE SCHEMA
+
+The following is a conceptual SQL starting point.
+
+sql
+CREATE TABLE manufacturers (
+    manufacturer_id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    website TEXT,
+    country TEXT,
+    created_at TEXT
+);
+
+CREATE TABLE product_families (
+    family_id TEXT PRIMARY KEY,
+    family_name TEXT NOT NULL,
+    component_class TEXT NOT NULL,
+    description TEXT,
+    taxonomy_version TEXT
+);
+
+CREATE TABLE products (
+    product_id TEXT PRIMARY KEY,
+    manufacturer_id TEXT NOT NULL,
+    family_id TEXT,
+    manufacturer_part_number TEXT NOT NULL,
+    model TEXT,
+    architecture_type TEXT,
+    product_status TEXT,
+    FOREIGN KEY (manufacturer_id)
+        REFERENCES manufacturers(manufacturer_id),
+    FOREIGN KEY (family_id)
+        REFERENCES product_families(family_id)
+);
+
+CREATE TABLE components (
+    component_id TEXT PRIMARY KEY,
+    product_id TEXT,
+    manufacturer_serial_number TEXT,
+    product_revision TEXT,
+    manufacturing_lot TEXT,
+    manufacturing_date TEXT,
+    lifecycle_status TEXT,
+    verification_status TEXT,
+    created_at TEXT,
+    FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+);
+
+CREATE TABLE robots (
+    robot_id TEXT PRIMARY KEY,
+    robot_name TEXT NOT NULL,
+    robot_class TEXT,
+    platform_model TEXT,
+    deployment_status TEXT,
+    created_at TEXT
+);
+
+CREATE TABLE configurations (
+    configuration_id TEXT PRIMARY KEY,
+    robot_id TEXT NOT NULL,
+    configuration_revision TEXT,
+    effective_date TEXT,
+    configuration_status TEXT,
+    FOREIGN KEY (robot_id)
+        REFERENCES robots(robot_id)
+);
+
+CREATE TABLE subsystems (
+    subsystem_id TEXT PRIMARY KEY,
+    robot_id TEXT NOT NULL,
+    parent_subsystem_id TEXT,
+    subsystem_name TEXT NOT NULL,
+    FOREIGN KEY (robot_id)
+        REFERENCES robots(robot_id),
+    FOREIGN KEY (parent_subsystem_id)
+        REFERENCES subsystems(subsystem_id)
+);
+
+CREATE TABLE component_installations (
+    installation_id TEXT PRIMARY KEY,
+    component_id TEXT NOT NULL,
+    robot_id TEXT NOT NULL,
+    subsystem_id TEXT,
+    installation_date TEXT,
+    removal_date TEXT,
+    installation_status TEXT,
+    FOREIGN KEY (component_id)
+        REFERENCES components(component_id),
+    FOREIGN KEY (robot_id)
+        REFERENCES robots(robot_id),
+    FOREIGN KEY (subsystem_id)
+        REFERENCES subsystems(subsystem_id)
+);
+
+CREATE TABLE bills_of_materials (
+    bom_id TEXT PRIMARY KEY,
+    robot_id TEXT NOT NULL,
+    configuration_id TEXT,
+    bom_revision TEXT,
+    bom_status TEXT,
+    created_at TEXT,
+    FOREIGN KEY (robot_id)
+        REFERENCES robots(robot_id),
+    FOREIGN KEY (configuration_id)
+        REFERENCES configurations(configuration_id)
+);
+
+CREATE TABLE bom_lines (
+    bom_line_id TEXT PRIMARY KEY,
+    bom_id TEXT NOT NULL,
+    component_id TEXT,
+    product_id TEXT,
+    quantity INTEGER NOT NULL,
+    installation_location TEXT,
+    required_or_optional TEXT,
+    FOREIGN KEY (bom_id)
+        REFERENCES bills_of_materials(bom_id),
+    FOREIGN KEY (component_id)
+        REFERENCES components(component_id),
+    FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+);
+
+CREATE TABLE lifecycle_events (
+    event_id TEXT PRIMARY KEY,
+    component_id TEXT NOT NULL,
+    robot_id TEXT,
+    event_type TEXT NOT NULL,
+    event_date TEXT,
+    description TEXT,
+    evidence_reference TEXT,
+    FOREIGN KEY (component_id)
+        REFERENCES components(component_id),
+    FOREIGN KEY (robot_id)
+        REFERENCES robots(robot_id)
+);
+
+CREATE TABLE maintenance_events (
+    maintenance_id TEXT PRIMARY KEY,
+    component_id TEXT NOT NULL,
+    robot_id TEXT,
+    maintenance_type TEXT,
+    service_date TEXT,
+    description TEXT,
+    status TEXT,
+    FOREIGN KEY (component_id)
+        REFERENCES components(component_id),
+    FOREIGN KEY (robot_id)
+        REFERENCES robots(robot_id)
+);
+
+CREATE TABLE fault_events (
+    fault_id TEXT PRIMARY KEY,
+    component_id TEXT,
+    robot_id TEXT,
+    fault_code TEXT,
+    severity TEXT,
+    event_timestamp TEXT,
+    description TEXT
+);
+
+CREATE TABLE recalls (
+    recall_id TEXT PRIMARY KEY,
+    manufacturer_id TEXT,
+    product_id TEXT,
+    recall_reference TEXT,
+    affected_lot TEXT,
+    affected_revision TEXT,
+    required_action TEXT,
+    recall_status TEXT
+);
+
+
+This schema is a starting point only.
+
+Before implementation, the database design must be reviewed for constraints, indexing, historical assignment handling, versioning, and data validation.
+
+8. DATABASE DESIGN REQUIREMENTS
+
+The database should support:
+
+Unique identifiers.
+Foreign-key relationships.
+Explicit measurement units.
+Timestamped events.
+Versioned configurations.
+Versioned BOMs.
+Historical component assignments.
+Manufacturer and supplier references.
+Source and evidence references.
+Verification states.
+Lifecycle states.
+
+SQLite foreign-key enforcement must be explicitly enabled on database connections.
+
+Historical installation records must be preserved.
+
+A replacement should create a new installation event rather than overwriting the identity of the previously installed component.
+
+9. INITIAL FASTAPI IMPLEMENTATION
+
+Proposed minimal application:
+
+python
+from fastapi import FastAPI
+
+app = FastAPI(
+    title="RoboParts API",
+    description="Robotic component identity and lifecycle prototype",
+    version="0.1.0"
+)
+
+@app.get("/")
+def root():
+    return {
+        "project": "RoboParts.ai",
+        "status": "Prototype",
+        "message": "RoboParts API"
+    }
+
+@app.get("/health")
+def health():
+    return {
+        "status": "available"
+    }
+
+
+This is an illustrative starting point and has not been tested.
+
+10. PROPOSED API ENDPOINTS
+Manufacturers
+
+POST /manufacturers
+
+GET /manufacturers
+
+GET /manufacturers/{manufacturer_id}
+
+Products
+
+POST /products
+
+GET /products
+
+GET /products/{product_id}
+
+GET /products/search
+
+Components
+
+POST /components
+
+GET /components
+
+GET /components/{component_id}
+
+GET /components/{component_id}/history
+
+Robots
+
+POST /robots
+
+GET /robots
+
+GET /robots/{robot_id}
+
+Bills of Materials
+
+POST /robots/{robot_id}/bom
+
+GET /robots/{robot_id}/bom
+
+GET /bom/{bom_id}
+
+Compatibility
+
+POST /compatibility
+
+GET /products/{product_id}/compatibility
+
+Capabilities
+
+POST /capabilities
+
+GET /robots/{robot_id}/capabilities
+
+Lifecycle
+
+POST /components/{component_id}/events
+
+GET /components/{component_id}/lifecycle
+
+Maintenance
+
+POST /components/{component_id}/maintenance
+
+GET /components/{component_id}/maintenance
+
+Recalls
+
+POST /recalls
+
+GET /recalls
+
+GET /components/{component_id}/recalls
+
+These endpoint names are proposed. Request schemas, authorization, validation, and response formats must be defined before implementation.
+
+11. COMPONENT RECORD EXAMPLE
+
+Proposed JSON representation:
+
+json
+{
+  "component_id": "RP-000001",
+  "component_class": "Actuator",
+  "component_type": "Electric Rotary Actuator",
+  "manufacturer": "Example Manufacturer",
+  "manufacturer_part_number": "EXAMPLE-01",
+  "manufacturer_serial_number": "SN-123456",
+  "product_revision": "A",
+  "lifecycle_status": "registered",
+  "verification_status": "unverified"
+}
+
+
+This is a fictional example.
+
+12. API DATA VALIDATION
+
+The API should validate:
+
+Required identifiers.
+Manufacturer references.
+Product references.
+Component identity.
+Measurement units.
+Lifecycle transitions.
+BOM relationships.
+Compatibility status.
+Timestamp formats.
+Duplicate registrations.
+
+Missing specifications must remain null or explicitly unknown.
+
+Missing values must not be converted to zero.
+
+13. SECURITY REQUIREMENTS
+
+The prototype should eventually support:
+
+Authentication.
+Role-based authorization.
+API access control.
+Audit logging.
+Input validation.
+Secure secret management.
+Backup and recovery.
+Controlled administrative operations.
+Data export controls.
+
+Potential roles:
+
+Administrator.
+Engineer.
+Integrator.
+Manufacturer.
+Supplier.
+Maintenance Technician.
+Read-only User.
+
+The initial local prototype should not expose unrestricted write operations to an untrusted network.
+
+14. AI INTEGRATION BOUNDARIES
+
+Future RoboAgentic.ai integration may use the API to retrieve:
+
+Component identity.
+Product specifications.
+Robot configuration.
+Component compatibility.
+Lifecycle history.
+Maintenance records.
+Recall information.
+Verified capabilities.
+
+AI-generated summaries should be distinguishable from authoritative source records.
+
+An AI agent must not be allowed to silently modify safety-critical configuration or identity records.
+
+15. TESTING REQUIREMENTS
+
+Before considering the prototype functional, test:
+
+Database creation.
+Manufacturer registration.
+Product registration.
+Component registration.
+Robot registration.
+Component installation.
+BOM creation.
+Historical component removal.
+Replacement component installation.
+Lifecycle event recording.
+Fault event recording.
+Recall lookup.
+Invalid reference rejection.
+Duplicate identifier rejection.
+Database backup and restoration.
+
+Automated tests should be added using an appropriate testing framework.
+
+16. PROTOTYPE DEVELOPMENT PHASES
+
+Phase 1: Create project structure and database.
+
+Phase 2: Implement manufacturer and product records.
+
+Phase 3: Implement component identity.
+
+Phase 4: Implement robot identity and subsystem relationships.
+
+Phase 5: Implement BOM management.
+
+Phase 6: Implement lifecycle and maintenance records.
+
+Phase 7: Implement compatibility and capability relationships.
+
+Phase 8: Implement authentication and audit controls.
+
+Phase 9: Evaluate PostgreSQL migration.
+
+Phase 10: Evaluate digital twin and RoboAgentic integration.
+
+17. KNOWN LIMITATIONS
+
+The initial SQLite prototype is not intended to provide:
+
+Production-grade multi-user operation.
+Certified functional safety.
+Real-time robot control.
+Guaranteed recall notifications.
+Manufacturer data verification.
+Automatic physical component discovery.
+Validated predictive maintenance.
+Autonomous safety enforcement.
+
+These require separate implementation and validation.
+
+18. STATUS
+
+Document status: Proposed Prototype Specification.
+
+Implementation status: UNTESTED.
+
+No working API, deployed database, production security, or operational integration is claimed.
+
+END OF DOCUMENT
