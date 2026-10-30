@@ -1,0 +1,386 @@
+ROBOPARTS.ai — SUPPLIER INTELLIGENCE AND RFQ MODEL
+
+Document ID: RP-SOURCING-001
+Version: 1.0
+Status: Proposed Operational Specification
+Parent Project: PITN.ai
+
+1. Purpose
+
+Establish the commercial intelligence and sourcing framework connecting component requirements, manufacturers, distributors, engineering documentation, supplier qualification, RFQs, quotations, and procurement decisions.
+
+2. Supplier Classification
+
+Proposed supplier types:
+
+Original equipment manufacturers.
+Component manufacturers.
+Contract manufacturers.
+CNC machining suppliers.
+Electronics manufacturers.
+Motor and actuator manufacturers.
+Reducer and gearbox manufacturers.
+Distributor and reseller organizations.
+System integrators.
+Engineering and design service providers.
+
+Supplier type must be supported by evidence where represented as verified.
+
+3. Supplier Discovery Sources
+
+Potential sources:
+
+Official manufacturer websites.
+Public product catalogs.
+Authorized distributor catalogs.
+Robotics industry directories.
+Industry associations.
+Trade-show exhibitor directories.
+Public business registries.
+Public procurement portals.
+Licensed commercial databases.
+Authorized search APIs.
+
+Respect source access restrictions, licensing, applicable law, and rate limits.
+
+4. Supplier Record
+
+Proposed fields:
+
+company_id
+legal_name
+display_name
+official_website
+country
+region
+city
+languages
+company_type
+component_categories
+manufacturing_capabilities
+markets_served
+source_records
+contact_records
+qualification_status
+roboparts_fit_score
+last_verified_at
+created_at
+updated_at
+
+5. Supplier Evidence
+
+Each material supplier claim should have an evidence record.
+
+Required fields:
+
+evidence_id
+source_url
+source_type
+retrieved_at
+supporting_excerpt, where permitted
+claim_type
+verification_status
+confidence_score, where available
+associated_entity_id
+
+A company listing does not independently prove manufacturing capability.
+
+A distributor must not be represented as a manufacturer unless the relationship is established.
+
+6. Contact Intelligence
+
+Contact records may include:
+
+contact_id
+company_id
+contact_channel
+contact_type
+contact_name, when verified
+source_url
+source_excerpt, where permitted
+source_retrieved_at
+verification_status
+verification_method
+outreach_status
+consent_or_legal_basis, where applicable
+suppression_reason
+created_at
+updated_at
+
+Verification levels:
+
+Syntax validation.
+Domain validation.
+Public-source verification.
+Authorized provider verification.
+Delivery-event confirmation after an authorized send.
+
+A syntactically valid email is not proof of mailbox existence or permission to contact.
+
+Guessed email addresses must never be marked verified.
+
+7. Supplier Matching Model
+
+Proposed configurable score: 0–100.
+
+Criterion	Maximum points
+Component relevance	30
+Manufacturing capability fit	20
+Robotics industry relevance	15
+Evidence quality	15
+Geographic and logistics fit	10
+Business contact quality	10
+Total	100
+
+Initial interpretation:
+
+80–100: High-priority candidate.
+60–79: Relevant candidate.
+40–59: Additional research required.
+0–39: Low priority or insufficient evidence.
+
+These weights are proposed and not validated commercial predictions.
+
+Every score must include:
+
+Individual criterion scores.
+Supporting evidence references.
+Missing information.
+Scoring configuration version.
+Calculation timestamp.
+
+A high score does not authorize outreach or purchasing.
+
+Missing information must not automatically be interpreted as negative information.
+
+8. Supplier Research Workflow
+Define required component family.
+Define target specifications and manufacturing processes.
+Discover potential companies.
+Identify original source records.
+Classify supplier type.
+Resolve duplicate company identities.
+Identify public business contact channels.
+Assess evidence quality.
+Evaluate manufacturing relevance.
+Calculate explainable matching score.
+Produce a supplier shortlist.
+Request additional evidence where required.
+9. RFQ Classification
+
+Proposed RFQ classes:
+
+RFQ-01 — Standard Catalog Product
+
+Used when a commercially available product appears suitable without significant interface changes.
+
+RFQ-02 — Standard Product with Configuration
+
+Used when standard hardware requires a defined choice of encoder, brake, driver, harness, voltage, or protocol.
+
+RFQ-03 — Modified Interface
+
+Used when flange, connector, cable exit, shaft, mounting, or other defined interfaces require modification.
+
+RFQ-04 — OEM Custom Engineering
+
+Used when a supplier must develop a modified or new product architecture.
+
+RFQ-05 — Manufacturing and Component Supply
+
+Used for standalone motors, reducers, structural parts, harnesses, electronics, and other manufactured components.
+
+RFQ-06 — Integrated Actuator System
+
+Used when the buyer requires an integrated mechanical, electrical, feedback, and control package.
+
+RFQ-07 — Linear Motion System
+
+Used for force, stroke, speed, stiffness, and positioning requirements.
+
+RFQ-08 — Controller and Electronics
+
+Used for drivers, motor controllers, communications hardware, and associated firmware.
+
+These classes are proposed internal classifications and may be revised as the catalog develops.
+
+10. RFQ Information Requirements
+
+Each RFQ should identify:
+
+RFQ identifier.
+Buyer organization.
+Component class.
+Product or model family.
+Target application.
+Joint position, where applicable.
+Required specifications.
+Drawing reference and revision.
+Quantity.
+Unit of measure.
+Prototype quantity.
+Pilot quantity.
+Expected production volume.
+Required delivery date.
+Destination country.
+Required certifications, where applicable.
+Inspection criteria.
+Requested documents.
+Supplier response deadline.
+Commercial terms.
+11. Actuator RFQ Engineering Inputs
+
+Mandatory where applicable:
+
+Required continuous output torque.
+Required peak output torque.
+Peak duration.
+Output speed.
+Acceleration profile.
+Duty cycle.
+Ambient temperature.
+Cooling assumptions.
+Bus voltage.
+Continuous and peak current.
+Encoder.
+Brake.
+Driver.
+Communication protocol.
+Controller location.
+Outer diameter.
+Axial length.
+Hollow-shaft requirement.
+Flange.
+Output interface.
+Connector position.
+Cable exit direction.
+Harness length and routing.
+Sample quantity.
+Target sample date.
+12. Supplier Evidence Requested
+
+Initial selection:
+
+Catalog shortlist summary.
+Model-family identification.
+Basic datasheet.
+Reference envelope image.
+Application fit note.
+
+Engineering review:
+
+Torque-speed or force-speed envelope.
+Rated versus peak boundary.
+Thermal rise and duty-cycle basis.
+Overload duration.
+Wiring and protocol notes.
+Controller compatibility.
+Encoder and brake configuration.
+2D envelope drawing.
+Interface notes.
+
+Controlled engineering review:
+
+STEP/CAD files.
+Detailed interface drawings.
+Pinout and harness information.
+Section-view or exploded-view references.
+Customization notes.
+Revision-controlled documentation.
+
+Sample validation:
+
+Inspection record.
+Focused performance test.
+Temperature-rise result.
+Backlash or stiffness result.
+Revision record.
+Packing and shipment baseline.
+13. Quotation Normalization
+
+Supplier quotations must retain:
+
+Supplier identity.
+Original quote number.
+Currency.
+Unit price.
+Quantity basis.
+Volume discount.
+Tooling and setup costs.
+Prototype costs.
+Lead time.
+Shipping terms.
+Incoterm.
+Payment terms.
+Warranty.
+Quote validity.
+Date.
+Product revision.
+Accessory inclusions.
+Source document.
+
+Comparisons must identify incomplete or incomparable values.
+
+Currency conversion must record the exchange-rate source and date.
+
+A normalized quote must not overwrite the original supplier quotation.
+
+14. Procurement Authorization
+
+The software may prepare RFQs and compare offers.
+
+Separate authorization is required for:
+
+Sending supplier communications.
+Accepting offers.
+Issuing purchase orders.
+Committing funds.
+Changing approved specifications.
+
+External communications must use authorized providers and applicable compliance controls.
+
+Dry-run mode is the default.
+
+Suppression records and opt-out instructions must be enforced.
+
+15. Supplier Qualification States
+
+Suggested states:
+
+DISCOVERED
+RESEARCHED
+IDENTITY_VERIFIED
+CAPABILITY_EVIDENCE_PENDING
+CAPABILITY_REVIEWED
+QUALIFIED_FOR_SAMPLE
+SAMPLE_EVALUATED
+PILOT_APPROVED
+PRODUCTION_APPROVED
+SUSPENDED
+REJECTED
+
+A company must not advance to a stronger qualification state without defined evidence.
+
+16. Procurement History
+
+Maintain records of:
+
+RFQ creation.
+Supplier invitations.
+Supplier responses.
+Quotation revisions.
+Technical clarifications.
+Sample requests.
+Sample receipts.
+Inspection outcomes.
+Purchase approvals.
+Purchase orders.
+Delivery records.
+Repeat-order changes.
+17. Initial Commercial Demonstration
+
+Demonstrate the following with synthetic data:
+
+Component requirement → Supplier discovery → Evidence collection → Supplier classification → Matching score → RFQ generation → Sample comparison → Technical acceptance decision.
+
+The demonstration must distinguish software workflow capability from real-world supplier qualification.
