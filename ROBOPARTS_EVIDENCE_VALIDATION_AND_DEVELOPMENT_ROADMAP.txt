@@ -1,0 +1,481 @@
+ROBOPARTS.ai — EVIDENCE, VALIDATION AND DEVELOPMENT ROADMAP
+
+Document ID: RP-VALIDATION-001
+Version: 1.0
+Status: Proposed Engineering and Implementation Baseline
+Parent Project: PITN.ai
+Founder: Aaron Bailot
+
+1. Purpose
+
+Establish the evidence requirements, document-control procedures, engineering validation gates, acceptance criteria, and implementation roadmap for ROBOPARTS.ai.
+
+The objective is to ensure that product selection, supplier qualification, technical claims, procurement decisions, and software implementation remain traceable.
+
+2. Evidence Classification
+
+Evidence should be classified by type.
+
+E1 — Public Reference Evidence
+Public product catalog.
+Manufacturer website.
+Public datasheet.
+Public product photograph.
+General application information.
+E2 — Engineering Selection Evidence
+Torque-speed curve.
+Force-speed curve.
+Basic envelope drawing.
+Thermal information.
+Wiring notes.
+Interface specifications.
+Application-specific technical explanation.
+E3 — Controlled Engineering Evidence
+Revision-controlled 2D drawing.
+STEP/CAD files.
+Detailed pinout.
+Internal section view.
+Exploded-view reference.
+Customization documentation.
+Engineering correspondence.
+E4 — Sample Validation Evidence
+Sample inspection record.
+Measured torque and speed.
+Thermal test.
+Backlash measurement.
+Noise measurement.
+Repeatability test.
+Functional test.
+Sample revision identification.
+E5 — Production and Quality Evidence
+Lot-specific test reports.
+Outgoing quality control records.
+Inspection certificates.
+Manufacturing change records.
+Production consistency evidence.
+Shipment and traceability records.
+
+These categories describe evidence maturity, not an automatic guarantee of authenticity or quality.
+
+3. Evidence Availability Rules
+
+Public selection information may be used for early comparison.
+
+Controlled drawings and CAD should be requested after the candidate model and project scope are established.
+
+Factory-floor photographs, teardown images, and lot-specific test reports must not be represented as actual project evidence until genuine source assets have been obtained and their provenance established.
+
+Synthetic illustrations must be identified as illustrative.
+
+Missing documentation must be recorded as missing rather than invented.
+
+4. Document Control
+
+Every controlled document should include:
+
+document_id
+document_title
+document_version
+revision
+supplier_or_originator
+associated_product_id
+associated_model
+associated_project
+document_type
+issue_date
+received_date
+source
+access_classification
+verification_status
+supersedes_reference
+related_evidence_ids
+
+Recommended document types:
+
+DATASHEET
+ENVELOPE_DRAWING
+CAD_MODEL
+TORQUE_SPEED_CURVE
+THERMAL_REPORT
+WIRING_NOTE
+PINOUT
+SECTION_VIEW
+INSPECTION_REPORT
+SAMPLE_TEST_REPORT
+OQC_REPORT
+CERTIFICATE
+SUPPLIER_QUOTATION
+ENGINEERING_CORRESPONDENCE
+
+Original supplier documents should remain preserved.
+
+Corrections and replacements should create new versions or linked records.
+
+5. Actuator Engineering Selection Gate
+Gate 01 — Joint Requirement Definition
+
+Define required:
+
+Peak torque.
+Continuous torque.
+Output speed.
+Acceleration and deceleration.
+Operating cycle.
+Peak duration.
+Load conditions.
+Robot mass and payload assumptions.
+Ambient temperature.
+
+Requirement: Every actuator candidate must be compared against a defined joint requirement.
+
+Gate 02 — Mechanical Envelope
+
+Confirm:
+
+Outer diameter.
+Axial length.
+Hollow-shaft requirement.
+Flange.
+Mounting interface.
+Output interface.
+Connector position.
+Cable exit direction.
+Assembly clearance.
+Harness routing.
+
+Requirement: Candidate fit must be supported by a drawing or sufficiently detailed engineering record.
+
+Gate 03 — Electrical and Control
+
+Confirm:
+
+Bus voltage.
+Current limits.
+Driver architecture.
+Encoder.
+Brake.
+Communication protocol.
+Firmware.
+Harness pinout.
+Connector.
+Controller location.
+
+Requirement: The sample must be integrable with the intended bench-test configuration.
+
+Gate 04 — Performance and Thermal
+
+Review:
+
+Torque-speed envelope.
+Rated versus peak boundaries.
+Thermal rise.
+Duty cycle.
+Cooling path.
+Overload duration.
+Recovery behavior.
+Backlash.
+Stiffness.
+Bearing support.
+
+Requirement: Continuous operating suitability must be assessed independently of peak torque.
+
+Gate 05 — Sample Acceptance
+
+Define the pass/fail criteria before sample release.
+
+Potential measurements:
+
+Dimensional fit.
+Continuous torque.
+Peak torque.
+Speed.
+Temperature rise.
+Backlash.
+Noise.
+Force response.
+Repeatability.
+Brake behavior.
+Communication stability.
+
+The actual acceptance values must be project-specific.
+
+Gate 06 — Pilot Continuity
+
+Confirm:
+
+Repeat-order model identity.
+Revision control.
+Inspection requirements.
+Packaging.
+Delivery.
+Incoterm.
+Production quantity.
+Change notification.
+Lot traceability.
+
+A successful sample is not automatic proof of production readiness.
+
+6. Five-Stage RFQ Decision Matrix
+Stage	Buyer input	Supplier evidence	Hold condition
+01 Fit	Joint, envelope, quantity	Model and drawing	Dimensions unresolved
+02 Duty	Continuous/peak torque, speed, cycle	Performance and thermal records	Peak-only selection
+03 Interface	Voltage, protocol, encoder, brake	Wiring and compatibility	Control stack unresolved
+04 Sample	Defined acceptance test	Inspection and test evidence	No pass/fail criteria
+05 Pilot	Volume, inspection, delivery	OQC and change control	No repeat-lot controls
+
+No-go conditions must be recorded explicitly.
+
+7. Document Request Sequence
+Public Selection Packet
+
+Request:
+
+Catalog summary.
+Model-family information.
+Basic datasheet.
+Reference envelope image.
+Application notes.
+RFQ Engineering Packet
+
+Request:
+
+2D envelope.
+Interface notes.
+Wiring and protocol information.
+Accessory list.
+Sample test recommendations.
+NDA-Controlled CAD Packet
+
+Request:
+
+STEP/CAD.
+Controlled drawings.
+Pinout.
+Revision history.
+Customization notes.
+Sample Validation Packet
+
+Request:
+
+Inspection note.
+Relevant test record.
+Revision baseline.
+Shipment and packaging information.
+8. Acceptance Testing
+
+The software implementation should include the following acceptance tests.
+
+Test	Requirement
+AT-01	Manufacturer part-number resolution
+AT-02	Physical-instance resolution
+AT-03	Ambiguous identifier detection
+AT-04	Lifecycle event retrieval
+AT-05	Historical configuration reconstruction
+AT-06	Component replacement history
+AT-07	ROBOTRAITS schema validation
+AT-08	Conflicting attribute handling
+AT-09	Capability matching
+AT-10	Configuration reassessment
+AT-11	Personality comparison
+AT-12	Agent registration
+AT-13	Permitted operation
+AT-14	Prohibited operation denial
+AT-15	Permission revocation
+AT-16	Restricted evidence access
+AT-17	Supplier record normalization
+AT-18	Supplier deduplication
+AT-19	Matching score validation
+AT-20	Contact provenance
+AT-21	Quotation normalization
+AT-22	Record integrity
+AT-23	Dry-run outreach
+AT-24	Suppression enforcement
+AT-25	Duplicate-send prevention
+AT-26	Rate-limit and retry behavior
+AT-27	Service failure handling
+AT-28	Secret redaction
+AT-29	Reporting accuracy
+AT-30	Simulated emergency restriction
+
+Each test must record:
+
+Initial state.
+Test data.
+Procedure.
+Expected result.
+Observed result.
+Pass/fail.
+Evidence location.
+Defects and limitations.
+9. Implementation Status
+
+Use these definitions:
+
+PROPOSED — Identified as a future requirement.
+
+DESIGNED — Technical design documented.
+
+IMPLEMENTED — Source code or service exists.
+
+TESTED — Defined tests have been executed.
+
+INDEPENDENTLY_VERIFIED — Appropriate independent verification has been completed.
+
+DEPRECATED — No longer recommended or supported.
+
+Do not mark a capability implemented merely because its specification exists.
+
+10. Proposed Development Roadmap
+
+Phase 1 — Repository discovery and architecture.
+
+Phase 2 — Component identity and catalog.
+
+Phase 3 — Physical-instance identity and lifecycle.
+
+Phase 4 — ROBOTRAITS ontology.
+
+Phase 5 — Agent registration and authorization.
+
+Phase 6 — Supplier intelligence.
+
+Phase 7 — RFQ and quotation workflows.
+
+Phase 8 — AI and behavioral integration.
+
+Phase 9 — Memory and personalization.
+
+Phase 10 — Simulated or selected robot adapter.
+
+Phase 11 — Operational automation.
+
+Phase 12 — Integrity and optional blockchain.
+
+Phase 13 — Digital twins and multiple robot platforms.
+
+Phase 14 — Ecosystem expansion.
+
+Phase completion requires documented acceptance evidence.
+
+11. Stage 1 Completion Requirements
+
+The first implementation review should establish:
+
+Functional component records.
+Separate product and physical-instance identities.
+Evidence references.
+Lifecycle reconstruction.
+Versioned ROBOTRAITS profiles.
+Explainable capability matching.
+Agent registration.
+Permission enforcement.
+Revocation testing.
+Supplier records and matching.
+RFQ and quotation workflows.
+Automated tests.
+Reproducible setup.
+Documented limitations and defects.
+12. Outstanding Engineering Information
+
+The following information is required to advance the model.
+
+A. Actuator Catalog
+Actual manufacturers.
+Actual product families.
+Model numbers.
+Torque classes.
+Voltage options.
+Reducer architectures.
+Encoder and brake options.
+Driver compatibility.
+B. Humanoid Joint Architecture
+Robot mass.
+Target payload.
+Joint map.
+Joint-axis count.
+Continuous and peak torque.
+Speed.
+Acceleration.
+Duty cycles.
+C. Mechanical Engineering
+Outer diameter.
+Inner diameter.
+Axial length.
+Flange.
+Output interface.
+Cable routing.
+Mounting envelope.
+D. Electrical Engineering
+Bus voltage.
+Current limits.
+Communication protocol.
+Control architecture.
+Encoder.
+Brake.
+Driver.
+Connector and pinout.
+E. Supplier Documentation
+Datasheets.
+Drawings.
+CAD availability.
+Thermal and performance records.
+Wiring notes.
+Sample inspection records.
+Quality documentation.
+F. Commercial Information
+Sample prices.
+Minimum order quantities.
+Lead times.
+Prototype costs.
+Production pricing.
+Shipping terms.
+Payment terms.
+Warranty.
+G. Software Implementation
+Existing repositories.
+Existing source code.
+Current schemas.
+Implemented APIs.
+Existing dependencies.
+Available infrastructure.
+Current test results.
+13. Change-Control Policy
+
+New documentation must not silently overwrite established definitions.
+
+Each material change should record:
+
+Document affected.
+Previous version.
+New version.
+Description of change.
+Reason.
+Source of information.
+Approval status.
+Dependencies.
+Validation required.
+
+Conflicting supplier or engineering information should remain traceable until resolved.
+
+14. Final Development Principle
+
+ROBOPARTS.ai must progress from catalog discovery to engineering qualification, sample validation, supplier qualification, and procurement with evidence appropriate to each stage.
+
+The purpose of the system is not simply to collect product information.
+
+It is to establish an auditable relationship between:
+
+IDENTITY
+SPECIFICATION
+SOURCE EVIDENCE
+ENGINEERING SUITABILITY
+SUPPLIER CAPABILITY
+SAMPLE PERFORMANCE
+QUALITY
+COMMERCIAL TERMS
+PROCUREMENT DECISION
+LIFECYCLE HISTORY
+
+The same evidence-driven principle must apply throughout the PITN.ai ecosystem.
+
+This document establishes the proposed baseline and does not represent completed implementation or verified supplier qualification.
