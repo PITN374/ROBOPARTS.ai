@@ -1,0 +1,537 @@
+ROBOPARTS.ai — GITHUB ROADMAP AND DEVELOPMENT
+
+Document ID: RP-ROADMAP-011
+Version: 1.0
+Status: Proposed Development Roadmap
+Parent Project: PITN.ai (Power in the Numbers)
+Author: Aaron Bailot
+Development Stage: Stage 1
+
+Repository: https://github.com/PITN374/pitn-roboparts-pilot
+
+1. PURPOSE
+
+This document establishes the proposed development roadmap for RoboParts.ai.
+
+The objective is to organize development into manageable stages while preserving the broader PITN.ai robotics ecosystem architecture.
+
+RoboParts.ai is intended to evolve beyond a conventional robotics parts directory.
+
+Its proposed long-term role is to provide:
+
+Structured robotics component information.
+Product and manufacturer indexing.
+Serialized component identity.
+Robot-specific bills of materials.
+Hardware compatibility information.
+Component accountability.
+Lifecycle and maintenance tracking.
+Recall identification.
+Capability relationships.
+Digital twin information.
+Integration with RoboTraits and RoboAgentic.
+
+Development should proceed incrementally.
+
+2. PROJECT VISION
+
+RoboParts.ai provides the physical hardware information layer for the PITN.ai robotics ecosystem.
+
+The long-term conceptual relationship is:
+
+ROBOT | v CAPABILITIES | v REQUIRED HARDWARE | v ROBOPARTS.AI | v COMPONENTS | v MANUFACTURERS | v SUPPLIERS | v INTEGRATORS | v MAINTENANCE | v LIFECYCLE ACCOUNTABILITY
+
+The platform should connect individual component information with the complete robotic system.
+
+3. DEVELOPMENT PRINCIPLES
+
+All development should follow these principles:
+
+Preserve original project authorship and attribution.
+Maintain clear document versioning.
+Separate proposed features from implemented features.
+Avoid unverified product specifications.
+Maintain traceable component identity.
+Preserve historical configurations.
+Design around real engineering requirements.
+Keep safety-related functions separate from ordinary AI functionality.
+Build modular software.
+Avoid premature complexity.
+Document changes.
+Validate before claiming implementation success.
+4. PHASE 1 — DOCUMENTATION AND ARCHITECTURE
+
+Objective:
+
+Establish a coherent documentation foundation.
+
+Deliverables:
+
+Catalog architecture.
+Component classification.
+Actuator classification.
+Joint engineering requirements.
+Digital identity architecture.
+BOM architecture.
+Safety architecture.
+Lifecycle architecture.
+API prototype specification.
+Development roadmap.
+Authorship and IP notice.
+
+Acceptance criteria:
+
+Documents use consistent terminology.
+Proposed and implemented functionality are distinguished.
+Internal identifiers are consistently defined.
+Relationships between documents are clear.
+Existing public repository references are preserved.
+5. PHASE 2 — COMPONENT CATALOG
+
+Objective:
+
+Create the initial structured robotics component catalog.
+
+Priority categories:
+
+Integrated rotary actuators.
+QDD actuators.
+Harmonic drive systems.
+Planetary gear systems.
+Cycloidal reducers.
+Frameless motors.
+Linear actuators.
+Controllers and drivers.
+Sensors.
+Robotic hands.
+End effectors.
+Power systems.
+Structural components.
+Communication hardware.
+
+Deliverables:
+
+Versioned component taxonomy.
+Manufacturer index.
+Product-family index.
+Product model records.
+Product specification records.
+Source references.
+Verification status.
+
+Acceptance criteria:
+
+Each product has a stable internal identifier.
+Manufacturer part numbers are recorded separately.
+Revisions can be distinguished.
+Missing data remains explicitly unknown.
+Source information is traceable.
+6. PHASE 3 — HUMANOID ACTUATOR SOURCING
+
+Objective:
+
+Develop a structured sourcing and evaluation framework for humanoid robotics hardware.
+
+Priority joint positions:
+
+Hip.
+Knee.
+Ankle.
+Shoulder.
+Elbow.
+Wrist.
+Neck.
+Hand.
+
+Priority architectures:
+
+Integrated rotary modules.
+Quasi-direct-drive systems.
+Harmonic drive systems.
+Planetary drive systems.
+Cycloidal systems.
+Frameless motors.
+Linear actuators.
+
+Additional technology evaluation:
+
+Axial-flux motors.
+Soft Magnetic Composite magnetic cores.
+Net-shape magnetic core prototypes.
+Planetary roller screws.
+Compact electric cylinders.
+Matched motor-controller-encoder kits.
+
+Acceptance criteria:
+
+Joint requirements are independently defined.
+Continuous and peak ratings remain separate.
+Mechanical envelopes are documented.
+Electrical and control compatibility is reviewed.
+Thermal requirements are considered.
+Supplier claims are supported by evidence.
+Sample acceptance criteria are established.
+7. PHASE 4 — SUPPLIER AND SAMPLE QUALIFICATION
+
+Objective:
+
+Create a repeatable process connecting engineering requirements to sourcing decisions.
+
+Five-stage workflow:
+
+FIT BASELINE
+
+Confirm joint position, robot class, mechanical envelope, mounting interface, cable exit, and quantity.
+
+DUTY AND THERMAL CHECK
+
+Confirm continuous output, peak output, peak duration, speed, cycle profile, current limit, and ambient conditions.
+
+INTERFACE AND CONTROL CHECK
+
+Confirm voltage, communication protocol, controller, encoder, brake, pinout, firmware, and harness.
+
+SAMPLE VALIDATION
+
+Define pass/fail criteria for backlash, thermal rise, noise, force response, impact, or stroke repeatability.
+
+PILOT CONTINUITY
+
+Define pilot quantity, repeat-order expectations, inspection, packaging, delivery terms, and revision control.
+
+Acceptance criteria:
+
+An accepted sample must have a traceable model, revision, test record, and defined acceptance outcome.
+
+8. PHASE 5 — DIGITAL IDENTITY AND BOM
+
+Objective:
+
+Establish individual component identity and robot configuration records.
+
+Deliverables:
+
+Robot identifiers.
+Component identifiers.
+Manufacturer identifiers.
+Product identifiers.
+Serialized component records.
+Subsystem hierarchy.
+BOM records.
+BOM revisions.
+Installation history.
+Compatibility relationships.
+
+Acceptance criteria:
+
+Components can be assigned to individual robots.
+Historical installations can be retrieved.
+Replacements preserve original identity.
+Robot configurations can be versioned.
+BOM records can be reconstructed.
+9. PHASE 6 — FASTAPI AND SQLITE PROTOTYPE
+
+Objective:
+
+Implement an initial local database and API.
+
+Proposed technology:
+
+Python.
+FastAPI.
+SQLite.
+SQLAlchemy.
+Pydantic.
+
+Initial functionality:
+
+Manufacturer registration.
+Product registration.
+Component registration.
+Robot registration.
+BOM management.
+Component installation records.
+Lifecycle event recording.
+
+Acceptance criteria:
+
+Application starts successfully.
+Database creation works.
+CRUD operations pass tests.
+Foreign-key constraints are enforced.
+Invalid references are rejected.
+Historical component assignments are retained.
+
+All functionality must be tested before being described as implemented.
+
+10. PHASE 7 — LIFECYCLE AND TRACEABILITY
+
+Objective:
+
+Establish component accountability over time.
+
+Deliverables:
+
+Receiving inspection.
+Sample history.
+Installation records.
+Maintenance records.
+Fault records.
+Replacement history.
+Recall records.
+Retirement records.
+Performance history.
+
+Acceptance criteria:
+
+The system can identify which robot contains a particular serialized component and reconstruct its recorded lifecycle.
+
+11. PHASE 8 — SAFETY AND ACCOUNTABILITY
+
+Objective:
+
+Introduce structured safety-related component information.
+
+Deliverables:
+
+Emergency stop device inventory.
+STO-related component records.
+Safety controller references.
+Fault classification.
+Operating-limit records.
+Recall identification.
+Safety change control.
+
+Acceptance criteria:
+
+Safety-related information is traceable to manufacturer documentation and system validation evidence.
+
+The software must not be represented as a replacement for a validated safety architecture.
+
+12. PHASE 9 — CAPABILITY AND ROBOT PROFILES
+
+Objective:
+
+Connect physical hardware to robot capabilities.
+
+Proposed relationship:
+
+COMPONENTS | v CAPABILITIES | v ROBOT PROFILE | v TASK REQUIREMENTS | v APPLICATION
+
+Deliverables:
+
+Component capability relationships.
+Robot capability profiles.
+Declared capability records.
+Available capability records.
+Verified capability records.
+Task requirement records.
+Performance evidence.
+
+Acceptance criteria:
+
+The system distinguishes between theoretical, installed, operational, and tested capabilities.
+
+13. PHASE 10 — ADAPTIVE ROBOTICS INTEGRATION
+
+Objective:
+
+Connect physical hardware history with adaptive robotics information.
+
+Potential integrations:
+
+RoboTraits.ai.
+RoboTraits.com.
+RoboAgentic.ai.
+PITN.ai.
+
+Potential functionality:
+
+Hardware-aware behavior.
+Capability updates after component changes.
+Performance-based maintenance.
+Configuration history.
+Learning history.
+Digital twin synchronization.
+Robot matching.
+Cross-platform capability comparison.
+
+Acceptance criteria:
+
+Hardware identity and operational state can be supplied to authorized intelligent systems without allowing those systems to bypass physical safety constraints.
+
+14. PHASE 11 — MULTI-ROBOT ECOSYSTEM
+
+Objective:
+
+Support multiple robot identities and their individual component configurations.
+
+Potential functionality:
+
+Multi-robot registration.
+Independent BOMs.
+Fleet-wide component inventory.
+Robot matching.
+Task-to-capability relationships.
+Recall impact analysis.
+Cross-platform compatibility.
+Digital twin relationships.
+
+Acceptance criteria:
+
+Each robot maintains its own identity, configuration, lifecycle, and component history.
+
+Actual coordination and task execution require separate validated implementations.
+
+15. PHASE 12 — PLATFORM EXPANSION
+
+Potential future capabilities:
+
+Manufacturer portals.
+Supplier portals.
+Integrator tools.
+Engineering RFQ workflows.
+Sample management.
+Digital component passports.
+QR and RFID identification.
+Automated documentation retrieval.
+Advanced search.
+Analytics.
+Production-grade database infrastructure.
+External API integrations.
+
+These capabilities should be prioritized according to actual engineering demand and available resources.
+
+16. GITHUB DEVELOPMENT WORKFLOW
+
+Recommended development approach:
+
+Maintain the main branch as the stable documentation and code baseline.
+Use feature branches for new development.
+Create focused commits.
+Include meaningful commit messages.
+Review changes before merging.
+Maintain versioned documentation.
+Use GitHub Issues for implementation tasks.
+Use GitHub Projects for milestone tracking.
+Record known limitations.
+Maintain tests alongside software changes.
+
+Recommended branch examples:
+
+main
+
+feature/component-catalog
+
+feature/digital-identity
+
+feature/bom-management
+
+feature/lifecycle
+
+feature/api-prototype
+
+feature/compatibility
+
+17. DEVELOPMENT PRIORITY
+
+Recommended priority:
+
+HIGH:
+
+Documentation.
+Component taxonomy.
+Manufacturer and product records.
+Component identity.
+Robot identity.
+BOM relationships.
+
+MEDIUM:
+
+API prototype.
+Lifecycle records.
+Compatibility records.
+Maintenance history.
+Capability profiles.
+
+FUTURE:
+
+Advanced analytics.
+Digital twins.
+Adaptive maintenance.
+RoboAgentic integration.
+Multi-robot coordination.
+Manufacturer and supplier portals.
+18. VERSION CONTROL
+
+Recommended document versioning:
+
+Version 1.0: Initial proposed architecture.
+
+Version 1.1: Clarifications and corrections.
+
+Version 1.2: Expanded technical specifications.
+
+Version 2.0: Major architectural revision.
+
+Actual versions should reflect committed repository changes.
+
+19. IMPLEMENTATION STATUS POLICY
+
+Every major feature should be assigned a status.
+
+PROPOSED: Architectural concept or intended functionality.
+
+IN DEVELOPMENT: Implementation work has started.
+
+IMPLEMENTED: Code or functionality has been completed.
+
+TESTED: Defined tests have been executed successfully.
+
+VERIFIED: Required verification evidence exists.
+
+DEPLOYED: Functionality has been released into an identified operating environment.
+
+These labels must not be used interchangeably.
+
+20. LONG-TERM PROJECT OBJECTIVE
+
+The long-term objective is to establish RoboParts.ai as a structured robotics hardware information and accountability platform.
+
+It should connect:
+
+Physical Components
+
+Digital Identity
+
+Robot Configuration
+
+Capabilities
+
+Performance
+
+Tasks
+
+Manufacturers
+
+Suppliers
+
+Integrators
+
+Maintenance
+
+Lifecycle
+
+Digital Twins
+
+Intelligent Robotics Systems
+
+RoboParts.ai is intended to provide the physical hardware foundation for a broader adaptive robotics ecosystem under PITN.ai.
+
+21. STATUS
+
+Document status: Proposed Development Roadmap.
+
+Development phases and priorities are architectural recommendations. Completion of any phase must be supported by actual repository and implementation evidence.
+
+END OF DOCUMENT
