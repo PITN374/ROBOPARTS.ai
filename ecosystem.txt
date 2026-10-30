@@ -1,0 +1,195 @@
+PITN.ai — ECOSYSTEM ARCHITECTURE
+
+Document ID: PITN-ARCH-001
+Version: 1.0
+Status: Proposed Architecture Baseline
+Founder: Aaron Bailot
+Development Stage: Stage 1 — Software Implementation and Technical Validation
+
+1. Purpose
+
+PITN.ai (Power in the Numbers) is the overarching ecosystem connecting robotics component intelligence, structured robotics knowledge, intelligent-agent orchestration, supplier discovery, procurement, and governed robotic-system interaction.
+
+The ecosystem comprises four principal layers:
+
+PITN.ai — ecosystem infrastructure, integration strategy, and architectural governance.
+ROBOPARTS.ai — component identity, catalog intelligence, supplier discovery, procurement, and lifecycle traceability.
+ROBOTRAITS.ai / ROBOTRAITS.com — structured robotics ontology, capability descriptions, behavioral profiles, and evidence-linked attributes.
+ROBOAGENTIC.ai — intelligent-agent implementation, orchestration, AI reasoning, memory, authorized workflows, and robot-platform integration.
+2. Fundamental Architectural Principle
+
+Component identification, physical capability, behavioral configuration, task suitability, authorization, and physical execution are separate responsibilities.
+
+A declared component specification does not establish verified performance.
+
+A declared robot capability does not establish physical suitability.
+
+A personality configuration does not grant physical capabilities.
+
+An AI-generated plan does not constitute authorization.
+
+A successful software simulation does not establish physical safety.
+
+These distinctions must be preserved throughout the ecosystem.
+
+3. System Relationships
+3.1 PITN.ai
+
+Responsible for:
+
+Common terminology and interoperability.
+Identity and provenance conventions.
+Integration standards.
+Architectural governance.
+Technical documentation.
+Cross-project relationships.
+Future shared knowledge infrastructure.
+
+Blockchain and decentralized infrastructure remain optional until justified and validated.
+
+3.2 ROBOPARTS.ai
+
+Responsible for:
+
+Component classification.
+Manufacturer product identification.
+Physical-instance identity.
+Product catalog indexing.
+Supplier discovery and qualification.
+Technical document management.
+Evidence provenance.
+RFQ generation and management.
+Supplier quotation comparison.
+Procurement workflows.
+Installation and lifecycle history.
+3.3 ROBOTRAITS.ai
+
+Responsible for:
+
+Robot identity and configuration profiles.
+Physical capability descriptions.
+Sensor and actuator profiles.
+Operating constraints.
+Behavioral and personality configurations.
+Communication and interaction characteristics.
+Performance measurements.
+Verification status.
+Versioned ontology and schema management.
+3.4 ROBOAGENTIC.ai
+
+Responsible for two logically separated agent domains.
+
+A. Robotics intelligence
+
+Robot-profile interpretation.
+Task matching.
+AI reasoning and planning.
+Context and memory.
+Behavioral configuration.
+Authorized robot-platform interaction.
+
+B. Commercial intelligence
+
+Supplier discovery.
+Manufacturer research.
+Component classification.
+Contact provenance.
+Commercial matching.
+RFQ preparation.
+Quotation normalization.
+Sourcing reports.
+
+The two domains may share infrastructure but must maintain separate permissions and operating policies.
+
+4. Common Architectural Services
+
+The ecosystem should progressively implement:
+
+Persistent identity service.
+Evidence and provenance service.
+Data validation service.
+Component and supplier intelligence.
+ROBOTRAITS profile service.
+Agent registry.
+AI provider integration.
+Context and memory management.
+Centralized authorization.
+Workflow orchestration.
+Audit and reporting.
+Robot-platform adapters.
+5. Information Flow
+
+External sources and internal systems
+→ Source records and evidence
+→ ROBOPARTS identity resolution
+→ Component and robot configuration
+→ ROBOTRAITS profiles
+→ ROBOAGENTIC agent registration and context
+→ AI reasoning and planning
+→ Policy and authorization evaluation
+→ Approved workflow execution
+→ Audit, results, and feedback.
+
+Physical robot execution requires an additional robot-specific adapter and applicable independent safety mechanisms.
+
+6. Architectural Principles
+Persistent identifiers.
+Separation of commercial products and physical instances.
+Evidence-linked technical claims.
+Non-destructive historical records.
+Versioned schemas.
+Replaceable external providers.
+Least-privilege authorization.
+Independent physical safety.
+Reproducible testing.
+Transparent implementation status.
+7. Common Status Conventions
+
+Implementation: PROPOSED, DESIGNED, IMPLEMENTED, TESTED, INDEPENDENTLY_VERIFIED, DEPRECATED.
+
+Evidence: DECLARED, INFERRED, VERIFIED, DISPUTED, UNVERIFIED.
+
+Authorization: PERMITTED, DENIED, UNRESOLVED, REVOKED, EXPIRED.
+
+These are separate status dimensions.
+
+8. Initial Technology Direction
+
+Proposed software foundation:
+
+Python 3.12 or later.
+Pydantic.
+SQLAlchemy.
+PostgreSQL.
+SQLite for development.
+httpx.
+pytest.
+Configurable AI and translation providers.
+Authorized external search integrations.
+
+Additional technologies should be introduced according to demonstrated requirements.
+
+9. Stage 1 Objective
+
+Demonstrate a reproducible software workflow connecting:
+
+Component identity → supporting evidence → ROBOTRAITS profile → agent identity → authorization → restricted operation → audit record → configuration change.
+
+Use synthetic data and simulated actions where necessary.
+
+10. Scope Boundary
+
+This document describes the proposed ecosystem architecture. It does not establish that the services, integrations, databases, supplier coverage, APIs, or physical robot capabilities have been implemented.
+
+All implementation claims require supporting evidence.
+
+11. Document Relationships
+
+This document is the architectural parent of:
+
+ROBOPARTS_CATALOG_AND_PRODUCT_INDEX.txt
+ROBOPARTS_SUPPLIER_AND_RFQ_MODEL.txt
+ROBOTRAITS_ROBOAGENTIC_TECHNICAL_MODEL.txt
+ROBOPARTS_EVIDENCE_VALIDATION_AND_DEVELOPMENT_ROADMAP.txt
+
+Future changes should preserve these relationships and identify the affected documents.
