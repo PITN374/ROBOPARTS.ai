@@ -495,11 +495,3 @@ The opportunity should be evaluated through measurable operational results, with
 ---
 
 **PITN — Power in the Numbers**
-
-**Manufacturing Information Savings Thesis**
-
-*Persistent information. Connected relationships. Lifecycle continuity. Reduced information friction.*
-
-Suggested GitHub location: `docs/PITN_MANUFACTURING_INFORMATION_SAVINGS_THESIS.md`
-
-This version contains no NIST references, external source links, or named outside organizations.
