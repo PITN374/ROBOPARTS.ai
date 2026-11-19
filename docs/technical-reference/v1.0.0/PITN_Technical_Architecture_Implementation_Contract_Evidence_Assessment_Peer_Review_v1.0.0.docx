@@ -1,0 +1,670 @@
+PITN — POWER IN THE NUMBERS
+PERSISTENT IDENTITY & ROBOTICS
+MANUFACTURING INFRASTRUCTURE
+Technical Architecture, Implementation Contract,
+Evidence Assessment & Peer-Review Protocol
+
+Version 1.0.0  |  19 November 2026
+Author: Aaron Bailot  |  Power In The Numbers, LLC
+Repository: github.com/PITN374/ROBOPARTS.ai
+
+Document control
+Value
+Document status
+Technical reference and implementation specification for peer review
+Architecture owner / author
+Aaron Bailot — PITN / Power In The Numbers, LLC
+Scope
+Persistent identity, namespace classification, product/instance identity, BOM relationships, provenance, lifecycle, interoperability and verification
+Intended audience
+Robotics OEMs, component manufacturers, system integrators, suppliers, manufacturing IT/OT architects, technical reviewers
+Implementation posture
+Manufacturer-controlled systems remain authoritative; PITN provides a persistent identity and relationship architecture
+Evidence posture
+Existing public interfaces and repository documents are cited; proposed contracts and tests are explicitly labelled
+
+
+Core principle: CONNECT THE PHYSICAL COMPONENT TO THE INFORMATION THAT ALREADY DESCRIBES IT.
+
+Document purpose and status
+This document consolidates the existing PITN / ROBOPARTS architecture into a manufacturer-facing implementation reference and peer-review package. It is based on the public ROBOPARTS repository materials, the supplied 34-TLD dashboard extract and Web3 domain examples, and the public ROBOPARTS marketplace page. It does not represent an independent security audit, a production deployment certification, or proof that every proposed API, integration, cryptographic mechanism, or lifecycle workflow is already implemented.
+The objective is to establish what is demonstrated, what is specified, what a manufacturer can implement using its own systems, and what remains subject to reproducible testing. The architecture is intended to be deployable alongside existing ERP, PLM, MES, CAD/PDM, supplier, inventory and maintenance systems. It is not a requirement to replace those systems or transfer confidential source records to PITN.
+Evidence-status vocabulary
+Status
+Meaning
+Permitted claim
+Demonstrated interface
+A public page or interactive demonstration visibly presents a workflow or data relationship.
+The interface demonstrates the presented concept/workflow; do not infer backend persistence or security.
+Documented specification
+A repository document defines a model, design, contract or target architecture.
+The design is documented; implementation is not implied.
+Code artifact
+Code or a code example is present in a repository.
+Source artifact exists; execution and deployment require separate evidence.
+Implemented
+A feature is present in an executable, deployed implementation and its version/configuration is identified.
+Implementation exists in the identified environment.
+Tested
+A reproducible test with inputs, expected results and observed results has passed.
+The tested behavior passed under stated conditions.
+Independently verified
+A qualified independent reviewer or test laboratory confirms the stated result.
+Independent verification is limited to the test scope and evidence.
+
+
+Do not collapse these statuses. A domain registration is not proof of a component registry; a passport UI is not proof of a cryptographic signature; a proposed API is not proof of an operating service; a blockchain transaction is not proof that the underlying physical-world claim is true.
+1. Executive architecture statement
+PITN is a blockchain-based namespace and persistent-identity architecture for physical manufacturing assets. ROBOPARTS applies that foundation to robotics components, assemblies, manufacturer identifiers, product revisions, serialized physical instances, BOM positions, compatibility, evidence and lifecycle relationships.
+The architecture separates (1) the classification namespace, (2) the persistent identity reference, (3) the manufacturer's product definition, (4) the individual physical instance, (5) the assembly/BOM relationship, and (6) evidence and lifecycle events. These are linked but are not interchangeable.
+Physical component → namespace classification → persistent identity → manufacturer/product record
+→ serialized instance → BOM / installed configuration → evidence & lifecycle events
+→ robot / fleet / service / sourcing applications
+Manufacturer deployment principle
+A manufacturer retains its existing systems of record and identifiers. PITN supplies a shared identity and relationship layer. Connectors or controlled exports map manufacturer records into PITN-compatible references; the manufacturer's ERP/PLM/MES remains authoritative for its source data. A deployment can begin with a read-only identity crosswalk and expand to controlled write-back only where governance permits.
+Architectural boundaries
+Namespace is a classification/identity context; it does not itself describe every attribute of a part.
+Manufacturer part number identifies a manufacturer's product definition; a distributor SKU is issuer-specific; a serial number identifies an individual unit; a BOM position identifies a place in a configuration.
+A robot identity persists across component replacement. A replaced component keeps its own identity and historical installation record.
+Intended engineering BOM, as-built configuration and as-maintained configuration must be separately represented.
+Blockchain may anchor namespace references, record digests, signatures or event commitments. Private commercial and personal information should remain off-chain.
+AI-generated summaries and compatibility suggestions must remain distinguishable from manufacturer declarations, measured results and authorized engineering approvals.
+2. Evidence inventory and current assessment
+Evidence source
+What it supports
+Limit / qualification
+ROBOPARTS public marketplace: https://roboparts.ai/
+Published category browsing, structured listing attributes, supplier labels, docs links and RFQ entry points; page presents a PITN identity layer connecting MPN, SKU, OEM BOM reference and serial unit.
+Public page content is observable. It does not by itself prove supplier verification, RFQ processing, database persistence or actual cohort participation.
+Factory01 passport: https://powerinthenumbers.ai/passport/factory01
+Public example of a humanoid model passport and associated identity information (user-provided reference).
+Demonstration, not live blockchain verification; preserve this caveat.
+Identity scan: https://powerinthenumbers.ai/identity#scan
+Public identity/scanning demonstration (user-provided reference).
+Demonstrates the presented scan interaction; does not alone prove anti-cloning, cryptographic authentication or physical authenticity.
+ROBOPARTS_DATA_MODEL.txt
+Existing entity concepts: Product, ComponentInstance, Organization, Robot, BOMPosition, LifecycleEvent, CompatibilityAssessment, PerformanceObservation, OntologyRelationship.
+Data-model document is compact/pseudocode; persistence, access controls and runtime behavior need implementation evidence.
+DIGITAL_IDENTITY_AND_BOM.txt
+Product-vs-instance distinction, manufacturer references, serial/lot, robot hierarchy, BOM and lifecycle concepts.
+Document labels itself Proposed Data Architecture; future features are explicitly prospective.
+PITN_PHYSICAL_IDENTITY_EVIDENCE_AND_LIFECYCLE_TRACEABILITY.md
+Four-part architecture: persistent identity, digital record association, lifecycle events and physical identification/verification; identity continuity and evidence model.
+Architecture description; illustrative examples are not deployed records.
+PITN_BLOCKCHAIN_NAMESPACE_ARCHITECTURE.md
+Blockchain is foundational to PITN namespace architecture; 27 namespace definitions and identity relationship concept.
+The source expressly describes registration/anchoring as target architecture and example IDs as illustrative.
+Historical pilot README
+Original 27 namespace architecture, seven browser categories, manufacturer identity chain, BOM, proposed Web3 anchoring and acceptance criteria.
+Status is TARGET ARCHITECTURE — PILOT DEVELOPMENT; it explicitly says registration, integrations, anchoring and endpoints require validation.
+API_AND_DATABASE_PROTOTYPE.txt
+FastAPI/SQLite stack, entity list, SQL starting schema, endpoint concepts, security and test requirements.
+Explicit status: Initial Prototype Specification — UNTESTED. It is not proof of production API.
+PITN_ROBOPARTS_CODE.txt
+A code-concept artifact with SQLite tables and FastAPI route examples.
+Text file is not a verified executable package. Syntax, packaging, dependency, test and runtime checks are required.
+IMPLEMENTATION_MANIFEST.md
+Ordered build plan and explicit status definitions: planned, prepared, uploaded, integrated, tested, launch-ready.
+Manifest states upload is not implementation, testing or deployment.
+
+
+Domain and namespace evidence supplied for this assessment
+The user supplied eight Web3 domain entries marked Polygon · Lifetime: st-rz-004-0002-yt1p.endeffector; factory01.humanoids; sentry02.cobots; humanoid.actuator; humanoid.encoder; humanoid.fastener; humanoid.endeffector; humanoid.controlsystem. Six map to the 34 robotics TLD schedule (.endeffector, .actuator, .encoder, .fastener and .controlsystem); .humanoids and .cobots are outside that 34-TLD schedule.
+The user supplied a namespace-management dashboard extract containing 34 matching robotics TLDs. All 34 entries show reseller active. Twenty-seven show royalties active and seven show royalties not active. The dashboard reports registered-domain counts for .actuator (1), .encoder (1), .fastener (1), .controlsystem (1), .endeffector (2), and .humanoidro (2). Of these, five TLDs belong to the 34-TLD robotics schedule and account for six domains (.actuator 1, .encoder 1, .fastener 1, .controlsystem 1 and .endeffector 2); .humanoidro is outside that 34-TLD schedule. The separately supplied eight named domain examples include six domains within the 34-TLD set and two outside it (.humanoids and .cobots). These counts are dashboard observations and should be reconciled against a dated export and individual registration records before publication.
+Commercial evidence: reseller-active and royalty-active controls evidence a configured monetization mechanism. They do not establish realized revenue. Revenue claims require dated sales, royalty accrual, payment or settlement records. No revenue amount is asserted here.
+Blockchain verification: supplied registration text identifies Polygon and lifetime terms. For independent chain verification, append the domain registrar/contract record, chain ID, token or registry reference, transaction hash, resolver output and block timestamp. Do not describe the domains as independently verified on-chain until those records have been checked.
+3. Canonical identity model — implementation contract
+The following is the recommended canonical model, reconciling the existing ROBOPARTS data model and identity/BOM documents. It is an implementation-ready contract proposal (Schema v1.0.0), not a claim that all fields are already implemented in a production registry.
+3.1 Entity separation
+Entity
+What it identifies
+Key rule
+Namespace
+Classification context such as .actuator.
+Versioned registry entry; namespace name is not a product or physical instance.
+Organization
+Manufacturer, supplier, distributor, integrator, operator or service provider.
+Organization identity and verification status are separate from a product record.
+Product definition
+Manufacturer-defined product/model/part and revision.
+MPN + manufacturer + revision identifies the defined product context; preserve issuer and source.
+Physical instance
+One manufactured or serialized unit.
+Serial/lot/physical identifier is not substituted for product MPN.
+Robot/system
+A machine or product-level system.
+Stable robot identity persists when components are replaced.
+Assembly/subsystem
+A physical grouping within a system.
+Hierarchical, typed relationships; do not infer hierarchy from names.
+BOM/configuration
+An intended, approved, as-built or as-maintained bill of materials.
+Versioned and effective-dated; preserve prior revisions.
+Installation relationship
+A physical instance installed at a defined BOM position.
+Removal closes an installation interval; replacement creates a new relationship.
+Lifecycle event
+An event affecting an identity or configuration.
+Append-only history; event actor, time, evidence and status are captured.
+Evidence reference
+A document, measurement, source record, photo, certificate or transaction.
+Store URI, issuer, digest, issue date and review status.
+Compatibility assessment
+A scoped assessment between a product/instance and a target system.
+Unknown is not compatible; preserve missing evidence and limitations.
+
+
+3.2 Canonical identifier rules
+Assign every PITN-managed entity a globally unique immutable internal identifier (UUID). Recommended canonical reference form: urn:pitn:<entity-type>:<UUID>.
+Keep human-readable labels and namespace-qualified Web3 domains as resolvable aliases/references; do not make mutable MPN, SKU, serial or BOM position the sole database primary key.
+Namespace TLD values are normalized to lowercase ASCII where possible; internationalized namespace labels require a documented IDNA/Unicode normalization policy and collision review.
+Preserve source-system identifiers verbatim, together with issuer/system, namespace, region (where relevant), and validity period.
+Never silently recycle an identifier. Retirement, suspension and revocation are states, not deletion.
+Do not assume a namespace-qualified name is a W3C DID or a URI resolver unless a specific resolution method and contract are defined and tested.
+3.3 Required product and physical-instance fields
+Field group
+Required / recommended fields
+Identity envelope
+schema_version; record_type; record_id; canonical_id; namespace_tld; identity status; optional Web3 domain, chain, chain_id, registry/token reference, tx hash, resolver URI.
+Classification
+class name; taxonomy version; category/subclass.
+Manufacturer
+organization ID; legal/display name; authoritative URI; identity status; country code where applicable.
+Product definition
+manufacturer_part_number; revision; optional product/family/model IDs; revision effective dates; issuer-specific distributor SKUs.
+Physical instance
+instance ID; serial number (nullable if non-serialized); lot number; manufacturing date; physical identifier type/value; instance status.
+Technical data
+named attributes with value, unit, source status, method, source reference and observation time; typed mechanical/electrical/communication/software/environmental interfaces.
+BOM relationships
+relationship ID/type; target ID; BOM ID/revision; line ID; position; quantity; effective interval; approval/installation status; source reference.
+Provenance
+record source, source URI/record ID, recorded by/at, last update, evidence references and content digests.
+Verification
+overall status plus claim-level status, method, evidence references, verifier and verification timestamp.
+Lifecycle
+event ID/type/time/actor/status; location; configuration reference; evidence; prior event reference and event digest.
+
+
+3.4 Core relationship rules
+A Product definition may have many Physical instances; an instance must reference one product definition unless an explicitly modelled unknown/unidentified state is used.
+A Robot/system may have many configurations. Each configuration references a versioned BOM.
+A BOM contains line items that describe required/optional product definitions and quantities; actual installations reference physical instances.
+An installation relationship is time-bounded. A removal closes the interval; it does not erase the historical relationship.
+A replacement event links the removed instance, replacement instance, BOM position, approving authority and supporting compatibility evidence.
+Lifecycle events refer to stable entity IDs and retain the actor, event time, record time, evidence and status.
+Compatibility is a scoped assessment, not a boolean inferred from matching category names. Missing specifications remain unknown.
+Every derived or measured technical attribute records its units, source type and provenance.
+3.5 Example identity relationship
+Robot: urn:pitn:robot:<UUID>
+  └─ Configuration: CFG-2026-REV-A
+      └─ BOM: HUMANOIDO-BOM-REV-A
+          └─ Position: LEFT-ARM/ELBOW/ACTUATOR-01
+              ├─ Required product: Manufacturer MPN ACT-4721, Rev A
+              └─ Installed physical instance:
+                   urn:pitn:component:<UUID>
+                   serial: SN-100238
+                   namespace: .actuator
+                   web3 alias: humanoid.actuator (if assigned)
+                   status: installed
+                   evidence: receiving + inspection + installation records
+The domain alias in the example is illustrative. The supplied registration `humanoid.actuator` is evidence of a named domain registration as reported by the user; the example does not establish that the registered domain currently resolves to the component record shown.
+4. Namespace crosswalk: original 27 to expanded 34
+The historical ROBOPARTS pilot README and PITN blockchain namespace architecture enumerate the original 27. The user-supplied management dashboard contains the 34-name expanded robotics set. The seven additions are identified below. This is a version crosswalk based on the two supplied/documented inventories; it does not assert that every TLD has an independently verified on-chain registry transaction.
+Original 27 (v0)
+Expanded 34 status
+Seven additions (v1)
+All 27 retained without renaming in supplied 34-name list.
+27/27 names retained.
+.electricalconnector
+No rename or deletion identified in supplied extracts.
+Original 27 preserved as baseline.
+.rollingbearing
+Expanded portfolio adds 7 names.
+Crosswalk complete by name.
+.circuitboard
+Namespace definitions should be versioned separately from registration state.
+Reseller active shown for all 34.
+.roboticjoint
+Dashboard royalty activation is not namespace ownership proof.
+27 active / 7 inactive royalty flags.
+.powerdistribution
+Domain count is separate from TLD portfolio listing.
+Individual domain count varies by TLD.
+.safetycontroller
+
+
+Registration evidence needs per-TLD chain references.
+.kinematiclink
+
+
+The 34 namespace definitions and dashboard statuses are also provided as a companion CSV. The seven added names are recorded as additions relative to the historical 27. Because the dashboard extract shows seven royalty-inactive TLDs, the current status should be read directly from the supplied dashboard, not inferred from whether a namespace is an addition.
+Crosswalk interpretation
+The original 27 form the documented ROBOPARTS physical BOM taxonomy. The expanded 34 portfolio adds electrical connector, rolling bearing, circuit board, robotic joint, power distribution, safety controller and kinematic link classifications. These additions increase classification granularity; they do not require a change to the persistent identity principles.
+Namespace governance requirements
+Maintain a registry record per TLD: canonical spelling, display label, definition, layer, parent/related namespaces, owner/controller, registry authority, chain/network, registry contract, activation state, royalty state, reseller state and effective dates.
+Maintain version history with created/modified/deprecated dates, author, rationale and supersession relationships.
+Do not merge similarly named namespaces (e.g. .endeffector and .endeffectors) without explicit governance and compatibility policy.
+Record domain registrations as individual records beneath a namespace; never infer that a TLD's dashboard presence means a domain has been registered.
+Publish an auditable dated export and attach chain proof for claims of on-chain registration.
+5. Manufacturer network implementation architecture
+The manufacturer can implement PITN identity in its own network using a logical integration layer. A minimal deployment need not centralize all manufacturer data. It can begin with a controlled crosswalk table and read-only resolver service.
+Manufacturer systems of record
+  ERP: inventory, procurement, supplier, PO, stock identifiers
+  PLM: product definition, MPN, revision, engineering change
+  MES: work order, as-built, lot, serial, inspection
+  CAD/PDM: drawings, models, technical documents
+  QMS/CMMS: quality, calibration, maintenance, service
+             |
+             | controlled adapters / API / events / scheduled export
+             v
+Manufacturer PITN Integration Gateway
+  - identity crosswalk and source-system mapping
+  - schema validation and data normalization
+  - authorization / tenant boundaries
+  - provenance and audit log
+  - event sequencing / idempotency
+             |
+             +--------------------+
+             |                    |
+             v                    v
+PITN Identity & Namespace     Manufacturer data vault
+Reference Layer              (confidential records remain local)
+  - canonical IDs             - source documents
+  - namespace references      - drawings / certificates
+  - relationship pointers     - supplier commercial terms
+  - signed digests            - personal / restricted data
+             |
+             v
+Authorized applications
+  ROBOPARTS discovery / BOM / RFQ / passport / maintenance
+  manufacturer engineering / service / supplier portal
+Integration pattern
+Pattern
+Use
+Minimum controls
+Read-only lookup
+Resolve PITN identity to source-system record references.
+Authenticated service identity; least privilege; source freshness timestamp.
+Batch exchange
+Import/export CSV, JSON or XML at controlled intervals.
+Schema version; row-level error report; idempotency key; reconciliation totals.
+API integration
+Query/create approved identity crosswalks and relationship records.
+OAuth2/OIDC or mutual TLS; scoped authorization; rate limits; audit log; versioned OpenAPI contract.
+Event integration
+Capture lifecycle or configuration events from MES/PLM/CMMS.
+Signed producer identity; event ID; event time and ingestion time; replay/idempotency protection; ordering policy.
+Federated evidence
+Keep documents local and expose permitted metadata, URI or digest.
+Access control at source; URI expiry/revocation; SHA-256 digest; data classification.
+
+
+Minimum manufacturer data mapping
+Source system
+Typical source keys
+PITN mapping
+ERP
+material number, supplier ID, SKU, PO, inventory lot
+Organization, commercial reference, receiving/procurement events
+PLM
+part number, product ID, revision, ECO/ECN
+Product definition, revision, engineering BOM, source authority
+MES
+work order, serial, lot, station, as-built BOM
+Physical instance, manufacturing/inspection event, as-built configuration
+CAD/PDM
+drawing number, model ID, file revision
+Evidence reference, product revision, interface/specification source
+QMS
+inspection, NCR, certificate, calibration
+Evidence reference, quality/lifecycle event, verification claim
+CMMS
+asset ID, work order, maintenance task
+Installation relationship, maintenance/repair event, replacement history
+Supplier portal
+supplier part number, datasheet, lead time
+Supplier organization, external SKU/MPN mapping, supplier evidence
+
+
+6. API and data exchange contract
+The existing API_AND_DATABASE_PROTOTYPE.txt defines FastAPI/SQLite as a proposed initial stack and lists core entities and endpoint concepts. It is explicitly marked UNTESTED. The following endpoint groups are a recommended contract boundary; exact route names, payloads and security policies must be frozen in an OpenAPI specification before implementation.
+Resource group
+Representative operations
+Expected behavior
+Namespaces
+GET /v1/namespaces; GET /v1/namespaces/{tld}
+Return definition, version, state, registry evidence references and related classes.
+Identity
+POST /v1/identities; GET /v1/identities/{canonical_id}
+Create or resolve canonical identity; enforce uniqueness and authorization.
+Products
+POST/GET /v1/products; GET /v1/products/{id}
+Maintain manufacturer product definitions and revisions.
+Instances
+POST /v1/instances; GET /v1/instances/{id}; GET /v1/instances/{id}/history
+Maintain physical instances and serial/lot references.
+Robots/configurations
+POST /v1/robots; POST /v1/robots/{id}/configurations
+Maintain persistent system identity and versioned configurations.
+BOM
+POST /v1/boms; GET /v1/boms/{id}; POST /v1/boms/{id}/validate
+Maintain versioned BOM and typed line items.
+Installations
+POST /v1/installations; POST /v1/installations/{id}/remove
+Time-bound physical instance placement; preserve history.
+Events
+POST /v1/events; GET /v1/identities/{id}/events
+Append lifecycle events with actor, timestamp, evidence and idempotency.
+Evidence
+POST /v1/evidence; GET /v1/evidence/{id}
+Register metadata, digest, issuer, review status; protect source content.
+Verification
+POST /v1/verifications; GET /v1/identities/{id}/verification
+Record claim-level verification with methods and evidence.
+Compatibility
+POST /v1/compatibility-assessments; GET /v1/products/{id}/compatibility
+Return scoped status, checked requirements, missing evidence and limitations.
+Anchoring
+POST /v1/anchors; GET /v1/anchors/{id}; POST /v1/anchors/{id}/verify
+Anchor digest/reference and verify transaction/record consistency; separate from physical authenticity.
+
+
+API conformance requirements
+Version routes and payload schemas (e.g. /v1); return schema_version in every exchange.
+Use stable UUID/URN identifiers; never use display name as a primary key.
+Support idempotency keys for create/event operations and return conflict on duplicate immutable identifiers.
+Use UTC RFC 3339 timestamps; distinguish event occurrence time from record ingestion time.
+Return explicit validation errors with field paths; reject unknown enum values and malformed identifiers.
+Support pagination, filtering, sorting and bulk import/export with reconciliation summaries.
+Use OpenAPI 3.1 and publish machine-readable schemas and examples.
+Define data ownership, retention, correction, deletion, export and dispute policies.
+7. Cryptographic identity, provenance and blockchain verification
+PITN's namespace architecture is blockchain-based by design. To convert the documented architecture and reported domain registrations into independently testable cryptographic evidence, the implementation must define and test the registry contract, resolution method, record digest, signer identity, signature envelope, event chain and revocation procedure.
+Recommended trust model
+Canonical record: serialize a record using a deterministic canonicalization profile (recommend RFC 8785 JSON Canonicalization Scheme or another explicitly selected profile).
+Digest: compute SHA-256 over the canonical bytes; store algorithm and digest with the record version.
+Signer: sign a domain-separated message containing record ID, schema version, digest, issuer ID, issued-at time and intended audience/context.
+Key management: use organization-controlled keys in a managed KMS/HSM where appropriate; define rotation, backup, compromise and revocation procedures.
+Anchor: submit only the minimum public identifier or digest/commitment required to the selected blockchain registry; keep sensitive data off-chain.
+Verify: independently recompute digest, validate signature against trusted key history, verify signer authorization at signing time, and query chain state/transaction receipt.
+Revoke/supersede: append a new signed status event; do not overwrite prior signed records or silently delete history.
+Cryptographic acceptance tests
+Test ID
+Test procedure
+Pass condition
+CRYPTO-01
+Canonicalize identical JSON records created in different key orders.
+Identical canonical bytes and digest.
+CRYPTO-02
+Sign record digest with authorized key; verify with published public key.
+Valid signature and correct signer/key ID.
+CRYPTO-03
+Change one field after signing.
+Digest/signature verification fails.
+CRYPTO-04
+Verify signature after key rotation.
+Historical signature validates against key valid at signing time.
+CRYPTO-05
+Revoke or supersede a record.
+Resolver returns current state and retains verifiable history.
+CRYPTO-06
+Verify blockchain anchor.
+Chain ID, contract, transaction receipt, event, block timestamp and digest match expected record.
+CRYPTO-07
+Attempt unauthorized update.
+Operation rejected and audit event recorded.
+CRYPTO-08
+Submit false physical-world claim with valid signature.
+System labels signer attestation separately; signature is not treated as proof claim is true.
+
+
+Important limitation: a valid signature proves that a key signed particular bytes, subject to key custody and authorization assumptions. A blockchain anchor can show that a commitment was recorded at a point in chain history. Neither proves that a manufacturer assertion, inspection result or physical object is true without a trustworthy evidence process.
+8. Physical identification and passport workflow
+The Factory01 passport and identity-scanning page are public reference demonstrations of the machine identity/passport concept. The user has clarified that Factory01 is a demonstration and is not live blockchain verification. The scanning demonstration should be described as an interface/workflow demonstration unless and until anti-cloning, cryptographic challenge-response and physical binding are tested.
+1. Manufacturer creates/exports robot and component source records.
+2. PITN-compatible identity references are assigned or cross-mapped.
+3. Product definitions, physical instances and BOM positions are related.
+4. Authorized identity/passport view displays permitted records and evidence.
+5. Physical label/QR/NFC/RFID is scanned to retrieve the identity reference.
+6. Resolver checks record state, source, permissions and evidence.
+7. If hardware supports secure challenge-response, authenticate the device separately.
+8. Record scan/verification outcome and actor as an auditable event.
+A static QR code proves only that the code encodes a reference. It can be copied. Stronger physical authentication requires a secure element or equivalent device-held secret, challenge-response protocol, secure provisioning, revocation and an independently tested threat model.
+9. Reproducible verification and conformance test plan
+Test area
+Required test cases
+Evidence artifact
+Schema
+Valid product/instance records; missing required fields; invalid namespace; malformed UUID; invalid date; wrong enum; unknown properties.
+JSON Schema; test vectors; machine test output.
+Identity uniqueness
+Duplicate canonical ID; duplicate manufacturer+MPN+revision policy; serial uniqueness scoped to issuer/manufacturer; alias collision.
+Database constraint tests and collision report.
+BOM/configuration
+Parent-child references; cyclic assembly detection; quantity; version; effective dates; intended vs as-built vs as-maintained.
+Fixtures, expected outputs and integration test report.
+Installation history
+Install, remove, replace, overlapping assignment, historical query.
+Event log and before/after configuration results.
+Provenance
+Missing source, broken URI, digest mismatch, expired certificate, disputed evidence.
+Evidence verification report.
+Interoperability
+ERP/PLM/MES test export/import; mapping preservation; round-trip comparison; idempotency; rejected rows.
+Adapter logs, mapping tables, reconciliation report.
+Security
+Authentication, authorization, tenant isolation, input validation, injection, rate limiting, secrets, audit trail, backup/restore.
+Threat model, automated scan and independent penetration test.
+Blockchain
+Registry lookup, resolver correctness, transaction verification, reorg/finality policy, revoked key, stale anchor.
+Chain ID, contract, tx hash, block, verification output.
+Performance
+Expected throughput, concurrent reads/writes, latency, large BOM and bulk import.
+Load test configuration and results.
+Recovery
+Database restore, event replay, key rotation, service outage and retry.
+Recovery exercise report.
+
+
+Minimum end-to-end demonstration
+Register a manufacturer organization with source evidence and verification status unverified.
+Register a product definition with manufacturer MPN, revision and sourced specifications.
+Register two physical instances with unique serial numbers and separate instance IDs.
+Create a robot and versioned configuration/BOM with a defined actuator position.
+Install instance A at that position and record evidence and actor.
+Remove instance A and install instance B without overwriting instance A's history.
+Retrieve the robot's current as-built configuration and the full history for both instances.
+Change a source field after signing and demonstrate digest/signature failure.
+Export the robot/BOM/identity package to a manufacturer system and round-trip it without losing identifiers, revision, units or provenance.
+The test must be run against a named software commit, dependency lockfile, environment, database migration version and configuration. Publish raw test output, test fixture data and known limitations. Do not report a test as passed unless the run is reproducible.
+10. Manufacturer pilot and economic validation
+The existing PITN economic paper provides a modeled information-cost case. Its modeled $2.5 million annual burden and $572,500 annual savings are hypotheses for pilot measurement, not actual measured savings. A manufacturer pilot should measure baseline and post-implementation workflows using the same definitions and sampling approach.
+Metric
+Baseline measure
+Post-implementation measure
+Component identification
+Median time to identify correct part, revision and instance.
+Same task and sampling rules after PITN workflow.
+Document retrieval
+Time to find applicable datasheet, drawing, certificate and service record.
+Time to retrieve by persistent identity and evidence link.
+BOM reconciliation
+Time and mismatch rate for a defined BOM sample.
+Same BOM size/complexity and mismatch criteria.
+Supplier reconciliation
+Time to map manufacturer MPN to supplier SKU and source.
+Same suppliers and source rules.
+Maintenance traceability
+Time to identify installed component and service history.
+Same task for comparable asset cohort.
+Data quality
+Duplicate IDs, missing fields, unresolved aliases, stale records.
+Same checks after integration.
+RFQ/sourcing
+Request preparation time, response time and completion rate.
+Same sourcing scope; do not equate page click with completed RFQ.
+
+
+Pre-register scope, sample size, workflow definitions, exclusions and success thresholds.
+Use actual manufacturer data under a data-processing agreement and least-privilege access.
+Report median and percentile times, error rates, sample counts and confidence/uncertainty; separate one-time integration cost from recurring operating cost.
+Record negative results and workflow regressions.
+Do not generalize results from one manufacturer or one component class without qualification.
+11. Security, privacy and operational controls
+Threat model: counterfeit/duplicate identity, copied label, compromised signer key, unauthorized write, malicious supplier data, resolver poisoning, replay, data leakage, tenant crossover, blockchain reorganization, stale cached records.
+Authentication: organization and service identities; MFA for privileged human access; short-lived tokens or mutual TLS for machine integrations.
+Authorization: least privilege, tenant isolation, role/attribute-based access, approval separation for safety-critical changes.
+Integrity: signed events, immutable audit log, deterministic digests, key rotation and revocation.
+Privacy: data classification; off-chain confidential records; selective disclosure; retention and deletion policies compatible with legal obligations.
+Availability: backups, tested restore, monitoring, rate limiting, queue retry/dead-letter handling and disaster recovery objectives.
+Safety boundary: PITN identity data is not a safety controller and must not directly authorize motion or replace functional-safety engineering.
+12. Standards and semantic alignment
+The implementation should evaluate relevant standards and specifications rather than claim blanket compliance. Candidate areas for technical mapping include ISO 8000 data quality, ISO 9001 quality-management records, IEC 62443 industrial cybersecurity, ISO/IEC 27001 information security management, IEC 61508/ISO 13849 functional safety boundaries, OPC UA information modelling, AutomationML, GS1 identifiers where applicable, W3C Verifiable Credentials and DID specifications where the chosen identity model actually conforms, JSON Schema 2020-12, OpenAPI 3.1 and RFC 8785 JSON canonicalization. Applicability and edition must be assessed by the manufacturer and independent reviewer.
+The namespace model is PITN's blockchain-based architecture. Any claim of conformance to a particular DID method, VC data model, GS1 scheme, OPC UA companion specification or industrial standard must be supported by a documented mapping and conformance test.
+13. Limitations and unresolved design decisions
+Area
+Current limitation / decision required
+Production software
+Repository documents include a proposed/untested API specification and code-concept text. A runnable, versioned service, dependencies, CI and test report must be identified.
+Database
+SQLite is a proposed prototype option. Production DB choice, migrations, constraints, backup, restore and tenancy are not evidenced by the cited documents.
+Namespace registration
+Dashboard and user-supplied registrations are evidence supplied by the owner. Independent per-TLD chain verification still requires registry/transaction/resolver artifacts.
+Revenue
+Reseller and royalty activation evidence supports a commercial mechanism, not realized revenue.
+Passport
+Factory01 is a demonstration; not live blockchain verification.
+Physical authentication
+Scanning a label/reference does not prove the label is original or the object authentic. Secure hardware challenge-response requires implementation and test.
+Interoperability
+ERP/PLM/MES integration architecture is specified here; live external system exchanges have not been established by reviewed evidence.
+Cryptography
+Signature, digest, key lifecycle, anchoring and revocation procedures are proposed here and require implementation/independent tests.
+Compatibility
+Data model supports assessments; validated engineering compatibility rules and evidence are still required.
+Supplier/RFQ
+Marketplace shows RFQ entry points; successful submission, routing, supplier response and transaction lifecycle need operational evidence.
+Economic pilot
+Published economic figures are modeled; measured manufacturer outcomes remain outstanding.
+Independent review
+No independent technical/security review is included in the reviewed evidence.
+
+
+14. Peer-to-peer technical review protocol
+Reviewers should evaluate the architecture against the evidence and implementation artifacts, not against marketing statements. The review should produce a signed or attributable report with scope, versions, methods, findings, severity, reproducibility and limitations.
+Review package item
+Reviewer action
+Architecture and entity model
+Check identity separation, cardinality, immutable identifiers, versioning and lifecycle semantics.
+Namespace registry/crosswalk
+Check 27-to-34 mapping, definitions, governance, registration references and status reconciliation.
+JSON Schema and test vectors
+Validate positive/negative records and schema evolution.
+Repository source and commit
+Inspect actual executable source, dependencies, build steps, tests and deployment manifests.
+Passport/scan demonstrations
+Reproduce visible workflows and distinguish UI behavior from backend, cryptographic and physical authentication.
+API/OpenAPI and adapters
+Run requests against a test environment; validate auth, errors, idempotency and mapping fidelity.
+Cryptographic evidence
+Independently recompute digests, verify signatures, inspect key controls and chain anchors.
+Security and privacy
+Review threat model, access controls, tenant boundaries, logging and data minimization.
+Economic pilot
+Reproduce baseline/post calculations and evaluate sampling, confounders and costs.
+
+
+Recommended reviewer outputs: (1) architecture review, (2) schema/conformance report, (3) implementation and test report, (4) security review, (5) standards mapping, and (6) economic-methodology review. Findings should be classified Critical / High / Medium / Low / Informational, with remediation owner and retest evidence.
+15. Acceptance criteria for a manufacturer-ready implementation
+Gate
+Minimum acceptance condition
+Status in this document
+A — Identity schema
+Versioned schema, data dictionary, valid/invalid examples and product/instance distinction.
+Specified; JSON Schema companion supplied.
+B — Namespace registry
+34 definitions, original-27 crosswalk, governance/versioning and per-TLD registration evidence.
+Crosswalk supplied; registry governance specified; on-chain proof incomplete.
+C — Passport / identity UX
+Manufacturer can resolve identity and display authorized passport fields.
+Public demos supplied; backend and security boundary require test.
+D — Runnable core service
+Buildable API, persistent database, migrations, auth and automated tests.
+Not established by reviewed docs; development/verification required.
+E — BOM/lifecycle
+Versioned BOM, install/remove/replace history and traceability query pass.
+Data model documented; end-to-end test required.
+F — Interoperability
+At least one ERP/PLM/MES or supplier round-trip passes with reconciliation.
+Specified; not yet evidenced.
+G — Cryptographic verification
+Signature, tamper detection, revocation and chain anchor independently pass.
+Specified; not yet evidenced.
+H — Security
+Threat model, access controls, audit and independent security assessment.
+Requirements specified; assessment outstanding.
+I — Pilot economics
+Measured baseline/post results and full cost accounting.
+Modeled case exists; actual pilot outstanding.
+J — Independent review
+External review report and closed critical/high findings.
+Outstanding.
+
+
+Manufacturer implementation readiness is therefore defined as an architecture and contract package that can be implemented in a manufacturer's network, plus a set of conformance gates. This document supplies the architecture, schema contract, mapping and test protocol. It does not falsely certify that all gates have already passed.
+16. Source references and evidence provenance
+Ref
+Source
+URL
+S1
+ROBOPARTS.ai public repository README
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/README.md
+S2
+ROBOPARTS_DATA_MODEL.txt
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/ROBOPARTS_DATA_MODEL.txt
+S3
+DIGITAL_IDENTITY_AND_BOM.txt
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/DIGITAL_IDENTITY_AND_BOM.txt
+S4
+PITN_PHYSICAL_IDENTITY_EVIDENCE_AND_LIFECYCLE_TRACEABILITY.md
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/PITN_PHYSICAL_IDENTITY_EVIDENCE_AND_LIFECYCLE_TRACEABILITY.md
+S5
+PITN_BLOCKCHAIN_NAMESPACE_ARCHITECTURE.md
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/PITN_BLOCKCHAIN_NAMESPACE_ARCHITECTURE.md
+S6
+HUMANOIDO_Actuator_Identity.md
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/HUMANOIDO_Actuator_Identity.md
+S7
+API_AND_DATABASE_PROTOTYPE.txt
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/API_AND_DATABASE_PROTOTYPE.txt
+S8
+PITN_ROBOPARTS_CODE.txt
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/PITN_ROBOPARTS_CODE.txt
+S9
+Historical ROBOPARTS pilot README
+https://github.com/PITN374/pitn-roboparts-pilot/blob/main/README.md
+S10
+Implementation manifest
+https://github.com/PITN374/ROBOPARTS.ai/blob/main/IMPLEMENTATION_MANIFEST.md
+S11
+ROBOPARTS public marketplace
+https://roboparts.ai/
+S12
+Factory01 passport demonstration
+https://powerinthenumbers.ai/passport/factory01
+S13
+Identity scanning demonstration
+https://powerinthenumbers.ai/identity#scan
+S14
+PITN website
+https://powerinthenumbers.ai/
+
+
+S12 and S13 are included as user-supplied public demonstration references. Their exact live behavior should be captured in dated screenshots or screen recordings for peer review. The dashboard extract and domain registration list are user-supplied records and should be attached as dated evidence exhibits in the final public repository release.
+17. Final technical position
+PITN has an established architecture proposition, a documented original 27-namespace robotics BOM taxonomy, a user-supplied expanded 34-TLD management inventory, reported Polygon lifetime domain examples, a public ROBOPARTS component/RFQ interface, public identity/passport demonstrations, and repository documentation defining component/product identity, physical instances, BOM relationships, lifecycle events, evidence and blockchain namespace architecture.
+The evidence supports presenting PITN as a developed and demonstrable identity-and-namespace architecture with a manufacturer implementation pathway. It does not support representing every planned API, integration, cryptographic verification process, production database, economic outcome or independent certification as complete.
+A manufacturer can implement the architecture within its own network by adopting the canonical identity schema, mapping its existing identifiers, linking its product and physical-instance records, relating instances to versioned BOM/configuration positions, and exchanging authorized references with its ERP/PLM/MES and supplier systems. The manufacturer's systems remain authoritative for their source records. PITN provides the persistent identity, namespace and relationship framework.
+The next engineering work is not to restart the architecture. It is to formalize and version the schema, implement the conformance tests, establish the namespace registry evidence, build/verify the runnable service and adapters, execute cryptographic and interoperability tests, and publish the results—including failures and limitations.
+CONNECT THE PHYSICAL COMPONENT TO THE INFORMATION THAT ALREADY DESCRIBES IT.
