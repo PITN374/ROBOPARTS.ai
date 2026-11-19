@@ -10,6 +10,31 @@
 
 ## ROBOPARTS at a Glance
 
+## PITN Technical Architecture — Published Project Deliverable
+
+**POWER IN THE NUMBERS (PITN)** has formally published its *Persistent Identity & Robotics Manufacturing Infrastructure: Technical Architecture, Implementation Contract, Evidence Assessment & Peer-Review Protocol*, Version 1.0.0.
+
+**Publication details:**
+
+- **Author:** Aaron Bailot
+- **Organization:** POWER IN THE NUMBERS (PITN)
+- **Publication date:** November 19, 2026
+- **Document version:** 1.0.0
+- **Resource type:** Project deliverable
+- **Version-specific DOI:** [10.5281/zenodo.24374150](https://doi.org/10.5281/zenodo.24374150)
+- **All-versions DOI:** [10.5281/zenodo.24374149](https://doi.org/10.5281/zenodo.24374149)
+- **Full publication and downloadable PDF:** [Zenodo publication record](https://zenodo.org/records/24374150)
+- **GitHub release:** [ROBOPARTS.ai v1.1.0](https://github.com/PITN374/ROBOPARTS.ai/releases/tag/v1.1.0)
+- **Author ORCID:** [0009-0006-2810-6829](https://orcid.org/0009-0006-2810-6829)
+
+The publication establishes the PITN technical architecture and manufacturer implementation framework for connecting physical robotics components to persistent digital identities, blockchain/Web3 namespaces, manufacturer information, assemblies, Bills of Materials (BOMs), provenance, and lifecycle records.
+
+It defines technical architecture, implementation requirements, data exchange contracts, integration patterns, verification procedures, manufacturer pilot considerations, security controls, evidence assessment, and criteria for independent technical peer review.
+
+PITN is designed to complement existing ERP, PLM, MES, CAD, PDM, and quality-management environments rather than replace them.
+
+**Evidence and review status:** The publication distinguishes documented specifications, demonstrated interfaces, proposed capabilities, and independently verified implementation. The publication establishes a peer-review protocol and invites independent technical evaluation; it does not claim that independent peer review has already been completed or that every proposed capability has been deployed or independently validated.
+
 ROBOPARTS provides a conceptual framework for connecting information about robotic components with their capabilities, the systems in which they operate, and the tasks and applications those systems may support.
 
 Related topics include:
